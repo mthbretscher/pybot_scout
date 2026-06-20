@@ -19,7 +19,6 @@ DISCOVERY_PATTERNS = [
     "range",
     "sonar",
     "tof",
-    "ir",
 ]
 
 RANGE_MESSAGE_TYPES = set([
@@ -61,6 +60,7 @@ def discover_proximity_topics(logger=None):
         _log(logger, "topic_discovery_failed", error=str(exc))
         return configured_topics
 
+    published_set = {topic for topic, _type in published_topics}
     _log(logger, "topic_discovery_total", total=len(published_topics))
 
     for topic, topic_type in published_topics:
@@ -77,6 +77,9 @@ def discover_proximity_topics(logger=None):
     for match in matching_topics:
         _log(logger, "topic_discovery_match", topic=match["topic"], topic_type=match["topic_type"])
 
-    selected_topics = _unique(configured_topics + discovered_topics)
+    # Only include configured/default topics that are actually published on the master.
+    validated_configured = [t for t in configured_topics if t in published_set]
+
+    selected_topics = _unique(validated_configured + discovered_topics)
     _log(logger, "topic_discovery_selected", topics=selected_topics)
     return selected_topics
