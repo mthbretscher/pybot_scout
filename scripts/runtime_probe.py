@@ -13,6 +13,7 @@ if REPO_ROOT not in sys.path:
 
 from pybot_scout.feedback import FeedbackLogger
 from pybot_scout.proximity import discover_proximity_topics
+from pybot_scout.ros_inventory import log_ros_inventory
 from pybot_scout.scout import pybot_scout
 
 PROBE_DURATION_SECS = 60
@@ -36,6 +37,7 @@ def _subscribe_topics(topics):
 
 
 def start():
+    log_ros_inventory(LOGGER)
     topics = discover_proximity_topics(LOGGER)
     LOGGER.log(
         "probe_started",

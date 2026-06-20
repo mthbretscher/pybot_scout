@@ -6,7 +6,33 @@ Helpers for collecting run feedback as structured JSONL files.
 import datetime
 import json
 import os
+import subprocess
 import threading
+
+
+def _get_git_version():
+    """Return a dict with git commit SHA, branch, and dirty flag."""
+    info = {}
+    try:
+        info["git_commit"] = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], stderr=subprocess.STDOUT
+        ).decode().strip()
+    except Exception:
+        info["git_commit"] = "unknown"
+    try:
+        info["git_branch"] = subprocess.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"], stderr=subprocess.STDOUT
+        ).decode().strip()
+    except Exception:
+        info["git_branch"] = "unknown"
+    try:
+        dirty_output = subprocess.check_output(
+            ["git", "status", "--porcelain"], stderr=subprocess.STDOUT
+        ).decode().strip()
+        info["git_dirty"] = bool(dirty_output)
+    except Exception:
+        info["git_dirty"] = None
+    return info
 
 
 class FeedbackLogger(object):
@@ -23,7 +49,8 @@ class FeedbackLogger(object):
         self.path = os.path.join(self.output_dir, filename)
         self._fp = open(self.path, "a")
 
-        self.log("logger_started", script=script_name, file=self.path)
+        git_version = _get_git_version()
+        self.log("logger_started", script=script_name, file=self.path, **git_version)
 
     def log(self, event, **fields):
         payload = {
