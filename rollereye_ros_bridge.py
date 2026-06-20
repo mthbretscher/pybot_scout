@@ -115,6 +115,11 @@ class RollerEyeRosBride(threading.Thread):
     sub = rospy.Subscriber("/CoreNode/motion", detect, cb)
     return sub
 
+  def sub_topic_proximity(self, topic, cb):
+    from sensor_msgs.msg import Range
+    sub = rospy.Subscriber(topic, Range, cb)
+    return sub
+
   def publish_cmd_vel(self, linearX, linearY, angularZ):
     #pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)  
     vel = Twist()

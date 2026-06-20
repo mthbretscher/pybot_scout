@@ -262,6 +262,10 @@ class Rollereye:
   _ai_detect_switch = dict([("person", False), ("dog", False), ("cat", False), ("motion", False)])
   _ai_detect_result = {"person":{"last_detected_time": -1.0}, "dog":{"last_detected_time": -1.0}, "cat":{"last_detected_time": -1.0}, "motion":{"last_detected_time": -1.0}}
 
+  _proximity_subs = {}
+  _proximity_lock = threading.Lock()
+  _proximity_readings = {}  # topic -> range in metres (-1.0 = no data yet)
+
   @property
   def translation_speed(self):
     return self._translation_speed
@@ -847,6 +851,52 @@ class Rollereye:
     self.rotation_direction = direction
 
     self._motion_cmd_async_sender.start_translate_rotate(self.translation_speed, self.translation_direction, self.rotation_speed, self.rotation_direction)
+
+  '''
+  description: Subscribe to a proximity/range sensor ROS topic.
+               The latest reading for each subscribed topic is cached internally.
+  param self
+  param topic  ROS topic name publishing sensor_msgs/Range messages
+  return the rospy.Subscriber object
+  '''
+  def subscribe_proximity(self, topic):
+    with self._proximity_lock:
+      if topic in self._proximity_subs:
+        return self._proximity_subs[topic]
+      self._proximity_readings[topic] = -1.0
+
+    def _cb(msg):
+      with self._proximity_lock:
+        self._proximity_readings[topic] = msg.range
+
+    sub = self._ros_bridge.sub_topic_proximity(topic, _cb)
+    with self._proximity_lock:
+      self._proximity_subs[topic] = sub
+    return sub
+
+  '''
+  description: Return a snapshot of all subscribed proximity readings.
+               Keys are topic names; values are range in metres (-1.0 = no data yet).
+  param self
+  return dict {topic: range_m}
+  '''
+  def get_proximity_readings(self):
+    with self._proximity_lock:
+      return dict(self._proximity_readings)
+
+  '''
+  description: Return True when any proximity reading on subscribed topics is
+               below threshold_m, indicating an obstacle is close.
+  param self
+  param threshold_m  distance threshold in metres
+  return bool
+  '''
+  def is_obstacle_ahead(self, threshold_m=0.4):
+    readings = self.get_proximity_readings()
+    for topic, dist in readings.items():
+      if dist >= 0.0 and dist < threshold_m:
+        return True
+    return False
 
   '''
   description: stop move
