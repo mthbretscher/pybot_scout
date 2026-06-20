@@ -4,12 +4,12 @@ import signal
 import sys
 import math
 from geometry_msgs.msg import Twist
-from rollereye_ros_bridge import *
+from .ros_bridge import *
 import datetime
 from timeit import default_timer as timer
 import json
 
-SC_SOUND_DIR = "/var/roller_eye/"
+SCOUT_SOUND_DIR = os.environ.get("PYBOT_SCOUT_SOUND_DIR", "/var/roller_eye/")
 
 def disable_print():
   print "print is disalbed"
@@ -235,7 +235,7 @@ class MotionCmdAsyncSender(threading.Thread):
     print "async vel cmd sender stop done"
 
 
-class Rollereye:
+class PyBotScout:
   _is_started = False
 
   _translation_speed = 0      #m/s
@@ -408,15 +408,15 @@ class Rollereye:
     disable_print()
     self._lock.acquire()
     if self._is_started:
-      print 'rollereye already started'
+      print 'pybot_scout already started'
     else:
       self._is_started = True
-      self._ros_bridge = RollerEyeRosBride()
+      self._ros_bridge = PyBotScoutRosBridge()
       self._motion_cmd_async_sender = MotionCmdAsyncSender(self._ros_bridge)
       self._motion_cmd_async_sender.start()
       self._reset_sound_volume_to_default()
       self.record_stop()
-      print('rollereye do start')
+      print('pybot_scout do start')
     self._lock.release()
 
   '''
@@ -433,9 +433,9 @@ class Rollereye:
       self._ros_bridge.close()
       self._ros_bridge.join()
       self._is_started = False
-      print('rollereye do stop')
+      print('pybot_scout do stop')
     else:
-     print('rollereye already stop or not started')
+     print('pybot_scout already stop or not started')
     self._lock.release()
     self._reset_sound_volume_to_default()
 
@@ -566,11 +566,11 @@ class Rollereye:
   '''
   def play_sound(self, effect_id, is_finished):
     if effect_id == 1:
-      sound_path = SC_SOUND_DIR + "sc_sound_001.wav"
+      sound_path = SCOUT_SOUND_DIR + "sc_sound_001.wav"
     elif effect_id == 2:
-      sound_path = SC_SOUND_DIR + "sc_sound_002.wav"
+      sound_path = SCOUT_SOUND_DIR + "sc_sound_002.wav"
     elif effect_id == 3:
-      sound_path = SC_SOUND_DIR + "sc_sound_003.wav"
+      sound_path = SCOUT_SOUND_DIR + "sc_sound_003.wav"
     else:
       print('unknown sound id:%d', effect_id)
     
@@ -680,7 +680,7 @@ class Rollereye:
     x_distance = x_part * speed * seconds
     y_distance = y_part * speed * seconds
 
-    print('set_translate_2, degree:%.2f, seconds:%d, x_distance:%.2f, y_distance:%.2f, speed:%.2f' % (degree, seconds, x_distance, y_distance, speed))
+    print('set_translate_2, degree:%.2f, seconds:%.2f, x_distance:%.2f, y_distance:%.2f, speed:%.2f' % (degree, seconds, x_distance, y_distance, speed))
 
     self._move(x_distance, y_distance, speed)
 
@@ -1122,74 +1122,74 @@ class Rollereye:
 
 def signalHandler(signalNum, frame):
   print("signalHandler bye")
-  rollereye.stop()
+  pybot_scout.stop()
 
-rollereye = Rollereye()
+pybot_scout = PyBotScout()
 
 def highlightBlock(meta_msg):
   time.sleep(0.05)
-  rollereye.handle_meta(meta_msg)
+  pybot_scout.handle_meta(meta_msg)
 
-def rollereye_print(msg):
+def pybot_scout_print(msg):
   time.sleep(0.05)
-  rollereye.handle_msg(0, msg)
+  pybot_scout.handle_msg(0, msg)
 
 # def start():
-#   rollereye.set_rotationSpeed(60)
-#   rollereye.set_translationSpeed(0.3)
-#   rollereye.set_translate_rotate(1,90)
-#   rollereye.timerStart()
-#   while rollereye.getTimerTime() <= 10000:
+#   pybot_scout.set_rotationSpeed(60)
+#   pybot_scout.set_translationSpeed(0.3)
+#   pybot_scout.set_translate_rotate(1,90)
+#   pybot_scout.timerStart()
+#   while pybot_scout.getTimerTime() <= 10000:
 #     pass
 
 # if __name__ == '__main__':
-#    rollereye.start()
+#    pybot_scout.start()
 #    start()
-#    rollereye.stop()
+#    pybot_scout.stop()
 
 if __name__ == '__main__':
   signal.signal(signal.SIGINT, signalHandler) 
   signal.signal(signal.SIGHUP, signalHandler)
   signal.signal(signal.SIGTERM, signalHandler)
 
-  rollereye.start()
+  pybot_scout.start()
 
-  #rollereye._enable_ai_detect()
+  #pybot_scout._enable_ai_detect()
 
-  rollereye.timerStart()
+  pybot_scout.timerStart()
 
 
 
-  while rollereye.getTimerTime() < 100000:
-    if(rollereye.getTimerTime() > 5000):
-      rollereye.stop()
+  while pybot_scout.getTimerTime() < 100000:
+    if(pybot_scout.getTimerTime() > 5000):
+      pybot_scout.stop()
   
 
 
-  rollereye.enable_detection()
+  pybot_scout.enable_detection()
 
-  rollereye.enable_reg(target = reg.person)
-  rollereye.enable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.enable_reg(target = reg.person)
+  pybot_scout.enable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.disable_reg(target = reg.person)
-  rollereye.disable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.disable_reg(target = reg.person)
+  pybot_scout.disable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.enable_reg(target = reg.cat)
-  rollereye.enable_reg(target = reg.person)
-  #rollereye.recWait(target = reg.person)
+  pybot_scout.enable_reg(target = reg.cat)
+  pybot_scout.enable_reg(target = reg.person)
+  #pybot_scout.recWait(target = reg.person)
 
-  rollereye.disable_reg(target = reg.person)
-  rollereye.disable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.disable_reg(target = reg.person)
+  pybot_scout.disable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.disable_detection()
+  pybot_scout.disable_detection()
 
-  rollereye.enable_reg(target = reg.person)
-  #rollereye.recWait(target = reg.person)
+  pybot_scout.enable_reg(target = reg.person)
+  #pybot_scout.recWait(target = reg.person)
   
-  rollereye.enable_reg(target = reg.person)
+  pybot_scout.enable_reg(target = reg.person)
 
   test = timer()
   time.sleep(1)
@@ -1197,78 +1197,78 @@ if __name__ == '__main__':
 
   vol = 100
 
-  rollereye.play_sound(1 + vol % 3, False)
+  pybot_scout.play_sound(1 + vol % 3, False)
 
   while vol > 90:
-    rollereye.set_soundVolume(vol)
-    rollereye.play_sound(1 + vol % 3, True)
+    pybot_scout.set_soundVolume(vol)
+    pybot_scout.play_sound(1 + vol % 3, True)
     vol = vol - 10
 
-    rollereye._reset_sound_volume_to_default()
+    pybot_scout._reset_sound_volume_to_default()
 
 
   cnt = 0
   while 1:
     time.sleep(0.1)
-    rollereye.recogResult() 
+    pybot_scout.recogResult() 
     continue
 
     cnt += 1
     #print('sleep:%d' % cnt)
     time.sleep(1)
-    rollereye.getRunTime()
-    rollereye.getCurrentTime()
-    rollereye.set_soundVolume(0)
-    rollereye.play_sound(0, True)
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.record_start()
+    pybot_scout.getRunTime()
+    pybot_scout.getCurrentTime()
+    pybot_scout.set_soundVolume(0)
+    pybot_scout.play_sound(0, True)
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.record_start()
     time.sleep(5)
-    rollereye.record_stop()
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.record_start()
+    pybot_scout.record_stop()
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.record_start()
     time.sleep(10)
-    rollereye.record_stop()
-    rollereye.capture() 
+    pybot_scout.record_stop()
+    pybot_scout.capture() 
 
-    rollereye.timerStart()
+    pybot_scout.timerStart()
     time.sleep(2.89712)
-    rollereye.getTimerTime()
-    rollereye.timerPause()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerPause()
     time.sleep(6.54323)
-    rollereye.getTimerTime()
-    rollereye.timerStart()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerStart()
     time.sleep(5.1)
-    rollereye.getTimerTime()
-    rollereye.timerStop()
-    rollereye.getTimerTime()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerStop()
+    pybot_scout.getTimerTime()
 
-    rollereye.set_translationSpeed(0.2)
-    rollereye.set_rotationSpeed(5)
-    rollereye.set_wheel(frontLeft = 0, frontRight = 0, rearLeft = 0, rearRight = 0)
-    rollereye.set_translate(degree = 1)
+    pybot_scout.set_translationSpeed(0.2)
+    pybot_scout.set_rotationSpeed(5)
+    pybot_scout.set_wheel(frontLeft = 0, frontRight = 0, rearLeft = 0, rearRight = 0)
+    pybot_scout.set_translate(degree = 1)
 
     time.sleep(1)
 
-    rollereye.set_translate_2(degree = 270, seconds = 1) 
-    rollereye.set_translate_3(degree = 45, meters = 1)
-    rollereye.set_translate_4(degree = 0, speed = 0.1)
-    rollereye.set_rotate(direction = 1)
-    rollereye.set_rotate_2(direction = 1, seconds = 10)
-    rollereye.set_rotate_3(direction = 1, degree = 30)
-    rollereye.set_translate_rotate(degree = 30, direction = 1)
-    rollereye.stop_move()
+    pybot_scout.set_translate_2(degree = 270, seconds = 1) 
+    pybot_scout.set_translate_3(degree = 45, meters = 1)
+    pybot_scout.set_translate_4(degree = 0, speed = 0.1)
+    pybot_scout.set_rotate(direction = 1)
+    pybot_scout.set_rotate_2(direction = 1, seconds = 10)
+    pybot_scout.set_rotate_3(direction = 1, degree = 30)
+    pybot_scout.set_translate_rotate(degree = 30, direction = 1)
+    pybot_scout.stop_move()
 
-    rollereye.recogResult() 
-    rollereye.recResult(target = reg.person)
-    rollereye.recWait(target = reg.person)
-    rollereye.enable_detection()
-    rollereye.disable_detection() 
-    rollereye.motionDetected()
+    pybot_scout.recogResult() 
+    pybot_scout.recResult(target = reg.person)
+    pybot_scout.recWait(target = reg.person)
+    pybot_scout.enable_detection()
+    pybot_scout.disable_detection() 
+    pybot_scout.motionDetected()
 
     if(cnt > 60):
       break
-  rollereye.stop()
+  pybot_scout.stop()
   print "main thread exit"
