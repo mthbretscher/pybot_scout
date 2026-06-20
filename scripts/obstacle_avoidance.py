@@ -25,6 +25,7 @@ SENSOR_TIMEOUT_SECS = 5.0
 CHECK_INTERVAL_SECS = 0.35
 REDISCOVERY_INTERVAL_SECS = 15.0
 REFRESH_SENSOR_WAIT_SECS = 2.0
+ALLOW_SENSORLESS_FALLBACK = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
 LOGGER = FeedbackLogger("obstacle_avoidance")
 
@@ -116,6 +117,7 @@ def start():
         sensor_timeout_secs=SENSOR_TIMEOUT_SECS,
         check_interval_secs=CHECK_INTERVAL_SECS,
         rediscovery_interval_secs=REDISCOVERY_INTERVAL_SECS,
+        allow_sensorless_fallback=ALLOW_SENSORLESS_FALLBACK,
         proximity_topics=sorted(subscribed_topics),
     )
 
@@ -131,8 +133,12 @@ def start():
         print("Proximity sensor data received – obstacle avoidance ENABLED.")
     else:
         print("WARNING: No proximity sensor data received after %.0f s." % SENSOR_TIMEOUT_SECS)
-        print("         Running in sensor-less random-walk fallback mode.")
-        LOGGER.log("sensor_fallback_enabled")
+        if ALLOW_SENSORLESS_FALLBACK:
+            print("         Running in sensor-less random-walk fallback mode.")
+            LOGGER.log("sensor_fallback_enabled")
+        else:
+            print("         Sensor-less fallback DISABLED; waiting for valid sensor data.")
+            LOGGER.log("sensor_fallback_disabled")
 
     print("Obstacle avoidance walk started. Press Ctrl-C to stop.")
 
@@ -149,6 +155,11 @@ def start():
                 proximity_topics=sorted(subscribed_topics),
             )
             next_discovery_at = time.time() + REDISCOVERY_INTERVAL_SECS
+
+        if not sensor_active and not ALLOW_SENSORLESS_FALLBACK:
+            LOGGER.log("waiting_for_sensor_data", proximity_topics=sorted(subscribed_topics))
+            time.sleep(PAUSE_SECS)
+            continue
 
         direction = random.randint(0, 360)
         duration = random.uniform(MIN_STEP_SECS, MAX_STEP_SECS)

@@ -18,6 +18,9 @@ Run these from the repository root:
 - `python scripts/human_detect.py`
 - `python scripts/example.py`
 
+`random_walk.py` now turns first, then drives forward each step, which gives a
+more exploratory path on differential-drive robots.
+
 ## Feedback logs
 
 Every JSONL log file starts with a `logger_started` event that includes the
@@ -38,6 +41,9 @@ variables:
 - `PYBOT_SCOUT_HUMAN_SOUND_ID` – sound effect to play (1, 2 or 3; default: 1)
 - `PYBOT_SCOUT_HUMAN_COOLDOWN` – seconds between triggers (default: 3.0)
 
+If audio playback fails (missing wave file or `aplay` execution error), the
+script logs `sound_failed` events in `run_feedback/*.jsonl`.
+
 ## ROS inventory
 
 `runtime_probe.py` (and `human_detect.py`) call `log_ros_inventory()` at
@@ -55,9 +61,15 @@ ros_inventory_services – list of all service names
 The obstacle avoidance script:
 
 - auto-discovers published `sensor_msgs/Range` topics
+- includes `/SensorNode/tof` and `/SensorNode/ibeacon` in default candidates
 - keeps the old default topic list as a fallback
 - re-checks for sensors while running if no data was available at startup
 - moves in short bursts so it can stop and rotate away sooner
+
+By default, if no valid proximity data is available, movement is paused until
+sensor data appears. To force the old sensor-less fallback behavior, set:
+
+- `PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK=1`
 
 If your robot publishes range data on custom topic names, set:
 

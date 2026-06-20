@@ -1,4 +1,5 @@
 import time,os
+import subprocess
 import threading
 import signal
 import sys
@@ -573,15 +574,23 @@ class PyBotScout:
       sound_path = SCOUT_SOUND_DIR + "sc_sound_003.wav"
     else:
       print('unknown sound id:%d', effect_id)
-    
-    if is_finished:
-      cmd = "aplay " + sound_path
-    else:
-      cmd = "aplay " + sound_path + " &"
+      return False
 
-    print("run: %s" % cmd)
-    
-    os.system(cmd)
+    if not os.path.isfile(sound_path):
+      print("sound file not found: %s" % sound_path)
+      return False
+
+    cmd = ["aplay", sound_path]
+    print("run: %s" % " ".join(cmd))
+
+    try:
+      if is_finished:
+        return subprocess.call(cmd) == 0
+      subprocess.Popen(cmd)
+      return True
+    except Exception as exc:
+      print("play_sound failed: %s" % exc)
+      return False
  
   '''
   description: take photo

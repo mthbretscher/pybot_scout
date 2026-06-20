@@ -4,6 +4,8 @@
 import os
 
 DEFAULT_PROXIMITY_TOPICS = [
+    "/SensorNode/tof",
+    "/SensorNode/ibeacon",
     "/proximity_sensor",
     "/ultrasonic_front",
     "/ultrasonic_rear",

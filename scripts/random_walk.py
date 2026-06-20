@@ -19,6 +19,8 @@ ROTATION_SPEED = 90
 MIN_STEP_SECS = 2
 MAX_STEP_SECS = 5
 PAUSE_SECS = 0.5
+MIN_TURN_DEG = 45
+MAX_TURN_DEG = 180
 
 LOGGER = FeedbackLogger("random_walk")
 
@@ -46,15 +48,25 @@ def start():
     step_index = 0
     while True:
         step_index += 1
-        direction = random.randint(0, 360)
+        turn_direction = random.choice([1, 2])
+        turn_degree = random.randint(MIN_TURN_DEG, MAX_TURN_DEG)
         duration = random.uniform(MIN_STEP_SECS, MAX_STEP_SECS)
 
-        print("Moving direction=%d deg for %.1f s" % (direction, duration))
-        pybot_scout.set_translate_2(direction, duration)
+        print("Turning dir=%d by %d deg" % (turn_direction, turn_degree))
+        pybot_scout.set_rotate_3(turn_direction, turn_degree)
+        LOGGER.log(
+            "turn_step",
+            step_index=step_index,
+            turn_direction=turn_direction,
+            turn_degree=turn_degree,
+        )
+
+        print("Moving forward for %.1f s" % duration)
+        pybot_scout.set_translate_2(0, duration)
         LOGGER.log(
             "move_step",
             step_index=step_index,
-            direction_deg=direction,
+            direction_deg=0,
             requested_duration_s=duration,
             actual_duration_s=duration,
         )

@@ -70,7 +70,9 @@ def start():
                 print("Human detected! Playing sound %d." % SOUND_ID)
                 LOGGER.log("human_detected", sound_id=SOUND_ID)
                 try:
-                    pybot_scout.play_sound(SOUND_ID, False)
+                    played = pybot_scout.play_sound(SOUND_ID, False)
+                    if not played:
+                        LOGGER.log("sound_failed", sound_id=SOUND_ID, reason="play_sound_returned_false")
                 except Exception as exc:
                     LOGGER.log("sound_failed", error=str(exc))
                     print("Sound playback failed: %s" % exc)
