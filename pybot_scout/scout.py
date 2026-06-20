@@ -694,6 +694,69 @@ class PyBotScout:
     self._move(x_distance, y_distance, speed)
 
   '''
+  description: set Scout to translate at (0:360) for (0:20) s with a velocity
+               ramp-up at the start and ramp-down at the end, for smoother motion.
+               Falls back to a normal move when the requested duration is too short
+               to accommodate both ramp phases.
+  param self
+  param degree  translate direction (0:360)
+  param seconds duration (0:20)
+  '''
+  def set_translate_smooth(self, degree, seconds):
+    print('set_translate_smooth')
+    if degree < 0 or degree > 360:
+      print('invalid degree:%d, ignore set_translate_smooth' % degree)
+      return
+    if seconds < 0 or seconds > 20:
+      print('invalid seconds:%.2f, ignore set_translate_smooth' % seconds)
+      return
+
+    RAMP_FRACS   = [0.3, 0.7]   # velocity fractions for each ramp step
+    RAMP_STEP_S  = 0.1          # wall-clock duration per ramp step (seconds)
+    PUBLISH_INTERVAL_S = 0.05   # re-publish interval within each ramp step
+    TOTAL_RAMP_S = len(RAMP_FRACS) * RAMP_STEP_S * 2  # both ends
+
+    self._stop_async_translate_rotate()
+    self.translation_direction = degree
+    speed = self.translation_speed
+    x_part, y_part = direction_2_x_y(degree)
+    vx_full = speed * x_part
+    vy_full = speed * y_part
+
+    if seconds < TOTAL_RAMP_S:
+      # Too short to ramp; delegate to the standard timed move
+      x_distance = x_part * speed * seconds
+      y_distance = y_part * speed * seconds
+      self._move(x_distance, y_distance, speed)
+      return
+
+    sustain_s = seconds - TOTAL_RAMP_S
+
+    def _publish_for(vx, vy, duration_s):
+      end = time.time() + duration_s
+      vel = Twist()
+      vel.linear.x  = vx
+      vel.linear.y  = vy
+      vel.angular.z = 0.0
+      while time.time() < end:
+        self._ros_bridge.publish_raw_cmd_vel(vel)
+        remaining = end - time.time()
+        if remaining > 0:
+          time.sleep(min(PUBLISH_INTERVAL_S, remaining))
+
+    for frac in RAMP_FRACS:
+      _publish_for(vx_full * frac, vy_full * frac, RAMP_STEP_S)
+
+    _publish_for(vx_full, vy_full, sustain_s)
+
+    for frac in RAMP_FRACS[::-1]:
+      _publish_for(vx_full * frac, vy_full * frac, RAMP_STEP_S)
+
+    stop_vel = Twist()
+    self._ros_bridge.publish_raw_cmd_vel(stop_vel)
+    time.sleep(0.05)
+
+  '''
   description: set Scount to translate at (0:360) for (0:5) meters
   param self
   param degree

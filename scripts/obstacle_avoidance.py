@@ -11,7 +11,9 @@ REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
+from pybot_scout.charging_pile import ChargingPileDetector
 from pybot_scout.feedback import FeedbackLogger
+from pybot_scout.odometry import OdometryTracker
 from pybot_scout.proximity import discover_proximity_topics
 from pybot_scout.scout import pybot_scout
 
@@ -28,6 +30,8 @@ REFRESH_SENSOR_WAIT_SECS = 2.0
 ALLOW_SENSORLESS_FALLBACK = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
 LOGGER = FeedbackLogger("obstacle_avoidance")
+ODOM_TRACKER = OdometryTracker()
+PILE_DETECTOR = ChargingPileDetector()
 
 
 def _signal_handler(signum, frame):
@@ -102,6 +106,9 @@ def _step_with_avoidance(direction, duration_secs, sensor_active):
 
 
 def start():
+    ODOM_TRACKER.start()
+    PILE_DETECTOR.start()
+
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
     pybot_scout.set_translationSpeed(SPEED)
 
@@ -163,11 +170,21 @@ def start():
 
         direction = random.randint(0, 360)
         duration = random.uniform(MIN_STEP_SECS, MAX_STEP_SECS)
+
+        # Capture pose and check for charging pile before moving
+        pose_before = ODOM_TRACKER.get_pose()
+        if PILE_DETECTOR.was_recently_seen():
+            sighting = PILE_DETECTOR.get_last_sighting()
+            LOGGER.log("charging_pile_sighted", pose=pose_before, sighting=sighting)
+            print("Charging pile detected near pose (%.3f, %.3f)." % (
+                pose_before["x_m"], pose_before["y_m"]))
+
         LOGGER.log(
             "step_selected",
             direction_deg=direction,
             requested_duration_s=duration,
             sensor_active=sensor_active,
+            pose=pose_before,
         )
 
         if sensor_active and pybot_scout.is_obstacle_ahead(OBSTACLE_THRESHOLD_M):
@@ -203,6 +220,10 @@ if __name__ == '__main__':
         LOGGER.log("run_exception", error=str(exc), error_type=exc.__class__.__name__)
         pybot_scout.handle_exception(exc.__class__.__name__ + ': ' + str(exc))
 
+    stats = ODOM_TRACKER.get_stats()
+    LOGGER.log("run_summary", **stats)
+    ODOM_TRACKER.stop()
+    PILE_DETECTOR.stop()
     LOGGER.log("run_stopped")
     LOGGER.close()
     pybot_scout.stop()
