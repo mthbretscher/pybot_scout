@@ -8,7 +8,8 @@ brightness summary that can be sampled by scripts such as runtime_probe.py.
 The monitor is intentionally simple and Python-2-compatible:
   - no numpy / cv_bridge dependency
   - samples a sparse grid of pixels for low CPU overhead
-  - stores mean brightness for the whole frame and left/center/right thirds
+  - stores mean brightness for the whole frame, left/center/right thirds,
+    and the lower rim where forward-floor cues are more likely to appear
 """
 
 import threading
@@ -16,6 +17,8 @@ import time
 
 GREY_IMAGE_TOPIC = "/CoreNode/grey_img"
 PROCESS_INTERVAL_SECS = 0.25
+LOWER_RIM_START_NUM = 3
+LOWER_RIM_START_DEN = 4
 
 
 def _safe_round(value):
@@ -57,9 +60,18 @@ def _sample_image_stats(msg):
     center_count = 0
     right_sum = 0.0
     right_count = 0
+    lower_sum = 0.0
+    lower_count = 0
+    lower_left_sum = 0.0
+    lower_left_count = 0
+    lower_center_sum = 0.0
+    lower_center_count = 0
+    lower_right_sum = 0.0
+    lower_right_count = 0
 
     one_third = width // 3
     two_third = (2 * width) // 3
+    lower_row_start = (height * LOWER_RIM_START_NUM) // LOWER_RIM_START_DEN
 
     row = 0
     while row < height:
@@ -82,11 +94,40 @@ def _sample_image_stats(msg):
             else:
                 right_sum += val
                 right_count += 1
+
+            if row >= lower_row_start:
+                lower_sum += val
+                lower_count += 1
+                if col < one_third:
+                    lower_left_sum += val
+                    lower_left_count += 1
+                elif col < two_third:
+                    lower_center_sum += val
+                    lower_center_count += 1
+                else:
+                    lower_right_sum += val
+                    lower_right_count += 1
             col += col_stride
         row += row_stride
 
     if total_count == 0:
         return None
+
+    forward_mean = None
+    forward_source = None
+    forward_count = 0
+    if lower_center_count:
+        forward_mean = lower_center_sum / lower_center_count
+        forward_source = "lower_center"
+        forward_count = lower_center_count
+    elif lower_count:
+        forward_mean = lower_sum / lower_count
+        forward_source = "lower_rim"
+        forward_count = lower_count
+    elif center_count:
+        forward_mean = center_sum / center_count
+        forward_source = "center"
+        forward_count = center_count
 
     return {
         "encoding": encoding,
@@ -97,6 +138,14 @@ def _sample_image_stats(msg):
         "left_mean_brightness": _safe_round(left_sum / left_count) if left_count else None,
         "center_mean_brightness": _safe_round(center_sum / center_count) if center_count else None,
         "right_mean_brightness": _safe_round(right_sum / right_count) if right_count else None,
+        "lower_rim_sample_points": lower_count,
+        "lower_rim_mean_brightness": _safe_round(lower_sum / lower_count) if lower_count else None,
+        "lower_left_mean_brightness": _safe_round(lower_left_sum / lower_left_count) if lower_left_count else None,
+        "lower_center_mean_brightness": _safe_round(lower_center_sum / lower_center_count) if lower_center_count else None,
+        "lower_right_mean_brightness": _safe_round(lower_right_sum / lower_right_count) if lower_right_count else None,
+        "forward_brightness_source": forward_source,
+        "forward_sample_points": forward_count,
+        "forward_mean_brightness": _safe_round(forward_mean),
     }
 
 

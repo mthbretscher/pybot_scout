@@ -128,6 +128,11 @@ def start():
         "left_mean_brightness": [],
         "center_mean_brightness": [],
         "right_mean_brightness": [],
+        "lower_rim_mean_brightness": [],
+        "lower_left_mean_brightness": [],
+        "lower_center_mean_brightness": [],
+        "lower_right_mean_brightness": [],
+        "forward_mean_brightness": [],
     }
 
     while not STOP_REQUESTED and (deadline is None or time.time() < deadline):

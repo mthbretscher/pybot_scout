@@ -66,9 +66,16 @@ While running, the probe logs both:
 - proximity samples from `/SensorNode/tof` and other discovered range topics
 - grayscale camera brightness summaries from `/CoreNode/grey_img`
 
+The camera summary now includes both whole-frame brightness and lower-rim
+metrics. `forward_mean_brightness` prefers the lower-center band first, then
+falls back to the wider lower rim, and only then to the full-height center
+third. This helps avoid false "bright ahead" guesses from high, bright objects
+such as curtains that sit above the robot's actual path.
+
 At shutdown it emits a `probe_correlation` event with Pearson correlation
 statistics between valid ToF distances and camera brightness metrics
-(overall / left / center / right frame thirds).
+(overall / left / center / right frame thirds, lower-rim regions, and the
+forward fallback metric).
 
 ## Obstacle avoidance
 
