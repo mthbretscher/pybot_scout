@@ -235,7 +235,7 @@ def start():
         if obstacle_dist is not None:
             # ── bounce ────────────────────────────────────────────────────────
             pybot_scout.stop_move()
-            tof_buf.clear()   # reset stuck buffer after any direction change
+            del tof_buf[:]   # reset stuck buffer after any direction change
             deviation = random.randint(BOUNCE_MIN_DEG, BOUNCE_MAX_DEG)
             rotate_dir = random.choice([1, 2])   # 1 = CCW/left, 2 = CW/right
             new_heading = (heading + (deviation if rotate_dir == 1 else -deviation)) % 360
@@ -296,7 +296,7 @@ def start():
                        tof_buf=list(tof_buf),
                        heading_deg=heading)
             pybot_scout.stop_move()
-            tof_buf.clear()
+            del tof_buf[:]
             rotate_dir = random.choice([1, 2])
             escape_deg = random.randint(150, 210)   # roughly 180°
             pybot_scout.set_rotate_3(rotate_dir, escape_deg)
