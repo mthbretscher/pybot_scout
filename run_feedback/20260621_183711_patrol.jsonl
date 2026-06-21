@@ -1,0 +1,396 @@
+{"event": "logger_started", "file": "/home/linaro/programming_workspace/pybot_scout/run_feedback/20260621_183711_patrol.jsonl", "git_branch": "copilot/moorebot-scout-random-drive", "git_commit": "d548ba8c72b9c6043b6cb60df3bcf9624813e911", "git_dirty": true, "script": "patrol", "ts_utc": "2026-06-21T18:37:12.038858Z"}
+{"attrs": {"BACK_UP_ALIGN": 2, "BACK_UP_BACK": 3, "BACK_UP_CANCEL": 7, "BACK_UP_DETECT": 1, "BACK_UP_FAIL": 5, "BACK_UP_INACTIVE": 6, "BACK_UP_REDETECT": 8, "BACK_UP_SUCCESS": 4, "BATTERY_CHARGING": 0, "BATTERY_FULL": 2, "BATTERY_UNCHARGE": 1, "BATTERY_UNKOWN": 3, "OBJ_DETECT_CHARGE": 1, "P2P_AV_ERROR": 3, "P2P_AV_PLAYING": 1, "P2P_AV_STOP": 2, "PROCESS_ERROR": -1, "PROCESS_OK": 0, "RECORD_ERROR": 3, "RECORD_START": 1, "RECORD_STOP": 2, "WIFI_MODE_AP": 0, "WIFI_MODE_STA": 1, "WIFI_STATUS_CONNECTED": 1, "WIFI_STATUS_CONNECTING": 2, "WIFI_STATUS_CONN_FAIL": 4, "WIFI_STATUS_DISCONNECT": 0, "WIFI_STATUS_STOP": 5, "WIFI_STATUS_WRONG_KEY": 3, "status": [2, 100, 1]}, "event": "battery_msg_schema", "parsed_charging": null, "parsed_percent": null, "topic": "/SensorNode/simple_battery_status", "ts_utc": "2026-06-21T18:37:14.425801Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:37:14.480630Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:37:14.505739Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:37:14.519321Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/tof", "ts_utc": "2026-06-21T18:37:15.562668Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/ibeacon", "ts_utc": "2026-06-21T18:37:15.632965Z"}
+{"allow_sensorless": false, "battery_check_secs": 30.0, "crawl_speed": 0.1, "depart_pct": 80.0, "event": "patrol_started", "min_valid_m": 0.15, "obstacle_threshold_m": 0.25, "proximity_topics": ["/SensorNode/ibeacon", "/SensorNode/tof"], "return_pct": 50.0, "scan_step_deg": 45, "scan_steps": 8, "ts_utc": "2026-06-21T18:37:15.640816Z", "warning_threshold_m": 0.5}
+{"event": "sensor_wait_completed", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:15.857418Z"}
+{"battery_pct": null, "charging": null, "event": "initial_battery_status", "ts_utc": "2026-06-21T18:37:15.861981Z"}
+{"battery_pct": null, "cycle": 1, "event": "patrol_cycle_started", "on_charger": false, "ts_utc": "2026-06-21T18:37:15.868023Z"}
+{"battery_check_secs": 30.0, "depart_pct": 80.0, "event": "explore_started", "return_pct": 50.0, "ts_utc": "2026-06-21T18:37:15.873345Z"}
+{"direction_deg": 183, "event": "step_selected", "pose": {"has_data": true, "heading_deg": -0.47534409907732417, "ts": 1782067035.804088, "x_m": -0.0003122687339782715, "y_m": 0.030734997242689133}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:15.880615Z"}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:37:16.213409Z", "warning_dist_m": 0.324}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:16.524892Z"}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:16.829708Z"}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:37:17.141636Z", "warning_dist_m": 0.423}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:37:17.449539Z", "warning_dist_m": 0.315}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:17.748206Z"}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:37:18.038968Z", "warning_dist_m": 0.315}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:18.337482Z"}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.35100001096725464}, "ts_utc": "2026-06-21T18:37:18.648043Z", "warning_dist_m": 0.351}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:37:18.947876Z", "warning_dist_m": 0.468}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:19.246846Z"}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:19.568345Z"}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6209999918937683}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:19.865405Z"}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:20.166640Z"}
+{"direction_deg": 183, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "ts_utc": "2026-06-21T18:37:20.465712Z", "warning_dist_m": 0.387}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:20.764638Z"}
+{"burst_secs": 0.3, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:21.074172Z"}
+{"event": "scan_triggered", "heading_deg": 183, "obstacle_m": 0.243, "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.24300000071525574}, "ts_utc": "2026-06-21T18:37:21.119384Z"}
+{"best_clearance_m": 0.612, "best_cw_offset_deg": 270, "event": "direction_scan", "scan_results": [[0, 0.603], [45, 0.234], [90, 0.261], [135, 0.162], [180, 0.0], [225, 0.162], [270, 0.612], [315, 0.234]], "ts_utc": "2026-06-21T18:37:42.671626Z"}
+{"best_cw_offset_deg": 270, "event": "scan_bounce", "new_heading_deg": 93, "obstacle_m": 0.243, "old_heading_deg": 183, "ts_utc": "2026-06-21T18:37:45.269767Z"}
+{"direction_deg": 93, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 12.196218119539994, "ts": 1782067065.20253, "x_m": 7.168923275457928e-06, "y_m": -1.0347367606300395e-05}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:45.274331Z"}
+{"event": "charging_pile_sighted", "pose": {"has_data": true, "heading_deg": 12.196218119539994, "ts": 1782067065.20253, "x_m": 7.168923275457928e-06, "y_m": -1.0347367606300395e-05}, "sighting": {"name": "home", "ts": 1782067065.034607}, "ts_utc": "2026-06-21T18:37:45.278266Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:37:45.716034Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:37:45.726931Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:37:45.732517Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:37:46.019539Z", "warning_dist_m": 0.459}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 93, "ts_utc": "2026-06-21T18:37:46.027650Z", "waypoints_recorded": 4}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:37:46.318638Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:37:46.619480Z", "warning_dist_m": 0.45}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:46.920015Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:37:47.224885Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:37:47.527371Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:37:47.827575Z", "warning_dist_m": 0.477}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:48.126579Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:37:48.444563Z", "warning_dist_m": 0.495}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:37:48.739422Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:37:49.034830Z", "warning_dist_m": 0.495}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:37:49.337944Z", "warning_dist_m": 0.468}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:49.640859Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:49.939817Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:37:50.252444Z", "warning_dist_m": 0.432}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:50.555308Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:37:50.849760Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:37:51.150916Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:37:51.492210Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:37:51.874357Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:37:52.171580Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:37:52.472242Z", "warning_dist_m": 0.45}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:52.772205Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:37:53.083429Z", "warning_dist_m": 0.468}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:53.381004Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:37:53.684530Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:37:53.986857Z", "warning_dist_m": 0.495}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:37:54.291815Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:37:54.591587Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:37:54.898027Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:37:55.196308Z", "warning_dist_m": 0.477}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:55.495759Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:55.797579Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:56.100066Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:56.402825Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:56.712968Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:37:57.016369Z", "warning_dist_m": 0.495}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:57.319897Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:57.628546Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:37:57.926019Z", "warning_dist_m": 0.423}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:58.226452Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:58.529310Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.531000018119812}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:58.830710Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5400000214576721}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:59.130531Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:59.431951Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "sensor_active": true, "ts_utc": "2026-06-21T18:37:59.734470Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6480000019073486}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:00.034708Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6480000019073486}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:00.352355Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:00.660780Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:00.954005Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:38:01.020811Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:01.028910Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:01.033621Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:01.361278Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:01.655563Z", "warning_dist_m": 0.423}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:01.957298Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:02.257532Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.675000011920929}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:02.561669Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:02.862312Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:03.166000Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:03.467560Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:03.778769Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6570000052452087}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:04.083163Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6209999918937683}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:04.370910Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:04.674184Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:04.983844Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:05.281983Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4050000011920929}, "ts_utc": "2026-06-21T18:38:05.585039Z", "warning_dist_m": 0.405}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:05.888052Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5580000281333923}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:06.195050Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4050000011920929}, "ts_utc": "2026-06-21T18:38:06.501448Z", "warning_dist_m": 0.405}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:06.797519Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:07.100986Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:07.404781Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:07.712909Z", "warning_dist_m": 0.45}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:08.002990Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.531000018119812}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:08.303363Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:08.616925Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5400000214576721}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:08.911204Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:09.216195Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:09.526253Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:09.825626Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:10.131063Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:10.430938Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:10.732415Z", "warning_dist_m": 0.423}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:11.033950Z", "warning_dist_m": 0.441}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:11.334420Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:11.648876Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:11.953732Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:12.252613Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:12.544830Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:12.849725Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:38:13.149901Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:13.451468Z", "warning_dist_m": 0.423}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:38:13.752887Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:38:14.055337Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "ts_utc": "2026-06-21T18:38:14.356090Z", "warning_dist_m": 0.477}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:38:14.673333Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:14.972180Z", "warning_dist_m": 0.423}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:15.269802Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:15.569561Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:15.869454Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:16.182285Z", "warning_dist_m": 0.441}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 93, "ts_utc": "2026-06-21T18:38:16.186456Z", "waypoints_recorded": 13}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:38:16.236434Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:16.241059Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:16.244984Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:16.585531Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:16.887825Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:17.179527Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:17.490249Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:17.805842Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:18.105337Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:18.396293Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:18.697976Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:19.003845Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:19.303765Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:19.607711Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:19.906740Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:20.216807Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:20.519056Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:38:20.822996Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:21.127310Z", "warning_dist_m": 0.423}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:21.429283Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:21.730136Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:22.031261Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:22.329843Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:22.634195Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "ts_utc": "2026-06-21T18:38:22.932817Z", "warning_dist_m": 0.423}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:38:23.243741Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:23.566684Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:23.872454Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:38:24.152624Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:24.454538Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:24.757987Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:25.059788Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:25.360599Z", "warning_dist_m": 0.459}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "ts_utc": "2026-06-21T18:38:25.664248Z", "warning_dist_m": 0.45}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:25.964215Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:26.273749Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:26.570364Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:26.889996Z", "warning_dist_m": 0.441}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:27.174782Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "ts_utc": "2026-06-21T18:38:27.480661Z", "warning_dist_m": 0.468}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "ts_utc": "2026-06-21T18:38:27.771609Z", "warning_dist_m": 0.432}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "ts_utc": "2026-06-21T18:38:28.085275Z", "warning_dist_m": 0.441}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:38:28.375003Z", "warning_dist_m": 0.495}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "ts_utc": "2026-06-21T18:38:28.686422Z", "warning_dist_m": 0.459}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6299999952316284}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:28.984598Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "ts_utc": "2026-06-21T18:38:29.297070Z", "warning_dist_m": 0.342}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:38:29.596689Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.36000001430511475}, "ts_utc": "2026-06-21T18:38:29.891916Z", "warning_dist_m": 0.36}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:38:30.192802Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:38:30.496487Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:38:30.798224Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:38:31.098608Z", "warning_dist_m": 0.324}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:31.401962Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:38:31.521608Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:31.527870Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:31.533306Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:31.807622Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "ts_utc": "2026-06-21T18:38:32.111049Z", "warning_dist_m": 0.342}
+{"event": "scan_triggered", "heading_deg": 93, "obstacle_m": 0.171, "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "ts_utc": "2026-06-21T18:38:32.157839Z"}
+{"best_clearance_m": 0.441, "best_cw_offset_deg": 135, "event": "direction_scan", "scan_results": [[0, 0.252], [45, 0.18], [90, 0.18], [135, 0.441], [180, 0.207], [225, 0.198], [270, 0.252], [315, 0.189]], "ts_utc": "2026-06-21T18:38:53.898225Z"}
+{"best_cw_offset_deg": 135, "event": "scan_bounce", "new_heading_deg": 228, "obstacle_m": 0.171, "old_heading_deg": 93, "ts_utc": "2026-06-21T18:38:56.818582Z"}
+{"direction_deg": 228, "event": "step_selected", "pose": {"has_data": true, "heading_deg": -7.96473873955888, "ts": 1782067136.802652, "x_m": -1.0220991498499643e-05, "y_m": 2.223073533969e-05}, "sensor_active": true, "ts_utc": "2026-06-21T18:38:56.822569Z"}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 228, "ts_utc": "2026-06-21T18:38:57.127236Z", "waypoints_recorded": 15}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:38:57.181585Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:57.186161Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:38:57.189902Z"}
+{"event": "scan_triggered", "heading_deg": 228, "obstacle_m": 0.189, "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "ts_utc": "2026-06-21T18:38:57.228829Z"}
+{"best_clearance_m": 0.441, "best_cw_offset_deg": 225, "event": "direction_scan", "scan_results": [[0, 0.18], [45, 0.351], [90, 0.279], [135, 0.0], [180, 0.315], [225, 0.441], [270, 0.198], [315, 0.369]], "ts_utc": "2026-06-21T18:39:18.829327Z"}
+{"best_cw_offset_deg": 225, "event": "scan_bounce", "new_heading_deg": 93, "obstacle_m": 0.189, "old_heading_deg": 228, "ts_utc": "2026-06-21T18:39:21.624366Z"}
+{"direction_deg": 93, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 6.5223089831175525, "ts": 1782067161.603224, "x_m": -1.2065457667631563e-05, "y_m": 4.327465831011068e-06}, "sensor_active": true, "ts_utc": "2026-06-21T18:39:21.629718Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:39:22.054911Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:22.061562Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:22.065796Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:22.426816Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:22.726044Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:23.026921Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:23.327592Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:23.635457Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:23.925016Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:24.236246Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:24.538250Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:24.847343Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:25.143589Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:25.444667Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:25.743490Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:26.042644Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:26.344721Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:26.648620Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:26.948645Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:27.267688Z", "warning_dist_m": 0.27}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 93, "ts_utc": "2026-06-21T18:39:27.281262Z", "waypoints_recorded": 16}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:27.568642Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:27.876745Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:28.166292Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:28.470089Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:28.769535Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:29.071733Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:29.376820Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:29.678051Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:29.979992Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:30.300462Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:30.592004Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:30.884788Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:31.183677Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:31.489835Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:31.791339Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:32.096689Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:32.398402Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:32.703997Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:32.998376Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:33.308213Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:33.611333Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:33.912899Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:34.213272Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:34.513965Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:34.814376Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:35.115386Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:35.427231Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:35.719429Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:36.028637Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:36.333904Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "ts_utc": "2026-06-21T18:39:36.644582Z", "warning_dist_m": 0.279}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:36.934097Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:37.238272Z", "warning_dist_m": 0.27}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:39:37.306908Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:37.312802Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:37.321900Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "ts_utc": "2026-06-21T18:39:37.659387Z", "warning_dist_m": 0.27}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:37.960845Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:38.262444Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:38.566660Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:38.872963Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:39.176348Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:39.473782Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:39.774359Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:40.075293Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:40.377062Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:40.682547Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:40.982875Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:41.284173Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:41.608680Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:41.896343Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:42.205419Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:42.514747Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:42.804342Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:43.104815Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:43.408531Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:43.709281Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:44.011978Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:44.314906Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:44.628192Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:44.923293Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:45.217481Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:45.533023Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:45.824232Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:46.127641Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:46.429022Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:46.730967Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:47.033498Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:47.344709Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:47.644988Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:47.945782Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:48.249065Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:48.548831Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:48.860093Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:49.150373Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:49.451235Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:49.754446Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:50.059007Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:50.366072Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:50.672085Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:50.964198Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:51.266917Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "ts_utc": "2026-06-21T18:39:51.571091Z", "warning_dist_m": 0.288}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:51.872175Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:52.171073Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:52.485427Z", "warning_dist_m": 0.306}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:39:52.556385Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:52.563881Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:39:52.571644Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:52.884502Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:53.190368Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:53.504582Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:53.795997Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "ts_utc": "2026-06-21T18:39:54.097482Z", "warning_dist_m": 0.333}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:54.400201Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:54.705999Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:55.007480Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:55.307031Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:55.612173Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:55.916884Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:56.213415Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:39:56.514772Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:39:56.816427Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:57.116218Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:57.416659Z", "warning_dist_m": 0.315}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 93, "ts_utc": "2026-06-21T18:39:57.420887Z", "waypoints_recorded": 16}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:57.724589Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "ts_utc": "2026-06-21T18:39:58.026264Z", "warning_dist_m": 0.333}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:58.326888Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "ts_utc": "2026-06-21T18:39:58.635897Z", "warning_dist_m": 0.333}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:58.932676Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:59.245461Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:39:59.537079Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:39:59.839499Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:00.139536Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:00.443734Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:00.745052Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:40:01.045217Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "ts_utc": "2026-06-21T18:40:01.349819Z", "warning_dist_m": 0.333}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:01.658954Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "ts_utc": "2026-06-21T18:40:01.964778Z", "warning_dist_m": 0.297}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:40:02.269294Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:40:02.572865Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:02.865304Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:03.166021Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:03.472987Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:03.772896Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:04.073636Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:04.392950Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:04.692589Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:04.997055Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:40:05.291757Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:05.597662Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:05.899530Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:06.203210Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:06.504606Z", "warning_dist_m": 0.324}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:06.807288Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "ts_utc": "2026-06-21T18:40:07.108619Z", "warning_dist_m": 0.315}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "ts_utc": "2026-06-21T18:40:07.414180Z", "warning_dist_m": 0.306}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "ts_utc": "2026-06-21T18:40:07.718698Z", "warning_dist_m": 0.324}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:40:07.866432Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:40:07.873977Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:40:07.881093Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "ts_utc": "2026-06-21T18:40:08.217542Z", "warning_dist_m": 0.333}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.05400000140070915}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:08.518285Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:08.819090Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:09.127999Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": -Infinity}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:09.429197Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:09.729929Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:10.040011Z"}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:10.348405Z"}
+{"event": "stuck_detected", "heading_deg": 93, "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "tof_buf": [0.05400000140070915, 0.035999998450279236, 0.035999998450279236, 0.035999998450279236, 0.035999998450279236, 0.035999998450279236], "ts_utc": "2026-06-21T18:40:10.354297Z"}
+{"best_clearance_m": "Inf", "best_cw_offset_deg": 0, "event": "direction_scan", "scan_results": [[0, "Inf"], [45, 0.522], [90, 0.495], [135, 0.342], [180, 0.504], [225, 0.455], [270, 1.917], [315, 0.531]], "ts_utc": "2026-06-21T18:40:31.648772Z"}
+{"best_cw_offset_deg": 0, "event": "stuck_escape", "new_heading_deg": 93, "old_heading_deg": 93, "ts_utc": "2026-06-21T18:40:31.652435Z"}
+{"battery_pct": null, "charging": null, "event": "battery_check", "heading_deg": 93, "ts_utc": "2026-06-21T18:40:31.955833Z", "waypoints_recorded": 17}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T18:40:32.032740Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:40:32.037989Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T18:40:32.044521Z"}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "ts_utc": "2026-06-21T18:40:32.369883Z", "warning_dist_m": 0.486}
+{"direction_deg": 93, "event": "move_burst_crawl", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "ts_utc": "2026-06-21T18:40:32.666585Z", "warning_dist_m": 0.495}
+{"burst_secs": 0.3, "direction_deg": 93, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "sensor_active": true, "ts_utc": "2026-06-21T18:40:32.969529Z"}
+{"event": "signal_received", "signum": 2, "ts_utc": "2026-06-21T18:40:33.845834Z"}
