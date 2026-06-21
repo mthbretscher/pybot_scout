@@ -103,11 +103,11 @@ If it changes later, set:
 
 ## Optional terminal dashboard (TUI)
 
-Scripts can now render an optional Python-2-compatible curses dashboard. It is
-disabled by default, so normal robot runs and JSONL feedback logging are
-unchanged.
+Scripts render a Python-2-compatible curses dashboard by default. Set
+`PYBOT_SCOUT_TUI=0` to disable it (e.g. when running headless or piping
+output). JSONL feedback logging is unaffected either way.
 
-- `PYBOT_SCOUT_TUI=1` – enable the live dashboard
+- `PYBOT_SCOUT_TUI=0` – disable the live dashboard (default: enabled)
 - `PYBOT_SCOUT_TUI_HISTORY_SECS=45` – history window for sparkline panes
 - `PYBOT_SCOUT_TUI_REFRESH_SECS=0.5` – dashboard refresh period
 

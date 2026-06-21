@@ -62,7 +62,7 @@ class ScriptDashboard(object):
     def __init__(self, script_name, logger=None):
         self.script_name = script_name
         self.logger = logger
-        self.enabled = _env_truthy("PYBOT_SCOUT_TUI", "0")
+        self.enabled = _env_truthy("PYBOT_SCOUT_TUI", "1")
         self.history_secs = max(5.0, _env_float("PYBOT_SCOUT_TUI_HISTORY_SECS", 45.0))
         self.refresh_secs = max(0.1, _env_float("PYBOT_SCOUT_TUI_REFRESH_SECS", 0.5))
 
