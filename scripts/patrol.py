@@ -64,7 +64,7 @@ ALLOW_SENSORLESS     = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "
 # Explore (pong) parameters
 SPEED                = 0.3
 ROTATION_SPEED       = 90
-OBSTACLE_THRESHOLD_M = 0.40
+OBSTACLE_THRESHOLD_M = 0.25   # only bounce when within 25 cm; 0.25–0.40 m is ok to drive through
 MIN_VALID_M          = 0.15
 CHECK_INTERVAL_SECS  = 0.30
 PAUSE_SECS           = 0.30
@@ -73,8 +73,14 @@ BOUNCE_MAX_DEG       = 170
 SENSOR_TIMEOUT_SECS  = 5.0
 REDISCOVERY_SECS     = 15.0
 
+# Stuck detection: if tof readings stay within STUCK_EPSILON m for STUCK_BURST_COUNT
+# consecutive drive bursts while the motors are running, the robot is probably stuck
+# (wheels spinning against a wall).  React by stopping and rotating ~180°.
+STUCK_BURST_COUNT    = 5
+STUCK_EPSILON        = 0.010  # m
+
 # Charger exit / entry
-CHARGER_EXIT_SECS    = 1.5    # drive straight to clear the dock on departure
+CHARGER_EXIT_SECS    = 3.0    # drive straight to clear the dock on departure
 RETURN_TIMEOUT_SECS  = 300.0  # give up on return-home after this many seconds
 
 # Waypoint recording: only keep every Nth pose to avoid huge lists
@@ -128,12 +134,34 @@ def _wait_for_sensor_data(timeout_secs):
 
 
 def _nearest_obstacle(readings):
+    """Return closest valid obstacle distance (<OBSTACLE_THRESHOLD_M), or None if clear.
+
+    Readings below MIN_VALID_M (floor / dock surface reflections) are ignored.
+    """
     nearest = None
     for dist in readings.values():
         if MIN_VALID_M <= dist < OBSTACLE_THRESHOLD_M:
             if nearest is None or dist < nearest:
                 nearest = dist
     return nearest
+
+
+def _raw_tof(readings):
+    """Return the closest non-negative reading across all topics, or None."""
+    vals = [v for v in readings.values() if v >= 0.0]
+    return min(vals) if vals else None
+
+
+def _check_stuck(reading_buf):
+    """Return True when the last STUCK_BURST_COUNT valid tof readings span <= STUCK_EPSILON.
+
+    This detects wheels spinning in place against an obstacle while the motors
+    are running: the sensor distance stays constant even though we commanded motion.
+    """
+    if len(reading_buf) < STUCK_BURST_COUNT:
+        return False
+    tail = reading_buf[-STUCK_BURST_COUNT:]
+    return (max(tail) - min(tail)) <= STUCK_EPSILON
 
 
 # ── battery helpers ────────────────────────────────────────────────────────────
@@ -206,6 +234,7 @@ def _explore(subscribed, sensor_active):
     heading           = random.randint(0, 359)
     waypoints         = []
     burst_count       = 0
+    tof_buf           = []   # rolling raw tof readings during drive bursts (stuck detection)
     next_battery_check= time.time() + BATTERY_CHECK_SECS
     next_rediscovery  = time.time() + REDISCOVERY_SECS
 
@@ -251,6 +280,7 @@ def _explore(subscribed, sensor_active):
         if obstacle_dist is not None:
             # ── bounce ────────────────────────────────────────────────────────
             pybot_scout.stop_move()
+            tof_buf.clear()   # reset stuck buffer after any direction change
             deviation  = random.randint(BOUNCE_MIN_DEG, BOUNCE_MAX_DEG)
             rotate_dir = random.choice([1, 2])
             new_heading = (heading + (deviation if rotate_dir == 1 else -deviation)) % 360
@@ -291,6 +321,29 @@ def _explore(subscribed, sensor_active):
                    burst_secs=CHECK_INTERVAL_SECS,
                    sensor_active=sensor_active,
                    readings=readings)
+
+        # Update stuck-detection buffer with the raw tof value seen this burst
+        raw = _raw_tof(readings)
+        if raw is not None:
+            tof_buf.append(raw)
+            if len(tof_buf) > STUCK_BURST_COUNT + 2:
+                tof_buf.pop(0)
+
+        # ── stuck detection ────────────────────────────────────────────────
+        if sensor_active and _check_stuck(tof_buf):
+            print("Stuck detected (tof flat for %d bursts) – rotating to escape." %
+                  STUCK_BURST_COUNT)
+            LOGGER.log("stuck_detected",
+                       readings=readings,
+                       tof_buf=list(tof_buf),
+                       heading_deg=heading)
+            pybot_scout.stop_move()
+            tof_buf.clear()
+            rotate_dir = random.choice([1, 2])
+            escape_deg = random.randint(150, 210)   # roughly 180°
+            pybot_scout.set_rotate_3(rotate_dir, escape_deg)
+            heading = (heading + (escape_deg if rotate_dir == 1 else -escape_deg)) % 360
+            time.sleep(PAUSE_SECS)
 
         # Record a waypoint every WAYPOINT_STRIDE bursts
         if burst_count % WAYPOINT_STRIDE == 0:

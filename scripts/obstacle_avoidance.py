@@ -43,15 +43,20 @@ from pybot_scout.scout import pybot_scout
 # ── tunable constants ──────────────────────────────────────────────────────────
 SPEED                = 0.3     # m/s forward speed
 ROTATION_SPEED       = 90      # deg/s rotation speed
-OBSTACLE_THRESHOLD_M = 0.40    # react when an obstacle is within this distance
+OBSTACLE_THRESHOLD_M = 0.25    # only bounce when within 25 cm; 0.25–0.40 m is ok to drive through
 MIN_VALID_M          = 0.15    # ignore readings below this (floor / charger noise)
 CHECK_INTERVAL_SECS  = 0.30    # drive-burst length; sensor is checked between bursts
 PAUSE_SECS           = 0.30    # brief stop between a bounce and the next move
 BOUNCE_MIN_DEG       = 110     # minimum rotation on a bounce
 BOUNCE_MAX_DEG       = 170     # maximum rotation on a bounce
 SENSOR_TIMEOUT_SECS  = 5.0     # wait this long for the first valid sensor reading
-CHARGER_EXIT_SECS    = 1.5     # drive straight for this long to clear the dock
+CHARGER_EXIT_SECS    = 3.0     # drive straight for this long to clear the dock
 REDISCOVERY_SECS     = 15.0    # re-scan for proximity topics this often
+
+# Stuck detection: if tof readings stay within STUCK_EPSILON m for STUCK_BURST_COUNT
+# consecutive drive bursts the robot is probably stuck (wheels spinning against a wall).
+STUCK_BURST_COUNT    = 5
+STUCK_EPSILON        = 0.010   # m
 
 ALLOW_SENSORLESS = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
@@ -100,7 +105,8 @@ def _nearest_obstacle(readings):
     """Return the closest valid obstacle distance, or None if path is clear.
 
     Readings below MIN_VALID_M (floor / dock surface noise) are ignored.
-    Infinity and -1.0 (no data) are treated as clear.
+    Only distances within [MIN_VALID_M, OBSTACLE_THRESHOLD_M) are treated as
+    obstacles; space between OBSTACLE_THRESHOLD_M and infinity is clear to drive.
     """
     nearest = None
     for dist in readings.values():
@@ -108,6 +114,24 @@ def _nearest_obstacle(readings):
             if nearest is None or dist < nearest:
                 nearest = dist
     return nearest
+
+
+def _raw_tof(readings):
+    """Return the closest non-negative reading across all topics, or None."""
+    vals = [v for v in readings.values() if v >= 0.0]
+    return min(vals) if vals else None
+
+
+def _check_stuck(reading_buf):
+    """Return True when the last STUCK_BURST_COUNT entries span <= STUCK_EPSILON.
+
+    Wheels spinning against a wall produce a constant tof reading even though
+    motors are commanded to move.
+    """
+    if len(reading_buf) < STUCK_BURST_COUNT:
+        return False
+    tail = reading_buf[-STUCK_BURST_COUNT:]
+    return (max(tail) - min(tail)) <= STUCK_EPSILON
 
 
 # ── charger exit ───────────────────────────────────────────────────────────────
@@ -190,6 +214,7 @@ def start():
     print("Pong explorer started.  Initial heading: %d°.  Press Ctrl-C to stop." % heading)
 
     next_rediscovery = time.time() + REDISCOVERY_SECS
+    tof_buf = []   # rolling raw tof readings for stuck detection
 
     while True:
         # ── periodic topic rediscovery (helps if sensors come online late) ────
@@ -210,6 +235,7 @@ def start():
         if obstacle_dist is not None:
             # ── bounce ────────────────────────────────────────────────────────
             pybot_scout.stop_move()
+            tof_buf.clear()   # reset stuck buffer after any direction change
             deviation = random.randint(BOUNCE_MIN_DEG, BOUNCE_MAX_DEG)
             rotate_dir = random.choice([1, 2])   # 1 = CCW/left, 2 = CW/right
             new_heading = (heading + (deviation if rotate_dir == 1 else -deviation)) % 360
@@ -253,6 +279,29 @@ def start():
             sensor_active=sensor_active,
             readings=readings,
         )
+
+        # Update stuck-detection buffer
+        raw = _raw_tof(readings)
+        if raw is not None:
+            tof_buf.append(raw)
+            if len(tof_buf) > STUCK_BURST_COUNT + 2:
+                tof_buf.pop(0)
+
+        # ── stuck detection ───────────────────────────────────────────────────
+        if sensor_active and _check_stuck(tof_buf):
+            print("Stuck detected (tof flat for %d bursts) – rotating to escape." %
+                  STUCK_BURST_COUNT)
+            LOGGER.log("stuck_detected",
+                       readings=readings,
+                       tof_buf=list(tof_buf),
+                       heading_deg=heading)
+            pybot_scout.stop_move()
+            tof_buf.clear()
+            rotate_dir = random.choice([1, 2])
+            escape_deg = random.randint(150, 210)   # roughly 180°
+            pybot_scout.set_rotate_3(rotate_dir, escape_deg)
+            heading = (heading + (escape_deg if rotate_dir == 1 else -escape_deg)) % 360
+            time.sleep(PAUSE_SECS)
 
 
 # ── entry point ────────────────────────────────────────────────────────────────
