@@ -53,6 +53,7 @@ from pybot_scout.charging_pile  import ChargingPileDetector, ChargingStatusDetec
 from pybot_scout.feedback       import FeedbackLogger
 from pybot_scout.odometry       import OdometryTracker
 from pybot_scout.proximity      import discover_proximity_topics
+from pybot_scout import scanner as _scanner
 from pybot_scout.scout          import pybot_scout
 
 # ── tunable constants ──────────────────────────────────────────────────────────
@@ -63,19 +64,19 @@ ALLOW_SENSORLESS     = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "
 
 # Explore (pong) parameters
 SPEED                = 0.3
+CRAWL_SPEED          = 0.1     # m/s when obstacle is in warning zone
 ROTATION_SPEED       = 90
-OBSTACLE_THRESHOLD_M = 0.25   # only bounce when within 25 cm; 0.25–0.40 m is ok to drive through
+OBSTACLE_THRESHOLD_M = 0.25   # stop and scan when obstacle within this distance
+WARNING_THRESHOLD_M  = 0.50   # slow to CRAWL_SPEED when obstacle within this distance
 MIN_VALID_M          = 0.15
 CHECK_INTERVAL_SECS  = 0.30
 PAUSE_SECS           = 0.30
-BOUNCE_MIN_DEG       = 110
-BOUNCE_MAX_DEG       = 170
 SENSOR_TIMEOUT_SECS  = 5.0
 REDISCOVERY_SECS     = 15.0
 
 # Stuck detection: if tof readings stay within STUCK_EPSILON m for STUCK_BURST_COUNT
-# consecutive drive bursts while the motors are running, the robot is probably stuck
-# (wheels spinning against a wall).  React by stopping and rotating ~180°.
+# consecutive normal-speed drive bursts while the motors are running, the robot is
+# probably stuck (wheels spinning against a wall).  React by scanning for a way out.
 STUCK_BURST_COUNT    = 5
 STUCK_EPSILON        = 0.010  # m
 
@@ -141,6 +142,19 @@ def _nearest_obstacle(readings):
     nearest = None
     for dist in readings.values():
         if MIN_VALID_M <= dist < OBSTACLE_THRESHOLD_M:
+            if nearest is None or dist < nearest:
+                nearest = dist
+    return nearest
+
+
+def _nearest_valid(readings):
+    """Return the closest non-noise, finite reading across all topics, or None.
+
+    Used to detect the warning zone (OBSTACLE_THRESHOLD_M .. WARNING_THRESHOLD_M).
+    """
+    nearest = None
+    for dist in readings.values():
+        if dist >= MIN_VALID_M and not math.isinf(dist):
             if nearest is None or dist < nearest:
                 nearest = dist
     return nearest
@@ -276,27 +290,29 @@ def _explore(subscribed, sensor_active):
 
         readings      = pybot_scout.get_proximity_readings() if sensor_active else {}
         obstacle_dist = _nearest_obstacle(readings) if sensor_active else None
+        warning_dist  = _nearest_valid(readings)    if sensor_active else None
 
         if obstacle_dist is not None:
-            # ── bounce ────────────────────────────────────────────────────────
+            # ── danger zone: stop, scan, turn to clearest heading ─────────────
             pybot_scout.stop_move()
-            del tof_buf[:]   # reset stuck buffer after any direction change
-            deviation  = random.randint(BOUNCE_MIN_DEG, BOUNCE_MAX_DEG)
-            rotate_dir = random.choice([1, 2])
-            new_heading = (heading + (deviation if rotate_dir == 1 else -deviation)) % 360
-
-            print("Bounce!  %d° → %d°  (obstacle %.2f m)" % (
-                heading, new_heading, obstacle_dist))
-            LOGGER.log("pong_bounce",
-                       old_heading_deg=heading,
-                       new_heading_deg=new_heading,
-                       deviation_deg=deviation,
-                       rotate_dir=rotate_dir,
+            del tof_buf[:]
+            print("Obstacle at %.2f m – scanning for clearest direction…" % obstacle_dist)
+            LOGGER.log("scan_triggered",
                        obstacle_m=round(obstacle_dist, 3),
+                       heading_deg=heading,
                        readings=readings)
 
-            pybot_scout.set_rotate_3(rotate_dir, deviation)
-            heading = new_heading
+            best_cw, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
+            old_heading = heading
+            heading = (heading + best_cw) % 360
+
+            print("Scan: %d° → %d°  (best clearance at CW+%d°)" % (
+                old_heading, heading, best_cw))
+            LOGGER.log("scan_bounce",
+                       old_heading_deg=old_heading,
+                       new_heading_deg=heading,
+                       best_cw_offset_deg=best_cw,
+                       obstacle_m=round(obstacle_dist, 3))
 
             # Record new heading as a breadcrumb waypoint
             pose = dict(ODOM.get_pose())
@@ -313,7 +329,19 @@ def _explore(subscribed, sensor_active):
             time.sleep(PAUSE_SECS)
             continue
 
-        # ── drive one burst ────────────────────────────────────────────────
+        if warning_dist is not None and warning_dist < WARNING_THRESHOLD_M:
+            # ── warning zone: slow approach (smooth deceleration) ─────────────
+            del tof_buf[:]   # don't mix crawl bursts into stuck-detection buffer
+            pybot_scout.set_translationSpeed(CRAWL_SPEED)
+            pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
+            pybot_scout.set_translationSpeed(SPEED)
+            LOGGER.log("move_burst_crawl",
+                       direction_deg=heading,
+                       warning_dist_m=round(warning_dist, 3),
+                       readings=readings)
+            continue
+
+        # ── clear path: normal drive burst ────────────────────────────────────
         pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
         burst_count += 1
         LOGGER.log("move_burst",
@@ -331,18 +359,20 @@ def _explore(subscribed, sensor_active):
 
         # ── stuck detection ────────────────────────────────────────────────
         if sensor_active and _check_stuck(tof_buf):
-            print("Stuck detected (tof flat for %d bursts) – rotating to escape." %
-                  STUCK_BURST_COUNT)
+            print("Stuck detected – scanning for escape direction.")
             LOGGER.log("stuck_detected",
                        readings=readings,
                        tof_buf=list(tof_buf),
                        heading_deg=heading)
             pybot_scout.stop_move()
             del tof_buf[:]
-            rotate_dir = random.choice([1, 2])
-            escape_deg = random.randint(150, 210)   # roughly 180°
-            pybot_scout.set_rotate_3(rotate_dir, escape_deg)
-            heading = (heading + (escape_deg if rotate_dir == 1 else -escape_deg)) % 360
+            best_cw, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
+            old_heading = heading
+            heading = (heading + best_cw) % 360
+            LOGGER.log("stuck_escape",
+                       old_heading_deg=old_heading,
+                       new_heading_deg=heading,
+                       best_cw_offset_deg=best_cw)
             time.sleep(PAUSE_SECS)
 
         # Record a waypoint every WAYPOINT_STRIDE bursts
@@ -507,14 +537,20 @@ def _visual_scan_for_charger(timeout_secs):
 
         readings      = pybot_scout.get_proximity_readings() if sensor_ok else {}
         obstacle_dist = _nearest_obstacle(readings) if sensor_ok else None
+        warning_dist  = _nearest_valid(readings)    if sensor_ok else None
 
         if obstacle_dist is not None:
+            LOGGER.log("visual_scan_obstacle", obstacle_m=round(obstacle_dist, 3))
             pybot_scout.stop_move()
-            deviation  = random.randint(BOUNCE_MIN_DEG, BOUNCE_MAX_DEG)
-            rotate_dir = random.choice([1, 2])
-            heading    = (heading + (deviation if rotate_dir == 1 else -deviation)) % 360
-            pybot_scout.set_rotate_3(rotate_dir, deviation)
+            best_cw, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
+            heading = (heading + best_cw) % 360
             time.sleep(PAUSE_SECS)
+            continue
+
+        if warning_dist is not None and warning_dist < WARNING_THRESHOLD_M:
+            pybot_scout.set_translationSpeed(CRAWL_SPEED)
+            pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
+            pybot_scout.set_translationSpeed(SPEED)
             continue
 
         pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
@@ -573,8 +609,12 @@ def run_patrol():
         return_pct=RETURN_PCT,
         battery_check_secs=BATTERY_CHECK_SECS,
         obstacle_threshold_m=OBSTACLE_THRESHOLD_M,
+        warning_threshold_m=WARNING_THRESHOLD_M,
         min_valid_m=MIN_VALID_M,
+        crawl_speed=CRAWL_SPEED,
         allow_sensorless=ALLOW_SENSORLESS,
+        scan_steps=_scanner.N_STEPS,
+        scan_step_deg=_scanner.STEP_DEG,
         proximity_topics=sorted(subscribed),
     )
 
