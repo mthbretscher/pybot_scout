@@ -1,0 +1,14 @@
+{"event": "logger_started", "file": "/home/linaro/programming_workspace/pybot_scout/run_feedback/20260621_065229_obstacle_avoidance.jsonl", "git_branch": "copilot/moorebot-scout-random-drive", "git_commit": "f6b67e8e6500f76f4612047683c33fa4f111e64e", "git_dirty": true, "script": "obstacle_avoidance", "ts_utc": "2026-06-21T06:52:29.511890Z"}
+{"event": "topic_discovery_total", "total": 52, "ts_utc": "2026-06-21T06:52:32.070278Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T06:52:32.086663Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T06:52:32.092730Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/tof", "ts_utc": "2026-06-21T06:52:32.704731Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/ibeacon", "ts_utc": "2026-06-21T06:52:32.761368Z"}
+{"allow_sensorless": false, "bounce_max_deg": 170, "bounce_min_deg": 110, "charger_exit_secs": 3.0, "check_interval_secs": 0.3, "event": "run_started", "min_valid_m": 0.15, "obstacle_threshold_m": 0.25, "proximity_topics": ["/SensorNode/ibeacon", "/SensorNode/tof"], "rotation_speed": 90, "sensor_timeout_secs": 5.0, "speed": 0.3, "ts_utc": "2026-06-21T06:52:32.765423Z"}
+{"event": "sensor_wait_completed", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "sensor_active": true, "ts_utc": "2026-06-21T06:52:32.972523Z"}
+{"charging": false, "event": "charger_status_check", "ts_utc": "2026-06-21T06:52:32.977429Z"}
+{"burst_secs": 0.3, "direction_deg": 304, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "sensor_active": true, "ts_utc": "2026-06-21T06:52:33.254881Z"}
+{"error": "'list' object has no attribute 'clear'", "error_type": "AttributeError", "event": "run_exception", "ts_utc": "2026-06-21T06:52:33.296023Z"}
+{"avg_speed_mps": 0.0205, "breadcrumb_count": 2, "elapsed_secs": 1.6, "event": "run_summary", "total_distance_m": 0.032, "ts_utc": "2026-06-21T06:52:33.367179Z"}
+{"event": "run_stopped", "ts_utc": "2026-06-21T06:52:33.571791Z"}
+{"event": "logger_stopped", "ts_utc": "2026-06-21T06:52:33.576795Z"}
