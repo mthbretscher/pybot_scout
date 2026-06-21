@@ -3,9 +3,9 @@
 Return the robot to its starting position by replaying a logged exploration
 path in reverse.
 
-The script loads a run_feedback JSONL file produced by random_walk.py or
+The script loads a run_feedback JSONL file produced by
 obstacle_avoidance.py (auto-detects the most recent file if no path is given),
-extracts the pose snapshots embedded in move_step / step_selected events, and
+extracts the pose snapshots embedded in step_selected events, and
 drives the robot backward along those waypoints using live odometry to measure
 progress.
 
@@ -55,7 +55,7 @@ MIN_SEGMENT_M = 0.05
 # Pause after each segment
 PAUSE_SECS = 0.3
 
-LOGGER = FeedbackLogger("return_home")
+LOGGER = FeedbackLogger("return_home", output_dir=os.path.join(REPO_ROOT, "run_feedback"))
 ODOM_TRACKER = OdometryTracker()
 PILE_DETECTOR = ChargingPileDetector()
 
@@ -86,7 +86,7 @@ def _find_latest_feedback_file():
 def _load_pose_waypoints(jsonl_path):
     """Parse a JSONL log file and return an ordered list of pose dicts.
 
-    Extracts every move_step (random_walk) or step_selected (obstacle_avoidance)
+    Extracts every step_selected (obstacle_avoidance)
     event that carries a 'pose' field.  Returns poses in chronological order
     so that reversing the list gives the return path.
     """
@@ -275,7 +275,7 @@ if __name__ == "__main__":
         jsonl_path = _find_latest_feedback_file()
         if jsonl_path is None:
             print("No run_feedback/*.jsonl file found. "
-                  "Run random_walk.py or obstacle_avoidance.py first.")
+                  "Run obstacle_avoidance.py first.")
             sys.exit(1)
         print("Using most recent feedback file: %s" % jsonl_path)
 
@@ -287,7 +287,7 @@ if __name__ == "__main__":
     if not waypoints:
         print("No pose waypoints found in %s.\n"
               "The log was probably created before odometry tracking was added.\n"
-              "Run random_walk.py or obstacle_avoidance.py once more to generate "
+              "Run obstacle_avoidance.py once more to generate "
               "a log with embedded poses." % jsonl_path)
         sys.exit(1)
 

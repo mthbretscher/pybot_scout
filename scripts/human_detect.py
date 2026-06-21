@@ -35,7 +35,7 @@ POLL_INTERVAL_SECS = 0.1
 SOUND_ID = int(os.environ.get("PYBOT_SCOUT_HUMAN_SOUND_ID", "1"))
 COOLDOWN_SECS = float(os.environ.get("PYBOT_SCOUT_HUMAN_COOLDOWN", "3.0"))
 
-LOGGER = FeedbackLogger("human_detect")
+LOGGER = FeedbackLogger("human_detect", output_dir=os.path.join(REPO_ROOT, "run_feedback"))
 
 
 def _signal_handler(signum, frame):

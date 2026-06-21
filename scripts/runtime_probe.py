@@ -19,7 +19,7 @@ from pybot_scout.scout import pybot_scout
 PROBE_DURATION_SECS = 60
 SAMPLE_INTERVAL_SECS = 1.0
 
-LOGGER = FeedbackLogger("runtime_probe")
+LOGGER = FeedbackLogger("runtime_probe", output_dir=os.path.join(REPO_ROOT, "run_feedback"))
 
 
 def _signal_handler(signum, frame):

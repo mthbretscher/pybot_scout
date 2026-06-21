@@ -81,3 +81,76 @@ class ChargingPileDetector(object):
         """Return the last sighting as a dict, or None if never detected."""
         with self._lock:
             return dict(self._last_seen_data) if self._last_seen_data else None
+
+
+BATTERY_STATUS_TOPIC = "/SensorNode/simple_battery_status"
+
+
+class ChargingStatusDetector(object):
+    """Detect whether the robot is currently sitting on its charging station.
+
+    Subscribes to /SensorNode/simple_battery_status (roller_eye/status) and
+    inspects the message to determine charging state.  Thread-safe.
+
+    Usage::
+
+        detector = ChargingStatusDetector()
+        detector.start()
+        if detector.wait_for_status(timeout_secs=3.0):
+            print("on charger!")
+        detector.stop()
+    """
+
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._charging = None   # None = no data, True/False once a message arrives
+        self._msg_ts = None
+        self._sub = None
+
+    def start(self):
+        """Subscribe to the battery status topic."""
+        try:
+            import rospy
+            ros_pkg = os.environ.get("PYBOT_SCOUT_ROS_PACKAGE", "roller_eye")
+            _ros_msg = __import__(ros_pkg + ".msg", fromlist=["*"])
+            status_cls = getattr(_ros_msg, "status")
+
+            def _cb(msg):
+                # roller_eye/status may carry state in a 'name' string field or a
+                # numeric 'status' field – try both, accepting any that is present.
+                raw = ""
+                for attr in ("name", "state", "data"):
+                    val = getattr(msg, attr, None)
+                    if val is not None:
+                        raw = str(val)
+                        break
+                charging = "charg" in raw.lower()
+                with self._lock:
+                    self._charging = charging
+                    self._msg_ts = time.time()
+
+            self._sub = rospy.Subscriber(BATTERY_STATUS_TOPIC, status_cls, _cb)
+        except Exception:
+            pass
+
+    def stop(self):
+        """Unsubscribe from the battery status topic."""
+        if self._sub is not None:
+            try:
+                self._sub.unregister()
+            except Exception:
+                pass
+            self._sub = None
+
+    def wait_for_status(self, timeout_secs=3.0):
+        """Block up to *timeout_secs* for a battery message; return True if charging.
+
+        Returns None if no message was received within the timeout.
+        """
+        deadline = time.time() + timeout_secs
+        while time.time() < deadline:
+            with self._lock:
+                if self._msg_ts is not None:
+                    return self._charging
+            time.sleep(0.1)
+        return None
