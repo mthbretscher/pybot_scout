@@ -56,6 +56,20 @@ ros_inventory_topics   – list of {topic, topic_type} objects
 ros_inventory_services – list of all service names
 ```
 
+`runtime_probe.py` now runs until you stop it with **Ctrl-C** by default.  To
+force a fixed run length instead, set:
+
+- `PYBOT_SCOUT_PROBE_DURATION_SECS=60`
+
+While running, the probe logs both:
+
+- proximity samples from `/SensorNode/tof` and other discovered range topics
+- grayscale camera brightness summaries from `/CoreNode/grey_img`
+
+At shutdown it emits a `probe_correlation` event with Pearson correlation
+statistics between valid ToF distances and camera brightness metrics
+(overall / left / center / right frame thirds).
+
 ## Obstacle avoidance
 
 The obstacle avoidance script:
