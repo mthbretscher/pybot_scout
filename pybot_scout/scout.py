@@ -566,30 +566,23 @@ class PyBotScout:
   param isFinis_finishedished boolean
   '''
   def play_sound(self, effect_id, is_finished):
-    if effect_id == 1:
-      sound_path = SCOUT_SOUND_DIR + "sc_sound_001.wav"
-    elif effect_id == 2:
-      sound_path = SCOUT_SOUND_DIR + "sc_sound_002.wav"
-    elif effect_id == 3:
-      sound_path = SCOUT_SOUND_DIR + "sc_sound_003.wav"
-    else:
-      print('unknown sound id:%d', effect_id)
+    try:
+      refined_effect_id = int(effect_id)
+    except Exception:
+      print("unknown sound id: %s" % str(effect_id))
       return False
 
-    if not os.path.isfile(sound_path):
-      print("sound file not found: %s" % sound_path)
+    if refined_effect_id <= 0:
+      print("invalid sound id: %d" % refined_effect_id)
       return False
-
-    cmd = ["aplay", sound_path]
-    print("run: %s" % " ".join(cmd))
 
     try:
+      ok = self._ros_bridge.publish_speaker_cmd(refined_effect_id)
       if is_finished:
-        return subprocess.call(cmd) == 0
-      subprocess.Popen(cmd)
-      return True
+        time.sleep(0.8)
+      return bool(ok)
     except Exception as exc:
-      print("play_sound failed: %s" % exc)
+      print("play_sound failed: %s" % str(exc))
       return False
  
   '''

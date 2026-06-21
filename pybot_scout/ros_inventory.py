@@ -58,6 +58,14 @@ def log_ros_inventory(logger=None):
 
         type_map = {topic: topic_type for topic, topic_type in published}
 
+        pub_counts = {}
+        for topic, nodes in publishers:
+            pub_counts[topic] = len(nodes or [])
+
+        sub_counts = {}
+        for topic, nodes in subscribers:
+            sub_counts[topic] = len(nodes or [])
+
         # Union of all topics seen in publishers/subscribers
         topic_set = set()
         for topic, _nodes in publishers + subscribers:
@@ -68,6 +76,10 @@ def log_ros_inventory(logger=None):
             topics_with_types.append({
                 "topic": topic,
                 "topic_type": type_map.get(topic, "unknown"),
+                "publisher_count": int(pub_counts.get(topic, 0)),
+                "subscriber_count": int(sub_counts.get(topic, 0)),
+                "has_publishers": bool(pub_counts.get(topic, 0) > 0),
+                "has_subscribers": bool(sub_counts.get(topic, 0) > 0),
             })
         inventory["topics"] = topics_with_types
 

@@ -15,7 +15,7 @@ Environment:
                                     default: 1)
     PYBOT_SCOUT_HUMAN_COOLDOWN   – seconds to wait after a detection before
                                     triggering again (default: 3.0)
-    PYBOT_SCOUT_HUMAN_SOUND_BLOCKING – "1" waits for aplay exit code (default: 1)
+    PYBOT_SCOUT_HUMAN_SOUND_BLOCKING – "1" waits briefly after speaker command publish (default: 1)
     PYBOT_SCOUT_HUMAN_SOUND_VOLUME   – optional 0..100 startup volume override
 """
 
@@ -61,7 +61,8 @@ def _signal_handler(signum, frame):
 
 def start():
     DASHBOARD.start()
-    log_ros_inventory(LOGGER)
+    inventory = log_ros_inventory(LOGGER)
+    DASHBOARD.update_ros_topics(inventory.get("topics", []))
 
     LOGGER.log(
         "human_detect_started",

@@ -41,8 +41,9 @@ variables:
 - `PYBOT_SCOUT_HUMAN_SOUND_ID` – sound effect to play (1, 2 or 3; default: 1)
 - `PYBOT_SCOUT_HUMAN_COOLDOWN` – seconds between triggers (default: 3.0)
 
-If audio playback fails (missing wave file or `aplay` execution error), the
-script logs `sound_failed` events in `run_feedback/*.jsonl`.
+Audio playback now uses ROS speaker commands (`/speaker_cmd`) instead of local
+`aplay` WAV playback. If speaker command publishing fails, the script logs
+`sound_failed` events in `run_feedback/*.jsonl`.
 
 ## ROS inventory
 
@@ -81,14 +82,13 @@ forward fallback metric).
 
 The obstacle avoidance script:
 
-- auto-discovers published `sensor_msgs/Range` topics
-- includes `/SensorNode/tof` and `/SensorNode/ibeacon` in default candidates
-- keeps the old default topic list as a fallback
-- re-checks for sensors while running if no data was available at startup
-- moves in short bursts so it can stop and rotate away sooner
+- steers from camera lower-band brightness (`lower_left/center/right_mean_brightness`)
+- uses lower-center brightness as forward-confidence for speed control
+- keeps `/SensorNode/tof` and `/SensorNode/ibeacon` subscribed/logged as debug telemetry
+- re-checks for proximity topics while running for diagnostics
 
-By default, if no valid proximity data is available, movement is paused until
-sensor data appears. To force the old sensor-less fallback behavior, set:
+By default, if no camera brightness data is available, movement is paused until
+camera data appears. To force fallback movement, set:
 
 - `PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK=1`
 
@@ -114,7 +114,8 @@ output). JSONL feedback logging is unaffected either way.
 The dashboard shows:
 
 - a live values table (discovered proximity topics + script state variables)
-- compact ASCII sparklines for recent numeric history
+- a fixed-height history mini-plot with a moving trace/dot
+- a separate ROS topics pane listing topic name, type, and publisher/subscriber counts
 
 Each script can contribute its own state variables (for example heading, mode,
 battery, obstacle distance, or phase-specific counters) while sharing the same

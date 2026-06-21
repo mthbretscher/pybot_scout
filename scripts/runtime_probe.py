@@ -112,7 +112,8 @@ def start():
     duration_secs = _get_probe_duration_secs()
     DASHBOARD.start()
     CAMERA.start(logger=LOGGER)
-    log_ros_inventory(LOGGER)
+    inventory = log_ros_inventory(LOGGER)
+    DASHBOARD.update_ros_topics(inventory.get("topics", []))
     topics = discover_proximity_topics(LOGGER)
     LOGGER.log(
         "probe_started",

@@ -4,7 +4,7 @@ Long-running autonomous patrol script.
 
 Implements a continuous charge cycle:
   1. If docked: wait until battery >= DEPART_PCT (default 80 %)
-  2. Drive off the charger and explore using pong-ball obstacle avoidance
+  2. Drive off the charger and explore using camera-brightness steering
   3. Monitor battery every BATTERY_CHECK_SECS while exploring
   4. When battery drops below RETURN_PCT (default 50 %): stop exploring,
      navigate back to the charging station, and dock
@@ -15,7 +15,7 @@ Return-home strategy (tried in order):
      and wait for /CoreNode/going_home_status to confirm completion.
   b. Replay the odometry breadcrumbs recorded during exploration in reverse
      (same approach as return_home.py).
-  c. Visual scan: keep driving around until the charging pile is detected,
+  c. Visual scan: keep driving around using camera steering until the charging pile is detected,
      then stop to allow the robot's own docking to take over.
 
 All transitions and key events are written to run_feedback/ as JSONL so that
@@ -38,7 +38,6 @@ Environment:
 
 import math
 import os
-import random
 import signal
 import sys
 import time
@@ -49,12 +48,13 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from pybot_scout.battery        import BatteryMonitor
+from pybot_scout.camera         import GreyImageMonitor
 from pybot_scout.charging_pile  import ChargingPileDetector, ChargingStatusDetector
 from pybot_scout.feedback       import FeedbackLogger
 from pybot_scout.odometry       import OdometryTracker
 from pybot_scout.proximity      import discover_proximity_topics
 from pybot_scout.dashboard      import ScriptDashboard
-from pybot_scout import scanner as _scanner
+from pybot_scout.ros_inventory  import log_ros_inventory
 from pybot_scout.scout          import pybot_scout
 
 # ── tunable constants ──────────────────────────────────────────────────────────
@@ -63,23 +63,18 @@ RETURN_PCT           = float(os.environ.get("PYBOT_SCOUT_RETURN_PCT",          "
 BATTERY_CHECK_SECS   = float(os.environ.get("PYBOT_SCOUT_BATTERY_CHECK_SECS",  "30"))
 ALLOW_SENSORLESS     = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
-# Explore (pong) parameters
+# Explore (camera steering) parameters
 SPEED                = 0.3
 CRAWL_SPEED          = 0.1     # m/s when obstacle is in warning zone
 ROTATION_SPEED       = 90
-OBSTACLE_THRESHOLD_M = 0.25   # stop and scan when obstacle within this distance
-WARNING_THRESHOLD_M  = 0.50   # slow to CRAWL_SPEED when obstacle within this distance
-MIN_VALID_M          = 0.15
+MAX_STEER_DEG        = 45.0
+STEER_GAIN           = 28.0
+DARK_SLOW_BRIGHTNESS = 60.0
+DARK_PIVOT_BRIGHTNESS = 40.0
 CHECK_INTERVAL_SECS  = 0.30
 PAUSE_SECS           = 0.30
-SENSOR_TIMEOUT_SECS  = 5.0
+CAMERA_TIMEOUT_SECS  = 5.0
 REDISCOVERY_SECS     = 15.0
-
-# Stuck detection: if tof readings stay within STUCK_EPSILON m for STUCK_BURST_COUNT
-# consecutive normal-speed drive bursts while the motors are running, the robot is
-# probably stuck (wheels spinning against a wall).  React by scanning for a way out.
-STUCK_BURST_COUNT    = 5
-STUCK_EPSILON        = 0.010  # m
 
 # Charger exit / entry
 CHARGER_EXIT_SECS    = 3.0    # drive straight to clear the dock on departure
@@ -98,6 +93,7 @@ PILE          = ChargingPileDetector()
 CHARGER_IO    = ChargingStatusDetector()
 BATTERY       = BatteryMonitor()
 DASHBOARD     = ScriptDashboard("patrol", logger=LOGGER)
+CAMERA        = GreyImageMonitor()
 
 _shutdown = False
 
@@ -128,57 +124,56 @@ def _subscribe_topics(subscribed):
     return subscribed
 
 
-def _wait_for_sensor_data(timeout_secs):
+def _wait_for_camera_data(timeout_secs):
     deadline = time.time() + timeout_secs
     while time.time() < deadline:
-        if any(v >= 0.0 for v in pybot_scout.get_proximity_readings().values()):
+        if CAMERA.has_data():
             return True
         time.sleep(0.1)
     return False
 
 
-def _nearest_obstacle(readings):
-    """Return closest valid obstacle distance (<OBSTACLE_THRESHOLD_M), or None if clear.
-
-    Readings below MIN_VALID_M (floor / dock surface reflections) are ignored.
-    """
-    nearest = None
-    for dist in readings.values():
-        if MIN_VALID_M <= dist < OBSTACLE_THRESHOLD_M:
-            if nearest is None or dist < nearest:
-                nearest = dist
-    return nearest
+def _safe_float(value):
+    try:
+        return float(value)
+    except Exception:
+        return None
 
 
-def _nearest_valid(readings):
-    """Return the closest non-noise, finite reading across all topics, or None.
-
-    Used to detect the warning zone (OBSTACLE_THRESHOLD_M .. WARNING_THRESHOLD_M).
-    """
-    nearest = None
-    for dist in readings.values():
-        if dist >= MIN_VALID_M and not math.isinf(dist):
-            if nearest is None or dist < nearest:
-                nearest = dist
-    return nearest
+def _clamp(value, lo, hi):
+    if value < lo:
+        return lo
+    if value > hi:
+        return hi
+    return value
 
 
-def _raw_tof(readings):
-    """Return the closest non-negative reading across all topics, or None."""
-    vals = [v for v in readings.values() if v >= 0.0]
-    return min(vals) if vals else None
+def _camera_drive_command(camera_stats):
+    if not camera_stats:
+        return None
+    left = _safe_float(camera_stats.get("lower_left_mean_brightness"))
+    center = _safe_float(camera_stats.get("lower_center_mean_brightness"))
+    right = _safe_float(camera_stats.get("lower_right_mean_brightness"))
+    if left is None or center is None or right is None:
+        return None
 
-
-def _check_stuck(reading_buf):
-    """Return True when the last STUCK_BURST_COUNT valid tof readings span <= STUCK_EPSILON.
-
-    This detects wheels spinning in place against an obstacle while the motors
-    are running: the sensor distance stays constant even though we commanded motion.
-    """
-    if len(reading_buf) < STUCK_BURST_COUNT:
-        return False
-    tail = reading_buf[-STUCK_BURST_COUNT:]
-    return (max(tail) - min(tail)) <= STUCK_EPSILON
+    base = max(left, center, right, 1.0)
+    lateral_norm = (right - left) / base
+    center_conf = _clamp(center / base, 0.0, 1.0)
+    steer = STEER_GAIN * lateral_norm * (1.0 - (0.65 * center_conf))
+    heading_deg = _clamp(steer, -MAX_STEER_DEG, MAX_STEER_DEG)
+    speed = CRAWL_SPEED if center < DARK_SLOW_BRIGHTNESS else SPEED
+    pivot = bool(center < DARK_PIVOT_BRIGHTNESS and abs(lateral_norm) > 0.08)
+    return {
+        "left": left,
+        "center": center,
+        "right": right,
+        "lateral_norm": lateral_norm,
+        "center_conf": center_conf,
+        "heading_deg": heading_deg,
+        "speed": speed,
+        "pivot": pivot,
+    }
 
 
 # ── battery helpers ────────────────────────────────────────────────────────────
@@ -247,7 +242,7 @@ def _wait_for_charge():
 
 # ── phase 2 : explore until battery low ──────────────────────────────────────
 
-def _explore(subscribed, sensor_active):
+def _explore(subscribed, camera_active):
     """Run the pong-ball exploration loop.
 
     Returns a list of (x_m, y_m, heading_deg) waypoints recorded during the
@@ -261,15 +256,14 @@ def _explore(subscribed, sensor_active):
     DASHBOARD.update_state(
         mode="explore_started",
         return_pct=RETURN_PCT,
-        sensor_active=sensor_active,
+        camera_active=camera_active,
         subscribed_topics=len(subscribed),
     )
     DASHBOARD.tick()
 
-    heading           = random.randint(0, 359)
+    heading           = 0.0
     waypoints         = []
     burst_count       = 0
-    tof_buf           = []   # rolling raw tof readings during drive bursts (stuck detection)
     next_battery_check= time.time() + BATTERY_CHECK_SECS
     next_rediscovery  = time.time() + REDISCOVERY_SECS
 
@@ -278,7 +272,7 @@ def _explore(subscribed, sensor_active):
     LOGGER.log("step_selected",
                direction_deg=heading,
                pose=waypoints[-1],
-               sensor_active=sensor_active)
+               camera_active=camera_active)
 
     while not _shutdown:
         # ── periodic battery check ────────────────────────────────────────────
@@ -308,16 +302,17 @@ def _explore(subscribed, sensor_active):
         # ── periodic topic rediscovery ─────────────────────────────────────
         if time.time() >= next_rediscovery:
             subscribed = _subscribe_topics(subscribed)
-            if not sensor_active:
-                sensor_active = _wait_for_sensor_data(1.0)
             next_rediscovery = time.time() + REDISCOVERY_SECS
 
-        if not sensor_active and not ALLOW_SENSORLESS:
-            LOGGER.log("waiting_for_sensor_data")
+        if not camera_active:
+            camera_active = _wait_for_camera_data(0.2)
+
+        if not camera_active and not ALLOW_SENSORLESS:
+            LOGGER.log("waiting_for_camera_data")
             DASHBOARD.update_state(
-                mode="waiting_for_sensor_data",
+                mode="waiting_for_camera_data",
                 heading_deg=heading,
-                sensor_active=sensor_active,
+                camera_active=camera_active,
                 subscribed_topics=len(subscribed),
                 battery_pct=BATTERY.get_percent(),
                 charging=BATTERY.is_charging(),
@@ -327,116 +322,68 @@ def _explore(subscribed, sensor_active):
             time.sleep(0.5)
             continue
 
-        readings      = pybot_scout.get_proximity_readings() if sensor_active else {}
-        obstacle_dist = _nearest_obstacle(readings) if sensor_active else None
-        warning_dist  = _nearest_valid(readings)    if sensor_active else None
+        readings = pybot_scout.get_proximity_readings()
+        camera_stats = CAMERA.get_snapshot()
+        drive = _camera_drive_command(camera_stats)
         DASHBOARD.update_sensors(readings)
         DASHBOARD.update_state(
             mode="explore_loop",
             heading_deg=heading,
-            sensor_active=sensor_active,
+            camera_active=camera_active,
             subscribed_topics=len(subscribed),
-            obstacle_m=obstacle_dist,
-            warning_m=warning_dist,
+            camera_left=(drive or {}).get("left"),
+            camera_center=(drive or {}).get("center"),
+            camera_right=(drive or {}).get("right"),
             battery_pct=BATTERY.get_percent(),
             charging=BATTERY.is_charging(),
         )
         DASHBOARD.tick()
 
-        if obstacle_dist is not None:
-            # ── danger zone: stop, scan, turn to clearest heading ─────────────
+        if drive is None:
+            if not ALLOW_SENSORLESS:
+                LOGGER.log("camera_drive_missing", camera_stats=camera_stats)
+                time.sleep(0.3)
+                continue
+            drive = {
+                "heading_deg": 0.0,
+                "speed": CRAWL_SPEED,
+                "left": None,
+                "center": None,
+                "right": None,
+                "lateral_norm": 0.0,
+                "center_conf": 0.0,
+                "pivot": False,
+            }
+
+        heading = drive.get("heading_deg", 0.0)
+
+        if drive.get("pivot"):
             pybot_scout.stop_move()
-            del tof_buf[:]
-            print("Obstacle at %.2f m – scanning for clearest direction…" % obstacle_dist)
-            LOGGER.log("scan_triggered",
-                       obstacle_m=round(obstacle_dist, 3),
+            pybot_scout.set_rotate_3(2 if heading > 0 else 1, 12)
+            LOGGER.log("camera_pivot",
                        heading_deg=heading,
+                       camera_stats=camera_stats,
                        readings=readings)
-            DASHBOARD.update_state(mode="scan_triggered", obstacle_m=obstacle_dist, heading_deg=heading)
+            DASHBOARD.update_state(mode="camera_pivot", heading_deg=heading, camera_center=drive.get("center"))
             DASHBOARD.tick()
 
-            best_delta, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
-            old_heading = heading
-            heading = (heading + best_delta) % 360
-
-            print("Scan: %d° → %d°  (best clearance at delta %+d°)" % (
-                old_heading, heading, best_delta))
-            LOGGER.log("scan_bounce",
-                       old_heading_deg=old_heading,
-                       new_heading_deg=heading,
-                       best_heading_delta_deg=best_delta,
-                       obstacle_m=round(obstacle_dist, 3))
-            DASHBOARD.update_state(mode="scan_bounce", heading_deg=heading)
-            DASHBOARD.tick()
-
-            # Record new heading as a breadcrumb waypoint
             pose = dict(ODOM.get_pose())
             waypoints.append(pose)
-            LOGGER.log("step_selected",
-                       direction_deg=heading,
-                       pose=pose,
-                       sensor_active=sensor_active)
-
-            if PILE.was_recently_seen():
-                LOGGER.log("charging_pile_sighted", pose=pose,
-                           sighting=PILE.get_last_sighting())
-
+            LOGGER.log("step_selected", direction_deg=heading, pose=pose, camera_active=camera_active)
             time.sleep(PAUSE_SECS)
             continue
 
-        if warning_dist is not None and warning_dist < WARNING_THRESHOLD_M:
-            # ── warning zone: slow approach (smooth deceleration) ─────────────
-            del tof_buf[:]   # don't mix crawl bursts into stuck-detection buffer
-            pybot_scout.set_translationSpeed(CRAWL_SPEED)
-            pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
-            pybot_scout.set_translationSpeed(SPEED)
-            LOGGER.log("move_burst_crawl",
-                       direction_deg=heading,
-                       warning_dist_m=round(warning_dist, 3),
-                       readings=readings)
-            DASHBOARD.update_state(mode="crawl", heading_deg=heading, warning_m=warning_dist)
-            DASHBOARD.tick()
-            continue
-
-        # ── clear path: normal drive burst ────────────────────────────────────
-        pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
+        pybot_scout.set_translationSpeed(drive.get("speed", SPEED))
+        pybot_scout.set_translate_2(heading % 360, CHECK_INTERVAL_SECS)
         burst_count += 1
-        LOGGER.log("move_burst",
+        LOGGER.log("move_burst_camera",
                    direction_deg=heading,
                    burst_secs=CHECK_INTERVAL_SECS,
-                   sensor_active=sensor_active,
+                   camera_active=camera_active,
+                   camera_stats=camera_stats,
                    readings=readings)
-        DASHBOARD.update_state(mode="move_burst", heading_deg=heading)
+        DASHBOARD.update_state(mode="move_burst_camera", heading_deg=heading, camera_center=drive.get("center"))
         DASHBOARD.tick()
-
-        # Update stuck-detection buffer with the raw tof value seen this burst
-        raw = _raw_tof(readings)
-        if raw is not None:
-            tof_buf.append(raw)
-            if len(tof_buf) > STUCK_BURST_COUNT + 2:
-                tof_buf.pop(0)
-
-        # ── stuck detection ────────────────────────────────────────────────
-        if sensor_active and _check_stuck(tof_buf):
-            print("Stuck detected – scanning for escape direction.")
-            LOGGER.log("stuck_detected",
-                       readings=readings,
-                       tof_buf=list(tof_buf),
-                       heading_deg=heading)
-            DASHBOARD.update_state(mode="stuck_detected", heading_deg=heading)
-            DASHBOARD.tick()
-            pybot_scout.stop_move()
-            del tof_buf[:]
-            best_delta, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
-            old_heading = heading
-            heading = (heading + best_delta) % 360
-            LOGGER.log("stuck_escape",
-                       old_heading_deg=old_heading,
-                       new_heading_deg=heading,
-                       best_heading_delta_deg=best_delta)
-            DASHBOARD.update_state(mode="stuck_escape", heading_deg=heading)
-            DASHBOARD.tick()
-            time.sleep(PAUSE_SECS)
 
         # Record a waypoint every WAYPOINT_STRIDE bursts
         if burst_count % WAYPOINT_STRIDE == 0:
@@ -588,9 +535,8 @@ def _visual_scan_for_charger(timeout_secs):
     LOGGER.log("visual_scan_started", timeout_secs=timeout_secs)
     print("Visual scan: driving around to find the charging pile…")
 
-    heading   = random.randint(0, 359)
+    heading   = 0.0
     deadline  = time.time() + timeout_secs
-    sensor_ok = any(v >= 0.0 for v in pybot_scout.get_proximity_readings().values())
 
     pybot_scout.set_translationSpeed(SPEED)
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
@@ -600,25 +546,24 @@ def _visual_scan_for_charger(timeout_secs):
             LOGGER.log("visual_scan_found_pile")
             return True
 
-        readings      = pybot_scout.get_proximity_readings() if sensor_ok else {}
-        obstacle_dist = _nearest_obstacle(readings) if sensor_ok else None
-        warning_dist  = _nearest_valid(readings)    if sensor_ok else None
+        readings = pybot_scout.get_proximity_readings()
+        camera_stats = CAMERA.get_snapshot()
+        drive = _camera_drive_command(camera_stats)
+        if drive is None:
+            LOGGER.log("visual_scan_camera_missing", camera_stats=camera_stats, readings=readings)
+            time.sleep(0.2)
+            continue
+        heading = drive.get("heading_deg", 0.0)
 
-        if obstacle_dist is not None:
-            LOGGER.log("visual_scan_obstacle", obstacle_m=round(obstacle_dist, 3))
+        if drive.get("pivot"):
             pybot_scout.stop_move()
-            best_delta, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
-            heading = (heading + best_delta) % 360
+            pybot_scout.set_rotate_3(2 if heading > 0 else 1, 12)
+            LOGGER.log("visual_scan_camera_pivot", heading_deg=heading, camera_stats=camera_stats, readings=readings)
             time.sleep(PAUSE_SECS)
             continue
 
-        if warning_dist is not None and warning_dist < WARNING_THRESHOLD_M:
-            pybot_scout.set_translationSpeed(CRAWL_SPEED)
-            pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
-            pybot_scout.set_translationSpeed(SPEED)
-            continue
-
-        pybot_scout.set_translate_2(heading, CHECK_INTERVAL_SECS)
+        pybot_scout.set_translationSpeed(drive.get("speed", SPEED))
+        pybot_scout.set_translate_2(heading % 360, CHECK_INTERVAL_SECS)
 
     LOGGER.log("visual_scan_timeout")
     return False
@@ -673,7 +618,10 @@ def run_patrol():
     PILE.start()
     CHARGER_IO.start()
     BATTERY.start(logger=LOGGER)
+    CAMERA.start(logger=LOGGER)
     DASHBOARD.start()
+    inventory = log_ros_inventory(LOGGER)
+    DASHBOARD.update_ros_topics(inventory.get("topics", []))
 
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
     pybot_scout.set_translationSpeed(SPEED)
@@ -684,13 +632,12 @@ def run_patrol():
         depart_pct=DEPART_PCT,
         return_pct=RETURN_PCT,
         battery_check_secs=BATTERY_CHECK_SECS,
-        obstacle_threshold_m=OBSTACLE_THRESHOLD_M,
-        warning_threshold_m=WARNING_THRESHOLD_M,
-        min_valid_m=MIN_VALID_M,
+        max_steer_deg=MAX_STEER_DEG,
+        steer_gain=STEER_GAIN,
+        dark_slow_brightness=DARK_SLOW_BRIGHTNESS,
+        dark_pivot_brightness=DARK_PIVOT_BRIGHTNESS,
         crawl_speed=CRAWL_SPEED,
         allow_sensorless=ALLOW_SENSORLESS,
-        scan_half_angle_deg=_scanner.SCAN_HALF_ANGLE_DEG,
-        scan_step_deg=_scanner.SCAN_STEP_DEG,
         proximity_topics=sorted(subscribed),
     )
 
@@ -704,13 +651,14 @@ def run_patrol():
     )
     DASHBOARD.tick(force=True)
 
-    print("Waiting up to %.0f s for proximity sensor data…" % SENSOR_TIMEOUT_SECS)
-    sensor_active = _wait_for_sensor_data(SENSOR_TIMEOUT_SECS)
-    LOGGER.log("sensor_wait_completed",
-               sensor_active=sensor_active,
+    print("Waiting up to %.0f s for camera brightness data…" % CAMERA_TIMEOUT_SECS)
+    camera_active = _wait_for_camera_data(CAMERA_TIMEOUT_SECS)
+    LOGGER.log("camera_wait_completed",
+               camera_active=camera_active,
+               camera_snapshot=CAMERA.get_snapshot(),
                readings=pybot_scout.get_proximity_readings())
     DASHBOARD.update_sensors(pybot_scout.get_proximity_readings())
-    DASHBOARD.update_state(mode="sensor_wait_completed", sensor_active=sensor_active)
+    DASHBOARD.update_state(mode="camera_wait_completed", camera_active=camera_active)
     DASHBOARD.tick(force=True)
 
     # ── determine initial state ───────────────────────────────────────────────
@@ -757,7 +705,7 @@ def run_patrol():
             LOGGER.log("charger_exit_completed")
 
         # ── explore (pong) ────────────────────────────────────────────────────
-        waypoints = _explore(subscribed, sensor_active)
+        waypoints = _explore(subscribed, camera_active)
 
         if _shutdown:
             break
@@ -802,6 +750,7 @@ if __name__ == "__main__":
     PILE.stop()
     CHARGER_IO.stop()
     BATTERY.stop()
+    CAMERA.stop()
     LOGGER.log("run_stopped")
     LOGGER.close()
     pybot_scout.stop()

@@ -6,6 +6,7 @@ import time
 
 import rospy
 from std_msgs.msg import String
+from std_msgs.msg import Int32
 from geometry_msgs.msg import Twist
 
 from enum import Enum
@@ -42,6 +43,7 @@ class PyBotScoutRosBridge(threading.Thread):
     super(PyBotScoutRosBridge, self).__init__()
     rospy.init_node('PyBotScoutBridgeNode', anonymous=False)
     self._velPub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
+    self._speakerPub = rospy.Publisher('/speaker_cmd', Int32, queue_size = 10)
     self.start()
 
   def run(self):
@@ -116,6 +118,14 @@ class PyBotScoutRosBridge(threading.Thread):
       self._velPub.publish(vel)
     except:
       print "publish raw vel cmd failed!"
+
+  def publish_speaker_cmd(self, effect_id):
+    try:
+      self._speakerPub.publish(Int32(data=int(effect_id)))
+      return True
+    except Exception as exc:
+      print "publish speaker cmd failed: %s" % str(exc)
+      return False
 
   def call_service_programming_exception_handle(self, msg):
     SERVICE_NAME = "/AppNode/programming_exception_handle"
