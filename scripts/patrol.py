@@ -53,6 +53,7 @@ from pybot_scout.charging_pile  import ChargingPileDetector, ChargingStatusDetec
 from pybot_scout.feedback       import FeedbackLogger
 from pybot_scout.odometry       import OdometryTracker
 from pybot_scout.proximity      import discover_proximity_topics
+from pybot_scout.dashboard      import ScriptDashboard
 from pybot_scout import scanner as _scanner
 from pybot_scout.scout          import pybot_scout
 
@@ -96,6 +97,7 @@ ODOM          = OdometryTracker()
 PILE          = ChargingPileDetector()
 CHARGER_IO    = ChargingStatusDetector()
 BATTERY       = BatteryMonitor()
+DASHBOARD     = ScriptDashboard("patrol", logger=LOGGER)
 
 _shutdown = False
 
@@ -107,6 +109,7 @@ def _signal_handler(signum, frame):
     print("\nInterrupt received – stopping robot.")
     LOGGER.log("signal_received", signum=signum)
     _shutdown = True
+    DASHBOARD.close()
     pybot_scout.stop()
 
 
@@ -201,6 +204,8 @@ def _battery_low():
 def _wait_for_charge():
     """Block until battery level is >= DEPART_PCT or sensor gives no data."""
     LOGGER.log("wait_for_charge_started", target_pct=DEPART_PCT)
+    DASHBOARD.update_state(mode="wait_for_charge", target_depart_pct=DEPART_PCT)
+    DASHBOARD.tick()
     print("Waiting on charger until battery >= %.0f %% …" % DEPART_PCT)
     poll_interval = 60.0   # check every minute
     last_logged   = 0.0
@@ -220,6 +225,13 @@ def _wait_for_charge():
             else:
                 print("  Battery level unknown – waiting…")
             last_logged = time.time()
+            DASHBOARD.update_state(
+                mode="wait_for_charge",
+                battery_pct=pct,
+                charging=chg,
+                target_depart_pct=DEPART_PCT,
+            )
+            DASHBOARD.tick()
 
         if pct is None or pct >= DEPART_PCT:
             break
@@ -228,6 +240,8 @@ def _wait_for_charge():
 
     pct = BATTERY.get_percent()
     LOGGER.log("wait_for_charge_done", battery_pct=pct)
+    DASHBOARD.update_state(mode="wait_for_charge_done", battery_pct=pct)
+    DASHBOARD.tick()
     print("Ready to depart (battery=%.0f %%)." % (pct or 0))
 
 
@@ -244,6 +258,13 @@ def _explore(subscribed, sensor_active):
                return_pct=RETURN_PCT,
                battery_check_secs=BATTERY_CHECK_SECS)
     print("Exploring…  will return home when battery < %.0f %%." % RETURN_PCT)
+    DASHBOARD.update_state(
+        mode="explore_started",
+        return_pct=RETURN_PCT,
+        sensor_active=sensor_active,
+        subscribed_topics=len(subscribed),
+    )
+    DASHBOARD.tick()
 
     heading           = random.randint(0, 359)
     waypoints         = []
@@ -269,6 +290,14 @@ def _explore(subscribed, sensor_active):
             print("Battery: %s %%  (charging=%s)" % (
                 "%.0f" % pct if pct is not None else "?", chg))
             next_battery_check = time.time() + BATTERY_CHECK_SECS
+            DASHBOARD.update_state(
+                mode="battery_check",
+                battery_pct=pct,
+                charging=chg,
+                heading_deg=heading,
+                waypoints_recorded=len(waypoints),
+            )
+            DASHBOARD.tick()
 
             if _battery_low():
                 print("Battery low – stopping exploration to return home.")
@@ -285,12 +314,34 @@ def _explore(subscribed, sensor_active):
 
         if not sensor_active and not ALLOW_SENSORLESS:
             LOGGER.log("waiting_for_sensor_data")
+            DASHBOARD.update_state(
+                mode="waiting_for_sensor_data",
+                heading_deg=heading,
+                sensor_active=sensor_active,
+                subscribed_topics=len(subscribed),
+                battery_pct=BATTERY.get_percent(),
+                charging=BATTERY.is_charging(),
+            )
+            DASHBOARD.update_sensors(pybot_scout.get_proximity_readings())
+            DASHBOARD.tick()
             time.sleep(0.5)
             continue
 
         readings      = pybot_scout.get_proximity_readings() if sensor_active else {}
         obstacle_dist = _nearest_obstacle(readings) if sensor_active else None
         warning_dist  = _nearest_valid(readings)    if sensor_active else None
+        DASHBOARD.update_sensors(readings)
+        DASHBOARD.update_state(
+            mode="explore_loop",
+            heading_deg=heading,
+            sensor_active=sensor_active,
+            subscribed_topics=len(subscribed),
+            obstacle_m=obstacle_dist,
+            warning_m=warning_dist,
+            battery_pct=BATTERY.get_percent(),
+            charging=BATTERY.is_charging(),
+        )
+        DASHBOARD.tick()
 
         if obstacle_dist is not None:
             # ── danger zone: stop, scan, turn to clearest heading ─────────────
@@ -301,6 +352,8 @@ def _explore(subscribed, sensor_active):
                        obstacle_m=round(obstacle_dist, 3),
                        heading_deg=heading,
                        readings=readings)
+            DASHBOARD.update_state(mode="scan_triggered", obstacle_m=obstacle_dist, heading_deg=heading)
+            DASHBOARD.tick()
 
             best_delta, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
             old_heading = heading
@@ -313,6 +366,8 @@ def _explore(subscribed, sensor_active):
                        new_heading_deg=heading,
                        best_heading_delta_deg=best_delta,
                        obstacle_m=round(obstacle_dist, 3))
+            DASHBOARD.update_state(mode="scan_bounce", heading_deg=heading)
+            DASHBOARD.tick()
 
             # Record new heading as a breadcrumb waypoint
             pose = dict(ODOM.get_pose())
@@ -339,6 +394,8 @@ def _explore(subscribed, sensor_active):
                        direction_deg=heading,
                        warning_dist_m=round(warning_dist, 3),
                        readings=readings)
+            DASHBOARD.update_state(mode="crawl", heading_deg=heading, warning_m=warning_dist)
+            DASHBOARD.tick()
             continue
 
         # ── clear path: normal drive burst ────────────────────────────────────
@@ -349,6 +406,8 @@ def _explore(subscribed, sensor_active):
                    burst_secs=CHECK_INTERVAL_SECS,
                    sensor_active=sensor_active,
                    readings=readings)
+        DASHBOARD.update_state(mode="move_burst", heading_deg=heading)
+        DASHBOARD.tick()
 
         # Update stuck-detection buffer with the raw tof value seen this burst
         raw = _raw_tof(readings)
@@ -364,6 +423,8 @@ def _explore(subscribed, sensor_active):
                        readings=readings,
                        tof_buf=list(tof_buf),
                        heading_deg=heading)
+            DASHBOARD.update_state(mode="stuck_detected", heading_deg=heading)
+            DASHBOARD.tick()
             pybot_scout.stop_move()
             del tof_buf[:]
             best_delta, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
@@ -373,6 +434,8 @@ def _explore(subscribed, sensor_active):
                        old_heading_deg=old_heading,
                        new_heading_deg=heading,
                        best_heading_delta_deg=best_delta)
+            DASHBOARD.update_state(mode="stuck_escape", heading_deg=heading)
+            DASHBOARD.tick()
             time.sleep(PAUSE_SECS)
 
         # Record a waypoint every WAYPOINT_STRIDE bursts
@@ -382,6 +445,8 @@ def _explore(subscribed, sensor_active):
     LOGGER.log("explore_finished",
                waypoints_recorded=len(waypoints),
                battery_pct=BATTERY.get_percent())
+    DASHBOARD.update_state(mode="explore_finished", waypoints_recorded=len(waypoints), battery_pct=BATTERY.get_percent())
+    DASHBOARD.tick()
     return waypoints
 
 
@@ -562,6 +627,8 @@ def _visual_scan_for_charger(timeout_secs):
 def _return_home(waypoints):
     """Orchestrate the full return-to-charger sequence."""
     LOGGER.log("return_home_started", battery_pct=BATTERY.get_percent())
+    DASHBOARD.update_state(mode="return_home_started", battery_pct=BATTERY.get_percent(), waypoints=len(waypoints))
+    DASHBOARD.tick()
     print("Starting return-home sequence.")
     pybot_scout.stop_move()
 
@@ -572,6 +639,8 @@ def _return_home(waypoints):
         done = _wait_for_going_home_done(NAVBACKUP_WAIT_SECS)
         if done:
             LOGGER.log("return_home_via_navbackup_succeeded")
+            DASHBOARD.update_state(mode="return_home_navbackup_ok")
+            DASHBOARD.tick()
             return
         print("Built-in go-home did not confirm success within %.0f s." %
               NAVBACKUP_WAIT_SECS)
@@ -587,6 +656,12 @@ def _return_home(waypoints):
     LOGGER.log("return_home_finished",
                charging=BATTERY.is_charging(),
                battery_pct=BATTERY.get_percent())
+    DASHBOARD.update_state(
+        mode="return_home_finished",
+        charging=BATTERY.is_charging(),
+        battery_pct=BATTERY.get_percent(),
+    )
+    DASHBOARD.tick()
     print("Return-home sequence complete.")
 
 
@@ -598,6 +673,7 @@ def run_patrol():
     PILE.start()
     CHARGER_IO.start()
     BATTERY.start(logger=LOGGER)
+    DASHBOARD.start()
 
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
     pybot_scout.set_translationSpeed(SPEED)
@@ -620,12 +696,22 @@ def run_patrol():
 
     print("Patrol started.  Depart at %.0f %% / Return at %.0f %%.  "
           "Press Ctrl-C to stop." % (DEPART_PCT, RETURN_PCT))
+    DASHBOARD.update_state(
+        mode="patrol_started",
+        depart_pct=DEPART_PCT,
+        return_pct=RETURN_PCT,
+        subscribed_topics=len(subscribed),
+    )
+    DASHBOARD.tick(force=True)
 
     print("Waiting up to %.0f s for proximity sensor data…" % SENSOR_TIMEOUT_SECS)
     sensor_active = _wait_for_sensor_data(SENSOR_TIMEOUT_SECS)
     LOGGER.log("sensor_wait_completed",
                sensor_active=sensor_active,
                readings=pybot_scout.get_proximity_readings())
+    DASHBOARD.update_sensors(pybot_scout.get_proximity_readings())
+    DASHBOARD.update_state(mode="sensor_wait_completed", sensor_active=sensor_active)
+    DASHBOARD.tick(force=True)
 
     # ── determine initial state ───────────────────────────────────────────────
     pct, charging = BATTERY.wait_for_status(timeout_secs=3.0)
@@ -644,6 +730,14 @@ def run_patrol():
         LOGGER.log("patrol_cycle_started", cycle=cycle,
                    battery_pct=BATTERY.get_percent(),
                    on_charger=on_charger)
+        DASHBOARD.update_state(
+            mode="patrol_cycle_started",
+            cycle=cycle,
+            battery_pct=BATTERY.get_percent(),
+            charging=BATTERY.is_charging(),
+            on_charger=on_charger,
+        )
+        DASHBOARD.tick()
         print("\n── Patrol cycle %d ──────────────────────────────────────" % cycle)
 
         # ── wait for sufficient charge before departing ───────────────────────
@@ -675,6 +769,13 @@ def run_patrol():
 
         LOGGER.log("patrol_cycle_finished", cycle=cycle,
                    battery_pct=BATTERY.get_percent())
+        DASHBOARD.update_state(
+            mode="patrol_cycle_finished",
+            cycle=cycle,
+            battery_pct=BATTERY.get_percent(),
+            charging=BATTERY.is_charging(),
+        )
+        DASHBOARD.tick()
         print("Cycle %d complete." % cycle)
 
 
@@ -696,6 +797,7 @@ if __name__ == "__main__":
 
     stats = ODOM.get_stats()
     LOGGER.log("patrol_stopped", **stats)
+    DASHBOARD.close()
     ODOM.stop()
     PILE.stop()
     CHARGER_IO.stop()

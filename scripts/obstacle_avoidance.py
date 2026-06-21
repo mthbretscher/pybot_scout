@@ -40,6 +40,7 @@ from pybot_scout.charging_pile import ChargingPileDetector, ChargingStatusDetect
 from pybot_scout.feedback import FeedbackLogger
 from pybot_scout.odometry import OdometryTracker
 from pybot_scout.proximity import discover_proximity_topics
+from pybot_scout.dashboard import ScriptDashboard
 from pybot_scout import scanner as _scanner
 from pybot_scout.scout import pybot_scout
 
@@ -68,6 +69,7 @@ LOGGER         = FeedbackLogger("obstacle_avoidance", output_dir=FEEDBACK_DIR)
 ODOM_TRACKER   = OdometryTracker()
 PILE_DETECTOR  = ChargingPileDetector()
 CHARGER_STATUS = ChargingStatusDetector()
+DASHBOARD      = ScriptDashboard("obstacle_avoidance", logger=LOGGER)
 
 
 # ── signal handling ────────────────────────────────────────────────────────────
@@ -75,6 +77,7 @@ CHARGER_STATUS = ChargingStatusDetector()
 def _signal_handler(signum, frame):
     print("\nInterrupt received – stopping robot.")
     LOGGER.log("signal_received", signum=signum)
+    DASHBOARD.close()
     pybot_scout.stop()
 
 
@@ -188,6 +191,7 @@ def start():
 
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
     pybot_scout.set_translationSpeed(SPEED)
+    DASHBOARD.start()
 
     subscribed = _subscribe_topics(set())
     LOGGER.log(
@@ -222,6 +226,14 @@ def start():
         if not ALLOW_SENSORLESS:
             print("         Set PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK=1 to run without sensors.")
             LOGGER.log("sensor_fallback_disabled")
+    DASHBOARD.update_state(
+        heading_deg=0,
+        mode="sensor_wait_done",
+        sensor_active=sensor_active,
+        allow_sensorless=ALLOW_SENSORLESS,
+    )
+    DASHBOARD.update_sensors(pybot_scout.get_proximity_readings())
+    DASHBOARD.tick(force=True)
 
     # ── leave the dock first ───────────────────────────────────────────────────
     _exit_charger_if_needed()
@@ -244,12 +256,30 @@ def start():
 
         if not sensor_active and not ALLOW_SENSORLESS:
             LOGGER.log("waiting_for_sensor_data")
+            DASHBOARD.update_state(
+                mode="waiting_for_sensor_data",
+                heading_deg=heading,
+                sensor_active=sensor_active,
+                subscribed_topics=len(subscribed),
+            )
+            DASHBOARD.update_sensors(pybot_scout.get_proximity_readings())
+            DASHBOARD.tick()
             time.sleep(0.5)
             continue
 
         readings      = pybot_scout.get_proximity_readings() if sensor_active else {}
         obstacle_dist = _nearest_obstacle(readings)           if sensor_active else None
         warning_dist  = _nearest_valid(readings)              if sensor_active else None
+        DASHBOARD.update_sensors(readings)
+        DASHBOARD.update_state(
+            mode="drive_loop",
+            heading_deg=heading,
+            sensor_active=sensor_active,
+            subscribed_topics=len(subscribed),
+            obstacle_m=obstacle_dist,
+            warning_m=warning_dist,
+        )
+        DASHBOARD.tick()
 
         if obstacle_dist is not None:
             # ── danger zone: stop, scan, turn to clearest heading ─────────────
@@ -260,6 +290,8 @@ def start():
                        obstacle_m=round(obstacle_dist, 3),
                        heading_deg=heading,
                        readings=readings)
+            DASHBOARD.update_state(mode="scan_triggered", obstacle_m=obstacle_dist)
+            DASHBOARD.tick()
 
             best_delta, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
             old_heading = heading
@@ -272,6 +304,8 @@ def start():
                        new_heading_deg=heading,
                        best_heading_delta_deg=best_delta,
                        obstacle_m=round(obstacle_dist, 3))
+            DASHBOARD.update_state(mode="scan_bounce", heading_deg=heading)
+            DASHBOARD.tick()
 
             pose = ODOM_TRACKER.get_pose()
             LOGGER.log("step_selected", direction_deg=heading, pose=pose,
@@ -294,6 +328,8 @@ def start():
                        direction_deg=heading,
                        warning_dist_m=round(warning_dist, 3),
                        readings=readings)
+            DASHBOARD.update_state(mode="crawl", heading_deg=heading, warning_m=warning_dist)
+            DASHBOARD.tick()
             continue
 
         # ── clear path: normal drive burst ────────────────────────────────────
@@ -305,6 +341,8 @@ def start():
             sensor_active=sensor_active,
             readings=readings,
         )
+        DASHBOARD.update_state(mode="move_burst", heading_deg=heading)
+        DASHBOARD.tick()
 
         # Update stuck-detection buffer with the raw tof value seen this burst
         raw = _raw_tof(readings)
@@ -320,6 +358,8 @@ def start():
                        readings=readings,
                        tof_buf=list(tof_buf),
                        heading_deg=heading)
+            DASHBOARD.update_state(mode="stuck_detected", heading_deg=heading)
+            DASHBOARD.tick()
             pybot_scout.stop_move()
             del tof_buf[:]
             best_delta, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
@@ -329,6 +369,8 @@ def start():
                        old_heading_deg=old_heading,
                        new_heading_deg=heading,
                        best_heading_delta_deg=best_delta)
+            DASHBOARD.update_state(mode="stuck_escape", heading_deg=heading)
+            DASHBOARD.tick()
             time.sleep(PAUSE_SECS)
 
 
@@ -349,6 +391,7 @@ if __name__ == '__main__':
 
     stats = ODOM_TRACKER.get_stats()
     LOGGER.log("run_summary", **stats)
+    DASHBOARD.close()
     ODOM_TRACKER.stop()
     PILE_DETECTOR.stop()
     CHARGER_STATUS.stop()

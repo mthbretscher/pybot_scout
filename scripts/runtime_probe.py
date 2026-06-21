@@ -13,6 +13,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from pybot_scout.camera import GreyImageMonitor
+from pybot_scout.dashboard import ScriptDashboard
 from pybot_scout.feedback import FeedbackLogger
 from pybot_scout.proximity import discover_proximity_topics
 from pybot_scout.ros_inventory import log_ros_inventory
@@ -24,6 +25,7 @@ PROBE_DURATION_ENV = "PYBOT_SCOUT_PROBE_DURATION_SECS"
 
 LOGGER = FeedbackLogger("runtime_probe", output_dir=os.path.join(REPO_ROOT, "run_feedback"))
 CAMERA = GreyImageMonitor()
+DASHBOARD = ScriptDashboard("runtime_probe", logger=LOGGER)
 STOP_REQUESTED = False
 
 
@@ -31,6 +33,7 @@ def _signal_handler(signum, frame):
     global STOP_REQUESTED
     STOP_REQUESTED = True
     LOGGER.log("signal_received", signum=signum)
+    DASHBOARD.close()
 
 
 def _subscribe_topics(topics):
@@ -107,6 +110,7 @@ def _build_correlation_summary(pairs_by_metric):
 
 def start():
     duration_secs = _get_probe_duration_secs()
+    DASHBOARD.start()
     CAMERA.start(logger=LOGGER)
     log_ros_inventory(LOGGER)
     topics = discover_proximity_topics(LOGGER)
@@ -120,6 +124,13 @@ def start():
     )
 
     _subscribe_topics(topics)
+    DASHBOARD.update_state(
+        mode="probe_started",
+        duration_secs=duration_secs,
+        sample_interval_secs=SAMPLE_INTERVAL_SECS,
+        subscribed_topics=len(topics),
+    )
+    DASHBOARD.tick(force=True)
 
     deadline = (time.time() + duration_secs) if duration_secs is not None else None
     sample_index = 0
@@ -139,6 +150,17 @@ def start():
         sample_index += 1
         readings = pybot_scout.get_proximity_readings()
         camera_stats = CAMERA.get_snapshot()
+        DASHBOARD.update_sensors(readings)
+        state_vars = {
+            "mode": "sampling",
+            "sample_index": sample_index,
+            "duration_secs": duration_secs,
+            "camera_has_data": CAMERA.has_data(),
+        }
+        if camera_stats is not None:
+            state_vars["forward_mean_brightness"] = camera_stats.get("forward_mean_brightness")
+        DASHBOARD.update_state_map(state_vars)
+        DASHBOARD.tick()
 
         tof_m = _valid_tof_value(readings)
         if tof_m is not None and camera_stats is not None:
@@ -167,6 +189,8 @@ def start():
         min_valid_tof_m=MIN_VALID_TOF_M,
         metrics=_build_correlation_summary(pairs_by_metric),
     )
+    DASHBOARD.update_state(mode="probe_completed", total_samples=sample_index, stopped_by_signal=STOP_REQUESTED)
+    DASHBOARD.tick(force=True)
 
 
 if __name__ == "__main__":
@@ -182,5 +206,6 @@ if __name__ == "__main__":
         pybot_scout.handle_exception(exc.__class__.__name__ + ': ' + str(exc))
 
     CAMERA.stop()
+    DASHBOARD.close()
     LOGGER.close()
     pybot_scout.stop()

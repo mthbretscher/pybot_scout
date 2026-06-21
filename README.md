@@ -100,3 +100,22 @@ If the ROS package on the robot still uses the vendor name, you can leave it alo
 If it changes later, set:
 
 - `PYBOT_SCOUT_ROS_PACKAGE=your_ros_package_name`
+
+## Optional terminal dashboard (TUI)
+
+Scripts can now render an optional Python-2-compatible curses dashboard. It is
+disabled by default, so normal robot runs and JSONL feedback logging are
+unchanged.
+
+- `PYBOT_SCOUT_TUI=1` – enable the live dashboard
+- `PYBOT_SCOUT_TUI_HISTORY_SECS=45` – history window for sparkline panes
+- `PYBOT_SCOUT_TUI_REFRESH_SECS=0.5` – dashboard refresh period
+
+The dashboard shows:
+
+- a live values table (discovered proximity topics + script state variables)
+- compact ASCII sparklines for recent numeric history
+
+Each script can contribute its own state variables (for example heading, mode,
+battery, obstacle distance, or phase-specific counters) while sharing the same
+dashboard helper in `pybot_scout/dashboard.py`.

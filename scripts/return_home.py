@@ -40,6 +40,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from pybot_scout.charging_pile import ChargingPileDetector
+from pybot_scout.dashboard import ScriptDashboard
 from pybot_scout.feedback import FeedbackLogger
 from pybot_scout.odometry import OdometryTracker
 from pybot_scout.scout import pybot_scout
@@ -58,6 +59,7 @@ PAUSE_SECS = 0.3
 LOGGER = FeedbackLogger("return_home", output_dir=os.path.join(REPO_ROOT, "run_feedback"))
 ODOM_TRACKER = OdometryTracker()
 PILE_DETECTOR = ChargingPileDetector()
+DASHBOARD = ScriptDashboard("return_home", logger=LOGGER)
 
 _shutdown_requested = False
 
@@ -67,6 +69,7 @@ def _signal_handler(signum, frame):
     print("\nInterrupt received – stopping robot.")
     LOGGER.log("signal_received", signum=signum)
     _shutdown_requested = True
+    DASHBOARD.close()
     pybot_scout.stop()
 
 
@@ -216,6 +219,13 @@ def return_home(waypoints):
                goal_x_m=start_pose["x_m"],
                goal_y_m=start_pose["y_m"],
                goal_radius_m=GOAL_RADIUS_M)
+    DASHBOARD.update_state(
+        mode="return_home_started",
+        waypoint_count=len(waypoints),
+        goal_x_m=start_pose["x_m"],
+        goal_y_m=start_pose["y_m"],
+    )
+    DASHBOARD.tick(force=True)
     print("Returning home.  Goal: (%.3f, %.3f)  radius: %.2f m" % (
         start_pose["x_m"], start_pose["y_m"], GOAL_RADIUS_M))
 
@@ -239,6 +249,13 @@ def return_home(waypoints):
                    segment=idx,
                    live_pose=live,
                    dist_to_goal_m=round(dist_to_goal, 3))
+        DASHBOARD.update_state(
+            mode="waypoint_progress",
+            segment=idx,
+            dist_to_goal_m=round(dist_to_goal, 3),
+            heading_deg=live.get("heading_deg"),
+        )
+        DASHBOARD.tick()
 
         # Early-exit: already close enough to the goal
         if dist_to_goal <= GOAL_RADIUS_M:
@@ -283,6 +300,12 @@ def return_home(waypoints):
                dist_to_goal_m=round(dist_to_goal, 3),
                charging_pile_detected=pile_seen,
                **stats)
+    DASHBOARD.update_state(
+        mode="return_home_finished",
+        dist_to_goal_m=round(dist_to_goal, 3),
+        charging_pile_detected=pile_seen,
+    )
+    DASHBOARD.tick(force=True)
     print("Return home finished.  Distance from start: %.3f m" % dist_to_goal)
     if pile_seen:
         print("Charging pile was detected.")
@@ -327,8 +350,10 @@ if __name__ == "__main__":
                source_file=jsonl_path,
                first_pose=waypoints[0],
                last_pose=waypoints[-1])
+    DASHBOARD.update_state(mode="waypoints_loaded", waypoint_count=len(waypoints))
 
     pybot_scout.start()
+    DASHBOARD.start()
     ODOM_TRACKER.start()
     PILE_DETECTOR.start()
 
@@ -340,6 +365,7 @@ if __name__ == "__main__":
 
     ODOM_TRACKER.stop()
     PILE_DETECTOR.stop()
+    DASHBOARD.close()
     LOGGER.log("run_stopped")
     LOGGER.close()
     pybot_scout.stop()
