@@ -69,10 +69,24 @@ def _parse_battery_msg(msg):
                 charging = False
                 break
 
-    # ── fall back: try numeric 'status' or 'data' as a status code ──────────
-    # (common ROS conventions: 1 = charging, 0 = discharging, 2 = full)
-    if charging is None:
-        for attr in ("status", "data"):
+    # ── fall back: roller_eye/status carries status=[state, pct, extra] ──────
+    # Observed layout: status[0] = state (0=CHARGING, 1=UNCHARGE, 2=FULL, 3=UNKNOWN)
+    #                  status[1] = battery percentage 0-100
+    status_list = getattr(msg, "status", None)
+    if isinstance(status_list, (list, tuple)) and len(status_list) >= 2:
+        if percent is None:
+            pct_val = status_list[1]
+            if isinstance(pct_val, (int, float)) and 0.0 <= float(pct_val) <= 100.0:
+                percent = float(pct_val)
+        if charging is None:
+            state_code = status_list[0]
+            if state_code in (0, 2):   # 0=CHARGING, 2=FULL (still docked)
+                charging = True
+            elif state_code == 1:       # 1=UNCHARGE (discharging)
+                charging = False
+    elif charging is None:
+        # Scalar status/data fallback (other message types)
+        for attr in ("data",):
             val = getattr(msg, attr, None)
             if isinstance(val, int):
                 charging = val in (1, 2)

@@ -116,15 +116,25 @@ class ChargingStatusDetector(object):
             status_cls = getattr(_ros_msg, "status")
 
             def _cb(msg):
-                # roller_eye/status may carry state in a 'name' string field or a
-                # numeric 'status' field – try both, accepting any that is present.
-                raw = ""
-                for attr in ("name", "state", "data"):
-                    val = getattr(msg, attr, None)
-                    if val is not None:
-                        raw = str(val)
-                        break
-                charging = "charg" in raw.lower()
+                # roller_eye/status carries state in status=[state_code, pct, extra].
+                # state_code: 0=CHARGING, 1=UNCHARGE, 2=FULL, 3=UNKNOWN
+                charging = None
+                status_list = getattr(msg, "status", None)
+                if isinstance(status_list, (list, tuple)) and len(status_list) >= 1:
+                    state_code = status_list[0]
+                    if state_code in (0, 2):   # 0=CHARGING, 2=FULL (still docked)
+                        charging = True
+                    elif state_code == 1:       # 1=UNCHARGE (discharging)
+                        charging = False
+                if charging is None:
+                    # Fallback: look for "charg" text in any string field
+                    for attr in ("name", "state", "data"):
+                        val = getattr(msg, attr, None)
+                        if val is not None:
+                            charging = "charg" in str(val).lower()
+                            break
+                if charging is None:
+                    charging = False
                 with self._lock:
                     self._charging = charging
                     self._msg_ts = time.time()

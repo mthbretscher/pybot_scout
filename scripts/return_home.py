@@ -87,7 +87,7 @@ def _find_latest_feedback_file_with_waypoints():
     candidates.sort(key=os.path.getmtime, reverse=True)
     for path in candidates:
         try:
-            if _count_pose_waypoints(path) > 0:
+            if _count_pose_waypoints(path) >= 2:
                 return path
         except Exception:
             continue
@@ -326,22 +326,31 @@ if __name__ == "__main__":
     else:
         jsonl_path = _find_latest_feedback_file_with_waypoints()
         if jsonl_path is None:
-            print("No run_feedback file with usable pose waypoints was found.\n"
-                  "Run obstacle_avoidance.py or patrol.py to generate "
-                  "step_selected entries with pose data.")
+            msg = ("No run_feedback file with at least 2 pose waypoints was found. "
+                   "Run obstacle_avoidance.py or patrol.py to generate "
+                   "step_selected entries with pose data.")
+            print(msg)
+            LOGGER.log("run_aborted", reason="no_waypoint_file", detail=msg)
+            LOGGER.close()
             sys.exit(1)
         print("Using most recent feedback file with waypoints: %s" % jsonl_path)
 
     if not os.path.isfile(jsonl_path):
-        print("File not found: %s" % jsonl_path)
+        msg = "File not found: %s" % jsonl_path
+        print(msg)
+        LOGGER.log("run_aborted", reason="file_not_found", path=jsonl_path)
+        LOGGER.close()
         sys.exit(1)
 
     waypoints = _load_pose_waypoints(jsonl_path)
     if not waypoints:
-        print("No pose waypoints found in %s.\n"
-              "The log was probably created before odometry tracking was added.\n"
-              "Run obstacle_avoidance.py once more to generate "
-              "a log with embedded poses." % jsonl_path)
+        msg = ("No pose waypoints found in %s. "
+               "The log was probably created before odometry tracking was added. "
+               "Run obstacle_avoidance.py once more to generate "
+               "a log with embedded poses." % jsonl_path)
+        print(msg)
+        LOGGER.log("run_aborted", reason="no_waypoints_in_file", source_file=jsonl_path)
+        LOGGER.close()
         sys.exit(1)
 
     print("Loaded %d waypoints from %s" % (len(waypoints), jsonl_path))
