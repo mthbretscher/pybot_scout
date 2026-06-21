@@ -74,13 +74,42 @@ def _signal_handler(signum, frame):
 # JSONL loader
 # ---------------------------------------------------------------------------
 
-def _find_latest_feedback_file():
-    """Return the most-recently-modified *.jsonl in run_feedback/."""
+def _find_latest_feedback_file_with_waypoints():
+    """Return the newest run_feedback file that contains usable pose waypoints."""
     pattern = os.path.join(REPO_ROOT, "run_feedback", "*.jsonl")
     candidates = glob.glob(pattern)
     if not candidates:
         return None
-    return max(candidates, key=os.path.getmtime)
+
+    candidates.sort(key=os.path.getmtime, reverse=True)
+    for path in candidates:
+        try:
+            if _count_pose_waypoints(path) > 0:
+                return path
+        except Exception:
+            continue
+    return None
+
+
+def _count_pose_waypoints(jsonl_path):
+    """Fast count of step_selected/move_step records that contain x_m/y_m pose."""
+    count = 0
+    with open(jsonl_path) as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                record = json.loads(line)
+            except ValueError:
+                continue
+            event = record.get("event", "")
+            if event not in ("move_step", "step_selected"):
+                continue
+            pose = record.get("pose") or {}
+            if "x_m" in pose and "y_m" in pose:
+                count += 1
+    return count
 
 
 def _load_pose_waypoints(jsonl_path):
@@ -272,12 +301,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         jsonl_path = sys.argv[1]
     else:
-        jsonl_path = _find_latest_feedback_file()
+        jsonl_path = _find_latest_feedback_file_with_waypoints()
         if jsonl_path is None:
-            print("No run_feedback/*.jsonl file found. "
-                  "Run obstacle_avoidance.py first.")
+            print("No run_feedback file with usable pose waypoints was found.\n"
+                  "Run obstacle_avoidance.py or patrol.py to generate "
+                  "step_selected entries with pose data.")
             sys.exit(1)
-        print("Using most recent feedback file: %s" % jsonl_path)
+        print("Using most recent feedback file with waypoints: %s" % jsonl_path)
 
     if not os.path.isfile(jsonl_path):
         print("File not found: %s" % jsonl_path)

@@ -3,10 +3,9 @@
 Pong-ball explorer with directional-scan avoidance.
 
 The robot travels in a straight line until the proximity sensor reports an
-obstacle within OBSTACLE_THRESHOLD_M.  It then stops and performs a full
-360-degree rotational scan, sampling the ToF sensor at each 45-degree step
-with time-averaging to suppress noise.  It rotates to face the clearest
-direction found and resumes driving.
+obstacle within OBSTACLE_THRESHOLD_M.  It then stops and performs a short
+forward-cone scan (left/right around current heading), sampling ToF with
+time-averaging to suppress noise, then nudges toward the clearest direction.
 
 When an obstacle is detected in the wider WARNING_THRESHOLD_M zone the robot
 slows to CRAWL_SPEED before the hard stop, giving a smooth deceleration.
@@ -203,8 +202,8 @@ def start():
         sensor_timeout_secs=SENSOR_TIMEOUT_SECS,
         charger_exit_secs=CHARGER_EXIT_SECS,
         allow_sensorless=ALLOW_SENSORLESS,
-        scan_steps=_scanner.N_STEPS,
-        scan_step_deg=_scanner.STEP_DEG,
+        scan_half_angle_deg=_scanner.SCAN_HALF_ANGLE_DEG,
+        scan_step_deg=_scanner.SCAN_STEP_DEG,
         proximity_topics=sorted(subscribed),
     )
 
@@ -262,16 +261,16 @@ def start():
                        heading_deg=heading,
                        readings=readings)
 
-            best_cw, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
+            best_delta, scan_results = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
             old_heading = heading
-            heading = (heading + best_cw) % 360
+            heading = (heading + best_delta) % 360
 
-            print("Scan: %d° → %d°  (best clearance at CW+%d°)" % (
-                old_heading, heading, best_cw))
+            print("Scan: %d° → %d°  (best clearance at delta %+d°)" % (
+                old_heading, heading, best_delta))
             LOGGER.log("scan_bounce",
                        old_heading_deg=old_heading,
                        new_heading_deg=heading,
-                       best_cw_offset_deg=best_cw,
+                       best_heading_delta_deg=best_delta,
                        obstacle_m=round(obstacle_dist, 3))
 
             pose = ODOM_TRACKER.get_pose()
@@ -323,13 +322,13 @@ def start():
                        heading_deg=heading)
             pybot_scout.stop_move()
             del tof_buf[:]
-            best_cw, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
+            best_delta, _ = _scanner.scan_for_best_heading(pybot_scout, LOGGER)
             old_heading = heading
-            heading = (heading + best_cw) % 360
+            heading = (heading + best_delta) % 360
             LOGGER.log("stuck_escape",
                        old_heading_deg=old_heading,
                        new_heading_deg=heading,
-                       best_cw_offset_deg=best_cw)
+                       best_heading_delta_deg=best_delta)
             time.sleep(PAUSE_SECS)
 
 

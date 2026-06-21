@@ -48,8 +48,16 @@ Every log file starts with a `logger_started` event that includes the git commit
 When starting a session in this repo, check `run_feedback/` first:
 
 - **If there are new log files**: read them, look for errors, anomalies, or opportunities to improve the scripts, then make targeted code changes. Summarise your findings in the commit message.
-- **After reviewing logs (or if there are no new ones)**: delete all `.jsonl` files in `run_feedback/` to keep the directory clean for the next run.
-- **If the user asks for cleanup only**: just delete the `.jsonl` files.
+- **After reviewing logs**: keep logs that are still useful for calibration/trend analysis (for example sensor thresholds, camera-vs-ToF correlations, and regressions that can recur). Delete stale logs that are no longer useful (for example from superseded behavior or missing key signals).
+- **If the user asks for cleanup only**: delete only logs explicitly marked as disposable or clearly obsolete.
+
+---
+
+## Runtime constraints (must follow)
+
+- Target robot runtime is **Python 2.7.13** (ROS 1). Keep scripts Python-2-compatible.
+- **Do not run `apt upgrade` on the robot** (can brick the device).
+- Be conservative with package installs/updates on the robot; avoid recent package versions that may break Python 2.7 compatibility.
 
 ---
 

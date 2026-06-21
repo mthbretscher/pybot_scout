@@ -2,18 +2,14 @@
 """
 Directional clearance scanning via in-place rotation.
 
-scan_for_best_heading() performs a full 360-degree CW sweep in equal angular
-steps.  At each position it collects ToF readings for SAMPLE_WINDOW seconds
-and computes the *median* of valid readings (>= MIN_VALID_M) to suppress
-transient sensor noise.  After the sweep the robot is back at its original
-heading; it then rotates to face the direction of greatest clearance.
-
-Typical timing at ROTATION_SPEED=90 deg/s:
-    8 steps x (0.5 s rotation + SETTLE_SECS + SAMPLE_WINDOW) ~= 8.4 s
+scan_for_best_heading() performs a short forward-cone scan around the current
+heading (left/right offsets only), not a full 360 sweep.  At each offset it
+collects ToF readings for SAMPLE_WINDOW seconds and computes the *median* of
+valid readings (>= MIN_VALID_M) to suppress transient sensor noise.
 
 The Moorebot Scout / roller_eye has a single forward-facing ToF sensor with a
 ~27-42 degree field of view, so in-place rotation is the only way to sense in
-multiple directions.
+nearby directions.
 
 Compatible with the Python 2 ROS runtime on the roller_eye robot.
 """
@@ -22,12 +18,12 @@ import math
 import time
 
 # ── tunable scan parameters ───────────────────────────────────────────────────
-STEP_DEG        = 45    # degrees per rotation step
-N_STEPS         = 8     # steps for a full circle  (N_STEPS * STEP_DEG must == 360)
-SETTLE_SECS     = 0.15  # pause after each rotation before sampling starts
-SAMPLE_WINDOW   = 0.40  # seconds to collect samples at each angular position
-SAMPLE_INTERVAL = 0.08  # seconds between individual sensor reads within window
-MIN_VALID_M     = 0.15  # readings below this are floor / charger surface noise
+SCAN_HALF_ANGLE_DEG = 40  # scan range is [-SCAN_HALF_ANGLE_DEG, +SCAN_HALF_ANGLE_DEG]
+SCAN_STEP_DEG       = 10  # angular spacing between sampled offsets
+SETTLE_SECS         = 0.15
+SAMPLE_WINDOW       = 0.40
+SAMPLE_INTERVAL     = 0.08
+MIN_VALID_M         = 0.15  # readings below this are floor / charger surface noise
 
 # Readings at or above this value are treated as "fully clear" (including Inf)
 _INF_PROXY = 9.99
@@ -67,52 +63,70 @@ def _sample_clearance(scout):
     return _median(valid) if valid else 0.0
 
 
-def scan_for_best_heading(scout, logger=None):
-    """Rotate CW through N_STEPS * STEP_DEG = 360 degrees, sampling clearance
-    at each position with noise-reducing time-averaging.  Completes the circle
-    back to the original heading, then rotates to face the clearest direction.
+def _build_scan_offsets():
+    """Return signed offsets in degrees, centered on 0 with near-forward priority."""
+    offsets = [0]
+    step = SCAN_STEP_DEG
+    while step <= SCAN_HALF_ANGLE_DEG:
+        offsets.append(-step)
+        offsets.append(step)
+        step += SCAN_STEP_DEG
+    return offsets
 
-    Returns (best_cw_offset_deg, scan_results) where:
-      best_cw_offset_deg -- CW degrees from the pre-scan heading that was
-                            selected as the escape direction (0 = stay forward).
-      scan_results       -- list of (angle_cw_deg, clearance_m) in sweep order.
+
+def _rotate_by_delta(scout, delta_deg):
+    """Rotate by signed delta degrees. Positive = CW, negative = CCW."""
+    if delta_deg == 0:
+        return
+    magnitude = int(abs(delta_deg))
+    if magnitude <= 0:
+        return
+    direction = 2 if delta_deg > 0 else 1
+    scout.set_rotate_3(direction, magnitude)
+
+
+def scan_for_best_heading(scout, logger=None):
+    """Perform a short forward-cone scan and rotate to the clearest direction.
+
+    Returns (best_delta_deg, scan_results) where:
+      best_delta_deg -- signed heading delta from pre-scan heading:
+                        negative = left/CCW, positive = right/CW.
+      scan_results   -- list of (offset_deg, clearance_m) in scan order.
 
     After calling, update the working heading in the caller:
-        heading = (heading + best_cw_offset_deg) % 360
+        heading = (heading + best_delta_deg) % 360
     """
+    offsets = _build_scan_offsets()
     scan_results = []
+    current_offset = 0
 
-    for step in range(N_STEPS):
-        angle = step * STEP_DEG
-        if step > 0:
-            scout.set_rotate_3(2, STEP_DEG)   # direction 2 = CW
+    for target_offset in offsets:
+        delta = target_offset - current_offset
+        _rotate_by_delta(scout, delta)
         time.sleep(SETTLE_SECS)
         clearance = _sample_clearance(scout)
-        scan_results.append((angle, clearance))
+        scan_results.append((target_offset, clearance))
+        current_offset = target_offset
 
-    # One final step completes the 360 degrees back to the original heading
-    scout.set_rotate_3(2, STEP_DEG)
-    time.sleep(SETTLE_SECS)
-
-    best_angle, best_clearance = max(scan_results, key=lambda x: x[1])
+    # Prefer larger clearance; if equal, prefer smaller steering magnitude.
+    best_offset, best_clearance = max(scan_results, key=lambda x: (x[1], -abs(x[0])))
 
     if logger is not None:
         display = []
-        for a, c in scan_results:
-            display.append((a, 'Inf' if c >= _INF_PROXY else round(c, 3)))
+        for off, c in scan_results:
+            display.append((off, 'Inf' if c >= _INF_PROXY else round(c, 3)))
         logger.log(
-            'direction_scan',
+            'direction_scan_forward',
             scan_results=display,
-            best_cw_offset_deg=best_angle,
+            scan_half_angle_deg=SCAN_HALF_ANGLE_DEG,
+            scan_step_deg=SCAN_STEP_DEG,
+            best_delta_deg=best_offset,
             best_clearance_m=('Inf' if best_clearance >= _INF_PROXY
                               else round(best_clearance, 3)),
         )
 
-    # Rotate to face the best direction using the shorter arc
-    if best_angle > 0:
-        if best_angle <= 180:
-            scout.set_rotate_3(2, best_angle)           # CW
-        else:
-            scout.set_rotate_3(1, 360 - best_angle)     # CCW (shorter)
+    # We are currently at current_offset; rotate directly to best_offset.
+    _rotate_by_delta(scout, best_offset - current_offset)
+    time.sleep(SETTLE_SECS)
 
-    return best_angle, scan_results
+    return best_offset, scan_results
