@@ -10,6 +10,10 @@ The monitor is intentionally simple and Python-2-compatible:
   - samples a sparse grid of pixels for low CPU overhead
   - stores mean brightness for the whole frame, left/center/right thirds,
     and the lower rim where forward-floor cues are more likely to appear
+
+BrightnessWindow is a rolling buffer used by navigation scripts to detect
+brightness deltas (approaching obstacles) and stuck conditions (scene not
+changing while drive commands are being issued).
 """
 
 import threading
@@ -217,3 +221,57 @@ class GreyImageMonitor(object):
             if self._latest is None:
                 return None
             return dict(self._latest)
+
+
+class BrightnessWindow(object):
+    """Rolling window of (fwd, left, right) brightness tuples for navigation.
+
+    Used by exploration scripts to:
+      - Compute brightness deltas (rate of change) to detect approaching walls
+      - Detect stuck conditions when brightness barely varies over many readings
+
+    Python-2-compatible; no external dependencies.
+    """
+
+    def __init__(self, size=20):
+        self._buf = []          # list of (fwd, left, right) floats
+        self._size = size
+
+    def push(self, fwd, left, right):
+        """Append a new brightness reading."""
+        self._buf.append((float(fwd), float(left), float(right)))
+        if len(self._buf) > self._size:
+            del self._buf[0]
+
+    def get_delta(self, span=5):
+        """Return (delta_fwd, delta_left, delta_right) change over the last
+        ``span`` readings (positive = getting brighter = approaching object).
+        Returns (0, 0, 0) if fewer than 2 readings are available.
+        """
+        if len(self._buf) < 2:
+            return 0.0, 0.0, 0.0
+        n = min(span, len(self._buf))
+        old = self._buf[-n]
+        new = self._buf[-1]
+        return new[0] - old[0], new[1] - old[1], new[2] - old[2]
+
+    def is_stuck(self, min_readings=None, spread_threshold=5.0):
+        """Return True when the forward brightness spread over the last
+        ``min_readings`` samples is below ``spread_threshold``.
+
+        A small spread while drive commands are being issued suggests the
+        scene is not changing and the robot may be stuck.
+        """
+        n = min_readings if min_readings is not None else self._size
+        if len(self._buf) < n:
+            return False
+        fwds = [r[0] for r in self._buf[-n:]]
+        return (max(fwds) - min(fwds)) < spread_threshold
+
+    def full(self):
+        """Return True once the window has accumulated ``size`` readings."""
+        return len(self._buf) >= self._size
+
+    def reset(self):
+        """Clear all stored readings."""
+        del self._buf[:]

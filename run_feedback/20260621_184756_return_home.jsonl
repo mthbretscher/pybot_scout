@@ -1,1 +1,0 @@
-{"event": "logger_started", "file": "/home/linaro/programming_workspace/pybot_scout/run_feedback/20260621_184756_return_home.jsonl", "git_branch": "copilot/moorebot-scout-random-drive", "git_commit": "d548ba8c72b9c6043b6cb60df3bcf9624813e911", "git_dirty": true, "script": "return_home", "ts_utc": "2026-06-21T18:47:56.659832Z"}

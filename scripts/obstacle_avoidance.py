@@ -31,7 +31,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from pybot_scout.charging_pile import ChargingPileDetector, ChargingStatusDetector
-from pybot_scout.camera import GreyImageMonitor
+from pybot_scout.camera import BrightnessWindow, GreyImageMonitor
 from pybot_scout.feedback import FeedbackLogger
 from pybot_scout.odometry import OdometryTracker
 from pybot_scout.proximity import discover_proximity_topics
@@ -40,8 +40,8 @@ from pybot_scout.ros_inventory import log_ros_inventory
 from pybot_scout.scout import pybot_scout
 
 # ── tunable constants ──────────────────────────────────────────────────────────
-SPEED                = 0.3     # m/s forward speed (normal)
-CRAWL_SPEED          = 0.1     # m/s in the warning zone (smooth deceleration)
+SPEED                = 0.20    # m/s forward speed (low but continuous)
+CRAWL_SPEED          = 0.10    # m/s in the warning zone (smooth deceleration)
 ROTATION_SPEED       = 90      # deg/s rotation speed
 MAX_STEER_DEG        = 45.0    # clamp camera steering angle to this range
 STEER_GAIN           = 28.0    # heading command gain from lower-left/right bias
@@ -52,6 +52,19 @@ PAUSE_SECS           = 0.30    # brief stop between a scan-turn and the next mov
 CAMERA_TIMEOUT_SECS  = 5.0     # wait this long for the first camera brightness sample
 CHARGER_EXIT_SECS    = 3.0     # drive straight for this long to clear the dock
 REDISCOVERY_SECS     = 15.0    # re-scan for proximity topics this often
+
+# Delta-based obstacle approach steering
+DELTA_APPROACH_THRESHOLD = 0.025  # delta_fwd/base ratio that triggers approach boost
+DELTA_STEER_BOOST        = 3.0    # multiplier applied to lateral_norm when approaching
+DELTA_WINDOW_SPAN        = 5      # number of readings over which to compute deltas
+
+# Stuck detection and recovery
+STUCK_WINDOW_SIZE      = 20    # brightness readings in the stuck-detection window (~6 s)
+STUCK_BRIGHTNESS_SPREAD = 5.0  # max(fwd) - min(fwd) below this → scene not changing
+STUCK_DIST_THRESHOLD_M  = 0.20 # odometry distance that confirms NOT stuck (moving freely)
+STUCK_COOLDOWN_SECS     = 15.0 # minimum seconds between successive stuck-recoveries
+STUCK_ROTATE_DEG        = 90   # degrees to rotate during recovery
+STUCK_DRIVE_SECS        = 2.0  # seconds to drive straight after recovery rotation
 
 ALLOW_SENSORLESS = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
@@ -114,8 +127,13 @@ def _clamp(value, lo, hi):
     return value
 
 
-def _camera_drive_command(camera_stats):
-    """Return camera-based drive command dict or None when insufficient data."""
+def _camera_drive_command(camera_stats, delta_fwd=0.0, delta_left=0.0, delta_right=0.0):
+    """Return camera-based drive command dict or None when insufficient data.
+
+    delta_* are brightness changes over recent readings (positive = brighter =
+    approaching an obstacle on that face).  When the forward view is brightening,
+    the gain is boosted toward the darker (more-open) side.
+    """
     if not camera_stats:
         return None
     left = _safe_float(camera_stats.get("lower_left_mean_brightness"))
@@ -126,8 +144,19 @@ def _camera_drive_command(camera_stats):
 
     base = max(left, center, right, 1.0)
     lateral_norm = (right - left) / base
-    center_conf = _clamp(center / base, 0.0, 1.0)
-    steer = STEER_GAIN * lateral_norm * (1.0 - (0.65 * center_conf))
+
+    # Forward-approach boost: when the scene ahead is brightening, steer toward
+    # whichever side is currently darker (more open space).
+    delta_fwd_norm = max(0.0, delta_fwd) / base
+    if delta_fwd_norm > DELTA_APPROACH_THRESHOLD:
+        darker_bias = 1.0 if left < right else -1.0
+        lateral_norm += darker_bias * delta_fwd_norm * DELTA_STEER_BOOST
+
+    # Side-approach correction: steer away from a side that is rapidly brightening.
+    lateral_norm += max(0.0, delta_left) / base * DELTA_STEER_BOOST * 0.5
+    lateral_norm -= max(0.0, delta_right) / base * DELTA_STEER_BOOST * 0.5
+
+    steer = STEER_GAIN * lateral_norm
     heading_deg = _clamp(steer, -MAX_STEER_DEG, MAX_STEER_DEG)
     speed = CRAWL_SPEED if center < DARK_SLOW_BRIGHTNESS else SPEED
     pivot = bool(center < DARK_PIVOT_BRIGHTNESS and abs(lateral_norm) > 0.08)
@@ -136,10 +165,13 @@ def _camera_drive_command(camera_stats):
         "center": center,
         "right": right,
         "lateral_norm": lateral_norm,
-        "center_conf": center_conf,
+        "center_conf": _clamp(center / base, 0.0, 1.0),
         "heading_deg": heading_deg,
         "speed": speed,
         "pivot": pivot,
+        "delta_fwd": round(delta_fwd, 3),
+        "delta_left": round(delta_left, 3),
+        "delta_right": round(delta_right, 3),
     }
 
 
@@ -239,6 +271,9 @@ def start():
     print("Pong explorer started.  Initial heading: %d°.  Press Ctrl-C to stop." % int(heading))
 
     next_rediscovery = time.time() + REDISCOVERY_SECS
+    bw = BrightnessWindow(STUCK_WINDOW_SIZE)
+    last_stuck_ts = 0.0
+    odom_dist_at_window_fill = None
 
     while True:
         # ── periodic topic rediscovery (helps if sensors come online late) ────
@@ -264,7 +299,8 @@ def start():
 
         readings = pybot_scout.get_proximity_readings()
         camera_stats = CAMERA.get_snapshot()
-        drive = _camera_drive_command(camera_stats)
+        delta_fwd, delta_left, delta_right = bw.get_delta(DELTA_WINDOW_SPAN)
+        drive = _camera_drive_command(camera_stats, delta_fwd, delta_left, delta_right)
         DASHBOARD.update_sensors(readings)
         DASHBOARD.update_state(
             mode="drive_loop",
@@ -291,9 +327,47 @@ def start():
                 "lateral_norm": 0.0,
                 "center_conf": 0.0,
                 "pivot": False,
+                "delta_fwd": 0.0,
+                "delta_left": 0.0,
+                "delta_right": 0.0,
             }
 
         heading = drive.get("heading_deg", 0.0)
+
+        # ── stuck detection ────────────────────────────────────────────────────
+        if bw.is_stuck() and time.time() - last_stuck_ts > STUCK_COOLDOWN_SECS:
+            odom_stats = ODOM_TRACKER.get_stats()
+            odom_pose = ODOM_TRACKER.get_pose()
+            do_unstick = True
+            dist_since_fill = None
+            if odom_pose["has_data"] and odom_dist_at_window_fill is not None:
+                dist_since_fill = odom_stats["total_distance_m"] - odom_dist_at_window_fill
+                if dist_since_fill > STUCK_DIST_THRESHOLD_M:
+                    # Robot is actually moving through a uniform environment.
+                    do_unstick = False
+            LOGGER.log(
+                "stuck_check",
+                do_unstick=do_unstick,
+                dist_since_fill=dist_since_fill,
+                odom_has_data=odom_pose["has_data"],
+            )
+            if do_unstick:
+                rot_dir = 1 if int(time.time()) % 2 == 0 else 2
+                LOGGER.log("stuck_recovery_started",
+                           rot_dir=rot_dir, rot_deg=STUCK_ROTATE_DEG,
+                           drive_secs=STUCK_DRIVE_SECS)
+                print("Stuck detected – rotating %d° and driving forward." % STUCK_ROTATE_DEG)
+                pybot_scout.stop_move()
+                pybot_scout.set_rotate_3(rot_dir, STUCK_ROTATE_DEG)
+                time.sleep(float(STUCK_ROTATE_DEG) / ROTATION_SPEED + 0.3)
+                pybot_scout.set_translationSpeed(SPEED)
+                pybot_scout.set_translate_2(0, STUCK_DRIVE_SECS)
+                time.sleep(STUCK_DRIVE_SECS)
+                LOGGER.log("stuck_recovery_done")
+                bw.reset()
+                odom_dist_at_window_fill = None
+                last_stuck_ts = time.time()
+                continue
 
         if drive.get("pivot"):
             pybot_scout.stop_move()
@@ -319,6 +393,16 @@ def start():
         )
         DASHBOARD.update_state(mode="move_burst_camera", heading_deg=heading, camera_center=drive.get("center"))
         DASHBOARD.tick()
+
+        # ── update brightness window after each drive burst ────────────────────
+        if camera_stats:
+            lc = camera_stats.get("lower_center_mean_brightness") or 0.0
+            ll = camera_stats.get("lower_left_mean_brightness") or 0.0
+            lr = camera_stats.get("lower_right_mean_brightness") or 0.0
+            was_full = bw.full()
+            bw.push(lc, ll, lr)
+            if not was_full and bw.full():
+                odom_dist_at_window_fill = ODOM_TRACKER.get_stats()["total_distance_m"]
 
 
 # ── entry point ────────────────────────────────────────────────────────────────
