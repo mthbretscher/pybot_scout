@@ -1,0 +1,907 @@
+{"event": "logger_started", "file": "run_feedback/20260621_043158_obstacle_avoidance.jsonl", "git_branch": "copilot/moorebot-scout-random-drive", "git_commit": "b0ae1bfed14797edec4ad5180dced4e45cc08fce", "git_dirty": true, "script": "obstacle_avoidance", "ts_utc": "2026-06-21T04:31:58.510914Z"}
+{"event": "topic_discovery_total", "total": 50, "ts_utc": "2026-06-21T04:32:00.507739Z"}
+{"event": "topic_discovery_range_topics", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T04:32:00.516043Z"}
+{"event": "topic_discovery_selected", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T04:32:00.519951Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/tof", "ts_utc": "2026-06-21T04:32:00.923009Z"}
+{"event": "sensor_subscribed", "topic": "/SensorNode/ibeacon", "ts_utc": "2026-06-21T04:32:00.953077Z"}
+{"event": "sensor_topics_added", "topics": ["/SensorNode/tof", "/SensorNode/ibeacon"], "ts_utc": "2026-06-21T04:32:00.960237Z"}
+{"allow_sensorless_fallback": false, "check_interval_secs": 0.35, "event": "run_started", "max_step_secs": 5, "min_step_secs": 2, "obstacle_threshold_m": 0.4, "pause_secs": 0.5, "proximity_topics": ["/SensorNode/ibeacon", "/SensorNode/tof"], "rediscovery_interval_secs": 15.0, "rotation_speed": 90, "sensor_timeout_secs": 5.0, "speed": 0.3, "ts_utc": "2026-06-21T04:32:00.965020Z"}
+{"event": "sensor_wait_completed", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3860000371932983}, "sensor_active": true, "ts_utc": "2026-06-21T04:32:01.180441Z"}
+{"direction_deg": 186, "event": "step_selected", "pose": {"has_data": true, "heading_deg": -0.06912168851271976, "ts": 1782016321.177023, "x_m": 3.0898068392043454e-12, "y_m": 0.029583077877759933}, "requested_duration_s": 2.0836754620906337, "sensor_active": true, "ts_utc": "2026-06-21T04:32:01.186620Z"}
+{"burst_secs": 0.35, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3229999542236328}, "remaining_secs": 1.7336754620906336, "sensor_active": true, "ts_utc": "2026-06-21T04:32:01.508354Z"}
+{"burst_secs": 0.35, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1160000562667847}, "remaining_secs": 1.3836754620906335, "sensor_active": true, "ts_utc": "2026-06-21T04:32:01.906735Z"}
+{"burst_secs": 0.35, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0709999799728394}, "remaining_secs": 1.0336754620906334, "sensor_active": true, "ts_utc": "2026-06-21T04:32:02.319303Z"}
+{"burst_secs": 0.35, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2599999904632568}, "remaining_secs": 0.6836754620906335, "sensor_active": true, "ts_utc": "2026-06-21T04:32:02.719239Z"}
+{"burst_secs": 0.35, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 0.3336754620906335, "sensor_active": true, "ts_utc": "2026-06-21T04:32:03.113952Z"}
+{"burst_secs": 0.3336754620906335, "direction_deg": 186, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3949999809265137}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:32:03.501523Z"}
+{"direction_deg": 44, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016323.980789, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.787317955635732, "sensor_active": true, "ts_utc": "2026-06-21T04:32:04.006383Z"}
+{"burst_secs": 0.35, "direction_deg": 44, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.437317955635732, "sensor_active": true, "ts_utc": "2026-06-21T04:32:04.326748Z"}
+{"burst_secs": 0.35, "direction_deg": 44, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "remaining_secs": 2.087317955635732, "sensor_active": true, "ts_utc": "2026-06-21T04:32:04.729437Z"}
+{"burst_secs": 0.35, "direction_deg": 44, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.35100001096725464}, "remaining_secs": 1.7373179556357319, "sensor_active": true, "ts_utc": "2026-06-21T04:32:05.135949Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.35100001096725464}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:05.222660Z"}
+{"degree": 99, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:05.226364Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:08.284000Z"}
+{"direction_deg": 90, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016328.783012, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.165123830359977, "sensor_active": true, "ts_utc": "2026-06-21T04:32:08.789412Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.11699999868869781}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:08.793352Z"}
+{"degree": 92, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:08.797595Z"}
+{"direction_deg": 113, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:11.563777Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:11.666066Z"}
+{"degree": 176, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:11.671621Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:15.194881Z"}
+{"direction_deg": 140, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016335.679131, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.264139050424162, "sensor_active": true, "ts_utc": "2026-06-21T04:32:15.700286Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:15.703882Z"}
+{"degree": 170, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:15.707063Z"}
+{"direction_deg": 151, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:19.160032Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:19.194025Z"}
+{"degree": 103, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:19.198491Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:22.193215Z"}
+{"direction_deg": 43, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016342.677316, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.03304780993031, "sensor_active": true, "ts_utc": "2026-06-21T04:32:22.697026Z"}
+{"burst_secs": 0.35, "direction_deg": 43, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "remaining_secs": 3.68304780993031, "sensor_active": true, "ts_utc": "2026-06-21T04:32:23.117500Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:23.214367Z"}
+{"degree": 135, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:23.219808Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:26.337167Z"}
+{"direction_deg": 246, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016346.777445, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.4674283659181686, "sensor_active": true, "ts_utc": "2026-06-21T04:32:26.841484Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.12600000202655792}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:26.845294Z"}
+{"degree": 135, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:26.850561Z"}
+{"direction_deg": 114, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:30.008382Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:30.075807Z"}
+{"degree": 94, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:30.081512Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:32.955730Z"}
+{"direction_deg": 154, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016353.377366, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.8441749825492164, "sensor_active": true, "ts_utc": "2026-06-21T04:32:33.459463Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:33.463890Z"}
+{"degree": 140, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:33.470575Z"}
+{"direction_deg": 244, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:36.809418Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:36.906628Z"}
+{"degree": 96, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:36.910473Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:39.845283Z"}
+{"direction_deg": 86, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016360.277042, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.0008426957430214, "sensor_active": true, "ts_utc": "2026-06-21T04:32:40.352386Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:40.355887Z"}
+{"degree": 147, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:40.359658Z"}
+{"direction_deg": 131, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:43.713280Z"}
+{"burst_secs": 0.35, "direction_deg": 131, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": -Infinity}, "remaining_secs": 2.6508426957430213, "sensor_active": true, "ts_utc": "2026-06-21T04:32:44.043573Z"}
+{"burst_secs": 0.35, "direction_deg": 131, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.035999998450279236}, "remaining_secs": 2.3008426957430212, "sensor_active": true, "ts_utc": "2026-06-21T04:32:44.448441Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:44.543577Z"}
+{"degree": 168, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:44.551031Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:48.043149Z"}
+{"direction_deg": 103, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016368.476963, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.85239278251427, "sensor_active": true, "ts_utc": "2026-06-21T04:32:48.547074Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2160000056028366}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:48.550893Z"}
+{"degree": 142, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:48.555169Z"}
+{"direction_deg": 118, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:51.793894Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:51.880466Z"}
+{"degree": 165, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:51.887449Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:32:55.326639Z"}
+{"direction_deg": 304, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016375.777287, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.875950471715458, "sensor_active": true, "ts_utc": "2026-06-21T04:32:55.830438Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.09000000357627869}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:55.835363Z"}
+{"degree": 162, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:55.840510Z"}
+{"direction_deg": 81, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:32:59.234310Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:32:59.310213Z"}
+{"degree": 131, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:32:59.320236Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:02.506769Z"}
+{"direction_deg": 337, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016382.977039, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.209864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:03.010287Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:03.014150Z"}
+{"degree": 174, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:03.018787Z"}
+{"direction_deg": 98, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:06.497843Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7020000219345093}, "remaining_secs": 1.859864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:06.859915Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "remaining_secs": 1.509864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:07.274767Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0980000495910645}, "remaining_secs": 1.159864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:07.666332Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5580000281333923}, "remaining_secs": 0.809864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:08.069242Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.45986446836996797, "sensor_active": true, "ts_utc": "2026-06-21T04:33:08.477049Z"}
+{"burst_secs": 0.35, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.109864468369968, "sensor_active": true, "ts_utc": "2026-06-21T04:33:08.879137Z"}
+{"burst_secs": 0.109864468369968, "direction_deg": 98, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.350000023841858}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:33:09.181835Z"}
+{"direction_deg": 291, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016389.677956, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.5286696844314664, "sensor_active": true, "ts_utc": "2026-06-21T04:33:09.688467Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9810000061988831}, "remaining_secs": 3.1786696844314664, "sensor_active": true, "ts_utc": "2026-06-21T04:33:10.095916Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.8286696844314663, "sensor_active": true, "ts_utc": "2026-06-21T04:33:10.489598Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.478669684431466, "sensor_active": true, "ts_utc": "2026-06-21T04:33:10.894471Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.128669684431466, "sensor_active": true, "ts_utc": "2026-06-21T04:33:11.294528Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 1.778669684431466, "sensor_active": true, "ts_utc": "2026-06-21T04:33:11.696807Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1080000028014183}, "remaining_secs": 1.428669684431466, "sensor_active": true, "ts_utc": "2026-06-21T04:33:12.100211Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1080000028014183}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:12.198320Z"}
+{"degree": 169, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:12.205581Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:15.802588Z"}
+{"direction_deg": 170, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016396.276816, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.596538833474994, "sensor_active": true, "ts_utc": "2026-06-21T04:33:16.307016Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.11699999868869781}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:16.311011Z"}
+{"degree": 98, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:16.314693Z"}
+{"direction_deg": 301, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:19.291074Z"}
+{"burst_secs": 0.35, "direction_deg": 301, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 4.246538833474994, "sensor_active": true, "ts_utc": "2026-06-21T04:33:19.646435Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:19.733793Z"}
+{"degree": 174, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:19.737187Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:23.375491Z"}
+{"direction_deg": 201, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016403.876955, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.544806105841246, "sensor_active": true, "ts_utc": "2026-06-21T04:33:23.885584Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:23.889795Z"}
+{"degree": 126, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:23.893394Z"}
+{"direction_deg": 135, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:27.028927Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:27.073319Z"}
+{"degree": 146, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:27.076878Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:30.425268Z"}
+{"direction_deg": 205, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016410.876731, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.2720622083673074, "sensor_active": true, "ts_utc": "2026-06-21T04:33:30.929572Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.15299999713897705}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:30.932872Z"}
+{"degree": 140, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:30.936369Z"}
+{"direction_deg": 265, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:34.196948Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3779999911785126}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:34.211954Z"}
+{"degree": 160, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:34.221291Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:37.713032Z"}
+{"direction_deg": 44, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016418.176827, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.545416021072038, "sensor_active": true, "ts_utc": "2026-06-21T04:33:38.217568Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.09000000357627869}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:38.223459Z"}
+{"degree": 102, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:38.227414Z"}
+{"direction_deg": 248, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:41.190707Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.18000000715255737}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:41.246827Z"}
+{"degree": 167, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:41.251972Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:44.815182Z"}
+{"direction_deg": 34, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016425.277198, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.9712938101116797, "sensor_active": true, "ts_utc": "2026-06-21T04:33:45.318481Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:45.323783Z"}
+{"degree": 93, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:45.331626Z"}
+{"direction_deg": 118, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:48.135312Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:48.171074Z"}
+{"degree": 154, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:48.180001Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:51.591258Z"}
+{"direction_deg": 242, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016432.077518, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.573375425150126, "sensor_active": true, "ts_utc": "2026-06-21T04:33:52.095431Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.25200000405311584}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:52.098491Z"}
+{"degree": 107, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:52.101673Z"}
+{"direction_deg": 249, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:33:55.045296Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:55.110672Z"}
+{"degree": 121, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:55.113905Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:33:58.227495Z"}
+{"direction_deg": 6, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016438.678365, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.3503730150800415, "sensor_active": true, "ts_utc": "2026-06-21T04:33:58.731306Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.18000000715255737}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:33:58.734636Z"}
+{"degree": 101, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:33:58.737691Z"}
+{"direction_deg": 150, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:34:01.714270Z"}
+{"burst_secs": 0.35, "direction_deg": 150, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": -Infinity}, "remaining_secs": 3.0003730150800414, "sensor_active": true, "ts_utc": "2026-06-21T04:34:02.044323Z"}
+{"burst_secs": 0.35, "direction_deg": 150, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.16200000047683716}, "remaining_secs": 2.6503730150800413, "sensor_active": true, "ts_utc": "2026-06-21T04:34:02.450528Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:02.539259Z"}
+{"degree": 174, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:02.544758Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:34:06.128258Z"}
+{"direction_deg": 221, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016446.577078, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.0139876681193236, "sensor_active": true, "ts_utc": "2026-06-21T04:34:06.632160Z"}
+{"burst_secs": 0.35, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 1.6639876681193235, "sensor_active": true, "ts_utc": "2026-06-21T04:34:06.977444Z"}
+{"burst_secs": 0.35, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 1.3139876681193234, "sensor_active": true, "ts_utc": "2026-06-21T04:34:07.370263Z"}
+{"burst_secs": 0.35, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.9639876681193235, "sensor_active": true, "ts_utc": "2026-06-21T04:34:07.779247Z"}
+{"burst_secs": 0.35, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.6139876681193235, "sensor_active": true, "ts_utc": "2026-06-21T04:34:08.179712Z"}
+{"burst_secs": 0.35, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 0.2639876681193235, "sensor_active": true, "ts_utc": "2026-06-21T04:34:08.584212Z"}
+{"burst_secs": 0.2639876681193235, "direction_deg": 221, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6209999918937683}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:08.890405Z"}
+{"direction_deg": 347, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016449.377274, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.8295527763040944, "sensor_active": true, "ts_utc": "2026-06-21T04:34:09.395450Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "remaining_secs": 3.4795527763040943, "sensor_active": true, "ts_utc": "2026-06-21T04:34:09.786667Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "remaining_secs": 3.1295527763040942, "sensor_active": true, "ts_utc": "2026-06-21T04:34:10.191068Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 2.779552776304094, "sensor_active": true, "ts_utc": "2026-06-21T04:34:10.590065Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 2.429552776304094, "sensor_active": true, "ts_utc": "2026-06-21T04:34:10.999393Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 2.079552776304094, "sensor_active": true, "ts_utc": "2026-06-21T04:34:11.405677Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 1.7295527763040939, "sensor_active": true, "ts_utc": "2026-06-21T04:34:11.809663Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "remaining_secs": 1.3795527763040938, "sensor_active": true, "ts_utc": "2026-06-21T04:34:12.203948Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "remaining_secs": 1.0295527763040937, "sensor_active": true, "ts_utc": "2026-06-21T04:34:12.618681Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 0.6795527763040937, "sensor_active": true, "ts_utc": "2026-06-21T04:34:13.014253Z"}
+{"burst_secs": 0.35, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "remaining_secs": 0.32955277630409374, "sensor_active": true, "ts_utc": "2026-06-21T04:34:13.420073Z"}
+{"burst_secs": 0.32955277630409374, "direction_deg": 347, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:13.800951Z"}
+{"direction_deg": 273, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016454.277802, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.398098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:14.307437Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "remaining_secs": 4.048098099700303, "sensor_active": true, "ts_utc": "2026-06-21T04:34:14.731594Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6209999918937683}, "remaining_secs": 3.6980980997003026, "sensor_active": true, "ts_utc": "2026-06-21T04:34:15.130905Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.414000004529953}, "remaining_secs": 3.3480980997003025, "sensor_active": true, "ts_utc": "2026-06-21T04:34:15.541877Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "remaining_secs": 2.9980980997003024, "sensor_active": true, "ts_utc": "2026-06-21T04:34:15.941719Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "remaining_secs": 2.6480980997003023, "sensor_active": true, "ts_utc": "2026-06-21T04:34:16.344362Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5130000114440918}, "remaining_secs": 2.298098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:16.751347Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "remaining_secs": 1.9480980997003021, "sensor_active": true, "ts_utc": "2026-06-21T04:34:17.144912Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 1.598098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:17.554182Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "remaining_secs": 1.248098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:17.947501Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "remaining_secs": 0.898098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:18.350991Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 0.548098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:18.757382Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 0.198098099700302, "sensor_active": true, "ts_utc": "2026-06-21T04:34:19.153231Z"}
+{"burst_secs": 0.198098099700302, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:19.454790Z"}
+{"direction_deg": 251, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016459.877286, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.6780594008209113, "sensor_active": true, "ts_utc": "2026-06-21T04:34:19.960180Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5040000081062317}, "remaining_secs": 2.3280594008209112, "sensor_active": true, "ts_utc": "2026-06-21T04:34:20.366386Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "remaining_secs": 1.9780594008209111, "sensor_active": true, "ts_utc": "2026-06-21T04:34:20.764717Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "remaining_secs": 1.628059400820911, "sensor_active": true, "ts_utc": "2026-06-21T04:34:21.167662Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.531000018119812}, "remaining_secs": 1.278059400820911, "sensor_active": true, "ts_utc": "2026-06-21T04:34:21.582919Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "remaining_secs": 0.928059400820911, "sensor_active": true, "ts_utc": "2026-06-21T04:34:21.979695Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6480000019073486}, "remaining_secs": 0.578059400820911, "sensor_active": true, "ts_utc": "2026-06-21T04:34:22.392550Z"}
+{"burst_secs": 0.35, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5400000214576721}, "remaining_secs": 0.22805940082091103, "sensor_active": true, "ts_utc": "2026-06-21T04:34:22.778772Z"}
+{"burst_secs": 0.22805940082091103, "direction_deg": 251, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:23.083054Z"}
+{"direction_deg": 277, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016463.578036, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.4938216382651386, "sensor_active": true, "ts_utc": "2026-06-21T04:34:23.587374Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.1438216382651385, "sensor_active": true, "ts_utc": "2026-06-21T04:34:23.994936Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 1.7938216382651384, "sensor_active": true, "ts_utc": "2026-06-21T04:34:24.412309Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 1.4438216382651383, "sensor_active": true, "ts_utc": "2026-06-21T04:34:24.817859Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6029999852180481}, "remaining_secs": 1.0938216382651382, "sensor_active": true, "ts_utc": "2026-06-21T04:34:25.199396Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "remaining_secs": 0.7438216382651383, "sensor_active": true, "ts_utc": "2026-06-21T04:34:25.602913Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7110000252723694}, "remaining_secs": 0.3938216382651383, "sensor_active": true, "ts_utc": "2026-06-21T04:34:26.008216Z"}
+{"burst_secs": 0.35, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 0.043821638265138296, "sensor_active": true, "ts_utc": "2026-06-21T04:34:26.403061Z"}
+{"burst_secs": 0.043821638265138296, "direction_deg": 277, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:26.708348Z"}
+{"direction_deg": 203, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016467.177553, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.3795615725457626, "sensor_active": true, "ts_utc": "2026-06-21T04:34:27.215436Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.531000018119812}, "remaining_secs": 2.0295615725457625, "sensor_active": true, "ts_utc": "2026-06-21T04:34:27.620425Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 1.6795615725457624, "sensor_active": true, "ts_utc": "2026-06-21T04:34:28.017756Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "remaining_secs": 1.3295615725457623, "sensor_active": true, "ts_utc": "2026-06-21T04:34:28.421928Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "remaining_secs": 0.9795615725457624, "sensor_active": true, "ts_utc": "2026-06-21T04:34:28.820257Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5759999752044678}, "remaining_secs": 0.6295615725457624, "sensor_active": true, "ts_utc": "2026-06-21T04:34:29.226049Z"}
+{"burst_secs": 0.35, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7020000219345093}, "remaining_secs": 0.2795615725457624, "sensor_active": true, "ts_utc": "2026-06-21T04:34:29.631053Z"}
+{"burst_secs": 0.2795615725457624, "direction_deg": 203, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:29.960393Z"}
+{"direction_deg": 51, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016470.377476, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.077126248732916, "sensor_active": true, "ts_utc": "2026-06-21T04:34:30.464426Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.7271262487329158, "sensor_active": true, "ts_utc": "2026-06-21T04:34:30.838029Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.3771262487329157, "sensor_active": true, "ts_utc": "2026-06-21T04:34:31.233008Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "remaining_secs": 2.0271262487329156, "sensor_active": true, "ts_utc": "2026-06-21T04:34:31.638722Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 1.6771262487329155, "sensor_active": true, "ts_utc": "2026-06-21T04:34:32.041360Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7020000219345093}, "remaining_secs": 1.3271262487329154, "sensor_active": true, "ts_utc": "2026-06-21T04:34:32.450804Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "remaining_secs": 0.9771262487329154, "sensor_active": true, "ts_utc": "2026-06-21T04:34:32.853510Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "remaining_secs": 0.6271262487329154, "sensor_active": true, "ts_utc": "2026-06-21T04:34:33.252858Z"}
+{"burst_secs": 0.35, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "remaining_secs": 0.27712624873291547, "sensor_active": true, "ts_utc": "2026-06-21T04:34:33.649587Z"}
+{"burst_secs": 0.27712624873291547, "direction_deg": 51, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:34:33.979827Z"}
+{"direction_deg": 212, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016474.477435, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.2376727626579083, "sensor_active": true, "ts_utc": "2026-06-21T04:34:34.484851Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.887672762657908, "sensor_active": true, "ts_utc": "2026-06-21T04:34:34.854867Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.537672762657908, "sensor_active": true, "ts_utc": "2026-06-21T04:34:35.262621Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5669999718666077}, "remaining_secs": 2.187672762657908, "sensor_active": true, "ts_utc": "2026-06-21T04:34:35.669603Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6119999885559082}, "remaining_secs": 1.837672762657908, "sensor_active": true, "ts_utc": "2026-06-21T04:34:36.073583Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7379999756813049}, "remaining_secs": 1.4876727626579078, "sensor_active": true, "ts_utc": "2026-06-21T04:34:36.477532Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7110000252723694}, "remaining_secs": 1.1376727626579077, "sensor_active": true, "ts_utc": "2026-06-21T04:34:36.881769Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "remaining_secs": 0.7876727626579078, "sensor_active": true, "ts_utc": "2026-06-21T04:34:37.289345Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5490000247955322}, "remaining_secs": 0.4376727626579078, "sensor_active": true, "ts_utc": "2026-06-21T04:34:37.689474Z"}
+{"burst_secs": 0.35, "direction_deg": 212, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3959999978542328}, "remaining_secs": 0.0876727626579078, "sensor_active": true, "ts_utc": "2026-06-21T04:34:38.090291Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:38.186039Z"}
+{"degree": 111, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:38.204421Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:34:41.313835Z"}
+{"direction_deg": 271, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016481.777047, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.7214548077975125, "sensor_active": true, "ts_utc": "2026-06-21T04:34:41.818366Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:41.821656Z"}
+{"degree": 146, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:41.825617Z"}
+{"direction_deg": 191, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:34:45.143016Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.11699999868869781}, "remaining_secs": 2.3714548077975124, "sensor_active": true, "ts_utc": "2026-06-21T04:34:45.539238Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:45.639534Z"}
+{"degree": 169, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:45.643585Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:34:49.207322Z"}
+{"direction_deg": 345, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016489.676877, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.5674700437784512, "sensor_active": true, "ts_utc": "2026-06-21T04:34:49.717366Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:49.720887Z"}
+{"degree": 164, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:49.727831Z"}
+{"direction_deg": 46, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:34:53.123904Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:53.178736Z"}
+{"degree": 118, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:53.184068Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:34:56.332314Z"}
+{"direction_deg": 224, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016496.777385, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.759608530844264, "sensor_active": true, "ts_utc": "2026-06-21T04:34:56.836399Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:34:56.840551Z"}
+{"degree": 125, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:34:56.844251Z"}
+{"direction_deg": 143, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:34:59.951715Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:00.009571Z"}
+{"degree": 167, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:00.014642Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:03.522172Z"}
+{"direction_deg": 117, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016503.977151, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.698344873513615, "sensor_active": true, "ts_utc": "2026-06-21T04:35:04.025381Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:04.032479Z"}
+{"degree": 115, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:04.035627Z"}
+{"direction_deg": 71, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:07.168328Z"}
+{"burst_secs": 0.35, "direction_deg": 71, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "remaining_secs": 2.3483448735136148, "sensor_active": true, "ts_utc": "2026-06-21T04:35:07.560997Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.15299999713897705}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:07.649743Z"}
+{"degree": 171, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:07.653373Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:11.155386Z"}
+{"direction_deg": 181, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016511.577279, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.6169459808272, "sensor_active": true, "ts_utc": "2026-06-21T04:35:11.660488Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:11.664667Z"}
+{"degree": 90, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:11.668483Z"}
+{"direction_deg": 62, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:14.504355Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.36000001430511475}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:14.581238Z"}
+{"degree": 101, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:14.587342Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:17.537709Z"}
+{"direction_deg": 24, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016517.977567, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.031289382499875, "sensor_active": true, "ts_utc": "2026-06-21T04:35:18.041693Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:18.045406Z"}
+{"degree": 126, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:18.048905Z"}
+{"direction_deg": 259, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:21.170869Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:21.214392Z"}
+{"degree": 95, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:21.218408Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:24.182904Z"}
+{"direction_deg": 148, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016524.676862, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.5058062400665597, "sensor_active": true, "ts_utc": "2026-06-21T04:35:24.686646Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3779999911785126}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:24.689889Z"}
+{"degree": 138, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:24.693492Z"}
+{"direction_deg": 284, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:27.917373Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.16200000047683716}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:27.954241Z"}
+{"degree": 109, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:27.958850Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:30.919437Z"}
+{"direction_deg": 7, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016531.377297, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.559652482022625, "sensor_active": true, "ts_utc": "2026-06-21T04:35:31.424412Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:31.428447Z"}
+{"degree": 150, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:31.434784Z"}
+{"direction_deg": 13, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:34.708457Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:34.785589Z"}
+{"degree": 127, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:34.789312Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:37.882624Z"}
+{"direction_deg": 344, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016538.378734, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.9100052137901398, "sensor_active": true, "ts_utc": "2026-06-21T04:35:38.386799Z"}
+{"burst_secs": 0.35, "direction_deg": 344, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6930000185966492}, "remaining_secs": 3.5600052137901397, "sensor_active": true, "ts_utc": "2026-06-21T04:35:38.720560Z"}
+{"burst_secs": 0.35, "direction_deg": 344, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5220000147819519}, "remaining_secs": 3.2100052137901396, "sensor_active": true, "ts_utc": "2026-06-21T04:35:39.120796Z"}
+{"burst_secs": 0.35, "direction_deg": 344, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.24300000071525574}, "remaining_secs": 2.8600052137901395, "sensor_active": true, "ts_utc": "2026-06-21T04:35:39.531342Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:39.619793Z"}
+{"degree": 128, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:39.624275Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:42.745340Z"}
+{"direction_deg": 37, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016543.176724, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.0783107675394463, "sensor_active": true, "ts_utc": "2026-06-21T04:35:43.249234Z"}
+{"burst_secs": 0.35, "direction_deg": 37, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "remaining_secs": 2.7283107675394462, "sensor_active": true, "ts_utc": "2026-06-21T04:35:43.646607Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:43.743001Z"}
+{"degree": 111, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:43.746800Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:46.774175Z"}
+{"direction_deg": 131, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016547.277394, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.5905067025244914, "sensor_active": true, "ts_utc": "2026-06-21T04:35:47.279314Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:47.284430Z"}
+{"degree": 146, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:47.288830Z"}
+{"direction_deg": 149, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:50.642196Z"}
+{"burst_secs": 0.35, "direction_deg": 149, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "remaining_secs": 4.240506702524492, "sensor_active": true, "ts_utc": "2026-06-21T04:35:50.985477Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:51.073908Z"}
+{"degree": 99, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:51.082367Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:35:54.022380Z"}
+{"direction_deg": 42, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016554.476957, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.4848787561149344, "sensor_active": true, "ts_utc": "2026-06-21T04:35:54.526390Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.36000001430511475}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:54.530770Z"}
+{"degree": 149, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:54.534627Z"}
+{"direction_deg": 30, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:35:57.827450Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.18000000715255737}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:35:57.913199Z"}
+{"degree": 97, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:35:57.918432Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:00.893423Z"}
+{"direction_deg": 8, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016561.377296, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.131344999349706, "sensor_active": true, "ts_utc": "2026-06-21T04:36:01.397621Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:01.405457Z"}
+{"degree": 126, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:01.412848Z"}
+{"direction_deg": 26, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:04.517624Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:04.543642Z"}
+{"degree": 128, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:04.548007Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:07.731609Z"}
+{"direction_deg": 1, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016568.178433, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.526181608191474, "sensor_active": true, "ts_utc": "2026-06-21T04:36:08.235734Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:08.239994Z"}
+{"degree": 103, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:08.243309Z"}
+{"direction_deg": 194, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:11.231340Z"}
+{"burst_secs": 0.35, "direction_deg": 194, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "remaining_secs": 4.176181608191475, "sensor_active": true, "ts_utc": "2026-06-21T04:36:11.590525Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3779999911785126}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:11.687692Z"}
+{"degree": 174, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:11.692201Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:15.274210Z"}
+{"direction_deg": 56, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016575.777173, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.041221402021156, "sensor_active": true, "ts_utc": "2026-06-21T04:36:15.779420Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:15.784503Z"}
+{"degree": 101, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:15.788963Z"}
+{"direction_deg": 178, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:18.617009Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:18.721038Z"}
+{"degree": 93, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:18.728506Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:21.627701Z"}
+{"direction_deg": 36, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016582.077062, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.794524566564207, "sensor_active": true, "ts_utc": "2026-06-21T04:36:22.131325Z"}
+{"burst_secs": 0.35, "direction_deg": 36, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "remaining_secs": 2.444524566564207, "sensor_active": true, "ts_utc": "2026-06-21T04:36:22.547816Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:22.635921Z"}
+{"degree": 104, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:22.642575Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:25.610710Z"}
+{"direction_deg": 192, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016586.077052, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.0310682215109592, "sensor_active": true, "ts_utc": "2026-06-21T04:36:26.114572Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2160000056028366}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:26.118242Z"}
+{"degree": 155, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:26.122038Z"}
+{"direction_deg": 360, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:29.418980Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.36000001430511475}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:29.468165Z"}
+{"degree": 99, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:29.473858Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:32.431953Z"}
+{"direction_deg": 162, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016592.876984, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.8001186120757096, "sensor_active": true, "ts_utc": "2026-06-21T04:36:32.938353Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:32.942916Z"}
+{"degree": 103, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:32.946699Z"}
+{"direction_deg": 5, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:35.885340Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "remaining_secs": 2.4501186120757095, "sensor_active": true, "ts_utc": "2026-06-21T04:36:36.209470Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "remaining_secs": 2.1001186120757094, "sensor_active": true, "ts_utc": "2026-06-21T04:36:36.613436Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "remaining_secs": 1.7501186120757093, "sensor_active": true, "ts_utc": "2026-06-21T04:36:37.016417Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4860000014305115}, "remaining_secs": 1.4001186120757092, "sensor_active": true, "ts_utc": "2026-06-21T04:36:37.418678Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.47699999809265137}, "remaining_secs": 1.0501186120757091, "sensor_active": true, "ts_utc": "2026-06-21T04:36:37.825552Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "remaining_secs": 0.7001186120757091, "sensor_active": true, "ts_utc": "2026-06-21T04:36:38.228339Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.44999998807907104}, "remaining_secs": 0.35011861207570916, "sensor_active": true, "ts_utc": "2026-06-21T04:36:38.631577Z"}
+{"burst_secs": 0.35, "direction_deg": 5, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3959999978542328}, "remaining_secs": 0.00011861207570917909, "sensor_active": true, "ts_utc": "2026-06-21T04:36:39.026062Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4410000145435333}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:39.122925Z"}
+{"degree": 120, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:39.126758Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:42.350984Z"}
+{"direction_deg": 273, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016602.776961, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.832411685173905, "sensor_active": true, "ts_utc": "2026-06-21T04:36:42.856184Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5400000214576721}, "remaining_secs": 3.482411685173905, "sensor_active": true, "ts_utc": "2026-06-21T04:36:43.257446Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9269999861717224}, "remaining_secs": 3.132411685173905, "sensor_active": true, "ts_utc": "2026-06-21T04:36:43.663436Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 2.782411685173905, "sensor_active": true, "ts_utc": "2026-06-21T04:36:44.072618Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1610000133514404}, "remaining_secs": 2.432411685173905, "sensor_active": true, "ts_utc": "2026-06-21T04:36:44.466304Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9810000061988831}, "remaining_secs": 2.0824116851739047, "sensor_active": true, "ts_utc": "2026-06-21T04:36:44.867645Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.972000002861023}, "remaining_secs": 1.7324116851739046, "sensor_active": true, "ts_utc": "2026-06-21T04:36:45.272245Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "remaining_secs": 1.3824116851739046, "sensor_active": true, "ts_utc": "2026-06-21T04:36:45.671370Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0080000162124634}, "remaining_secs": 1.0324116851739045, "sensor_active": true, "ts_utc": "2026-06-21T04:36:46.079977Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0169999599456787}, "remaining_secs": 0.6824116851739045, "sensor_active": true, "ts_utc": "2026-06-21T04:36:46.490766Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.45899999141693115}, "remaining_secs": 0.3324116851739045, "sensor_active": true, "ts_utc": "2026-06-21T04:36:46.888835Z"}
+{"burst_secs": 0.3324116851739045, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9089999794960022}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:36:47.277605Z"}
+{"direction_deg": 207, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016607.778, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.3988193794993142, "sensor_active": true, "ts_utc": "2026-06-21T04:36:47.782835Z"}
+{"burst_secs": 0.35, "direction_deg": 207, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6299999952316284}, "remaining_secs": 3.048819379499314, "sensor_active": true, "ts_utc": "2026-06-21T04:36:48.195956Z"}
+{"burst_secs": 0.35, "direction_deg": 207, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.698819379499314, "sensor_active": true, "ts_utc": "2026-06-21T04:36:48.599531Z"}
+{"burst_secs": 0.35, "direction_deg": 207, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 2.348819379499314, "sensor_active": true, "ts_utc": "2026-06-21T04:36:49.010807Z"}
+{"burst_secs": 0.35, "direction_deg": 207, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "remaining_secs": 1.9988193794993139, "sensor_active": true, "ts_utc": "2026-06-21T04:36:49.404380Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:49.503875Z"}
+{"degree": 156, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:49.510987Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:52.850180Z"}
+{"direction_deg": 46, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016613.277356, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.1071441086488942, "sensor_active": true, "ts_utc": "2026-06-21T04:36:53.354065Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2160000056028366}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:53.358377Z"}
+{"degree": 114, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:53.362359Z"}
+{"direction_deg": 211, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:36:56.343838Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.15299999713897705}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:36:56.431565Z"}
+{"degree": 158, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:36:56.436659Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:36:59.883147Z"}
+{"direction_deg": 295, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016620.380332, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.7220365207385253, "sensor_active": true, "ts_utc": "2026-06-21T04:37:00.387480Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27900001406669617}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:00.391866Z"}
+{"degree": 137, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:00.396023Z"}
+{"direction_deg": 167, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:03.689823Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.18000000715255737}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:03.765436Z"}
+{"degree": 148, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:03.771656Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:07.130063Z"}
+{"direction_deg": 33, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016627.57786, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.711721921396803, "sensor_active": true, "ts_utc": "2026-06-21T04:37:07.633396Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.22499999403953552}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:07.636974Z"}
+{"degree": 134, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:07.642534Z"}
+{"direction_deg": 278, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:10.852782Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "remaining_secs": 4.3617219213968035, "sensor_active": true, "ts_utc": "2026-06-21T04:37:11.213302Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "remaining_secs": 4.011721921396804, "sensor_active": true, "ts_utc": "2026-06-21T04:37:11.634629Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "remaining_secs": 3.6617219213968037, "sensor_active": true, "ts_utc": "2026-06-21T04:37:12.030420Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "remaining_secs": 3.3117219213968037, "sensor_active": true, "ts_utc": "2026-06-21T04:37:12.428277Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4050000011920929}, "remaining_secs": 2.9617219213968036, "sensor_active": true, "ts_utc": "2026-06-21T04:37:12.820075Z"}
+{"burst_secs": 0.35, "direction_deg": 278, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "remaining_secs": 2.6117219213968035, "sensor_active": true, "ts_utc": "2026-06-21T04:37:13.226313Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4230000078678131}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:13.317675Z"}
+{"degree": 139, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:13.322739Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:16.593264Z"}
+{"direction_deg": 175, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016637.077631, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.0683106501759316, "sensor_active": true, "ts_utc": "2026-06-21T04:37:17.098384Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.12600000202655792}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:17.102705Z"}
+{"degree": 120, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:17.120212Z"}
+{"direction_deg": 62, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:20.171000Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:20.258549Z"}
+{"degree": 164, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:20.262392Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:23.696727Z"}
+{"direction_deg": 187, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016644.177912, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.5351125519106548, "sensor_active": true, "ts_utc": "2026-06-21T04:37:24.200437Z"}
+{"burst_secs": 0.35, "direction_deg": 187, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "remaining_secs": 3.1851125519106547, "sensor_active": true, "ts_utc": "2026-06-21T04:37:24.573277Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:24.671911Z"}
+{"degree": 106, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:24.677945Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:27.696771Z"}
+{"direction_deg": 283, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016648.178283, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.7935670066973994, "sensor_active": true, "ts_utc": "2026-06-21T04:37:28.203000Z"}
+{"burst_secs": 0.35, "direction_deg": 283, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "remaining_secs": 3.4435670066973993, "sensor_active": true, "ts_utc": "2026-06-21T04:37:28.603249Z"}
+{"burst_secs": 0.35, "direction_deg": 283, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3240000009536743}, "remaining_secs": 3.0935670066973993, "sensor_active": true, "ts_utc": "2026-06-21T04:37:28.998612Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.062000036239624}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:29.096195Z"}
+{"degree": 147, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:29.101427Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:32.524278Z"}
+{"direction_deg": 265, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016652.978819, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.379895849613777, "sensor_active": true, "ts_utc": "2026-06-21T04:37:33.028076Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:33.031981Z"}
+{"degree": 173, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:33.035159Z"}
+{"direction_deg": 180, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:36.603174Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.12600000202655792}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:36.637883Z"}
+{"degree": 129, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:36.645576Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:39.832737Z"}
+{"direction_deg": 42, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016660.277473, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.288721429221816, "sensor_active": true, "ts_utc": "2026-06-21T04:37:40.336643Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2070000022649765}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:40.345345Z"}
+{"degree": 120, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:40.352512Z"}
+{"direction_deg": 171, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:43.472327Z"}
+{"burst_secs": 0.35, "direction_deg": 171, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.05400000140070915}, "remaining_secs": 3.938721429221816, "sensor_active": true, "ts_utc": "2026-06-21T04:37:43.877304Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:43.976914Z"}
+{"degree": 129, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:43.983995Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:47.127912Z"}
+{"direction_deg": 176, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016667.583323, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.945182913656751, "sensor_active": true, "ts_utc": "2026-06-21T04:37:47.631961Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:47.637216Z"}
+{"degree": 136, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:47.644424Z"}
+{"direction_deg": 349, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:50.821290Z"}
+{"burst_secs": 0.35, "direction_deg": 349, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "remaining_secs": 3.595182913656751, "sensor_active": true, "ts_utc": "2026-06-21T04:37:51.210328Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:51.311253Z"}
+{"degree": 153, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:51.318167Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:37:54.640199Z"}
+{"direction_deg": 19, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016675.081559, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.589333253597088, "sensor_active": true, "ts_utc": "2026-06-21T04:37:55.147989Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:55.153547Z"}
+{"degree": 124, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:55.157025Z"}
+{"direction_deg": 233, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:37:58.258221Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.05400000140070915}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:37:58.345947Z"}
+{"degree": 114, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:37:58.352222Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:38:01.389189Z"}
+{"direction_deg": 320, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016681.885387, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.988452021970165, "sensor_active": true, "ts_utc": "2026-06-21T04:38:01.894883Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.25200000405311584}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:38:01.898607Z"}
+{"degree": 158, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:38:01.902423Z"}
+{"direction_deg": 184, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:38:05.296072Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:38:05.377575Z"}
+{"degree": 99, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:38:05.387535Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:38:08.296697Z"}
+{"direction_deg": 61, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016688.77983, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.1729014468226664, "sensor_active": true, "ts_utc": "2026-06-21T04:38:08.800394Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0080000162124634}, "remaining_secs": 2.8229014468226663, "sensor_active": true, "ts_utc": "2026-06-21T04:38:09.202965Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "remaining_secs": 2.472901446822666, "sensor_active": true, "ts_utc": "2026-06-21T04:38:09.619643Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9179999828338623}, "remaining_secs": 2.122901446822666, "sensor_active": true, "ts_utc": "2026-06-21T04:38:10.020226Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2510000467300415}, "remaining_secs": 1.772901446822666, "sensor_active": true, "ts_utc": "2026-06-21T04:38:10.440397Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.422901446822666, "sensor_active": true, "ts_utc": "2026-06-21T04:38:10.817033Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0889999866485596}, "remaining_secs": 1.0729014468226659, "sensor_active": true, "ts_utc": "2026-06-21T04:38:11.222305Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2690000534057617}, "remaining_secs": 0.7229014468226659, "sensor_active": true, "ts_utc": "2026-06-21T04:38:11.623989Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 0.3729014468226659, "sensor_active": true, "ts_utc": "2026-06-21T04:38:12.027296Z"}
+{"burst_secs": 0.35, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2419999837875366}, "remaining_secs": 0.022901446822665927, "sensor_active": true, "ts_utc": "2026-06-21T04:38:12.438822Z"}
+{"burst_secs": 0.022901446822665927, "direction_deg": 61, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1790000200271606}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:12.736207Z"}
+{"direction_deg": 134, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016693.177049, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.816607089157696, "sensor_active": true, "ts_utc": "2026-06-21T04:38:13.240413Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.125}, "remaining_secs": 3.466607089157696, "sensor_active": true, "ts_utc": "2026-06-21T04:38:13.630892Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.350000023841858}, "remaining_secs": 3.116607089157696, "sensor_active": true, "ts_utc": "2026-06-21T04:38:14.035597Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1790000200271606}, "remaining_secs": 2.766607089157696, "sensor_active": true, "ts_utc": "2026-06-21T04:38:14.441284Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.416607089157696, "sensor_active": true, "ts_utc": "2026-06-21T04:38:14.835981Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.215000033378601}, "remaining_secs": 2.0666070891576958, "sensor_active": true, "ts_utc": "2026-06-21T04:38:15.242351Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2599999904632568}, "remaining_secs": 1.7166070891576957, "sensor_active": true, "ts_utc": "2026-06-21T04:38:15.648600Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.890999972820282}, "remaining_secs": 1.3666070891576956, "sensor_active": true, "ts_utc": "2026-06-21T04:38:16.049885Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1610000133514404}, "remaining_secs": 1.0166070891576955, "sensor_active": true, "ts_utc": "2026-06-21T04:38:16.456340Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.7100000381469727}, "remaining_secs": 0.6666070891576955, "sensor_active": true, "ts_utc": "2026-06-21T04:38:16.858429Z"}
+{"burst_secs": 0.35, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 0.31660708915769553, "sensor_active": true, "ts_utc": "2026-06-21T04:38:17.261857Z"}
+{"burst_secs": 0.31660708915769553, "direction_deg": 134, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:17.632008Z"}
+{"direction_deg": 291, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016698.076969, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.78541825098745, "sensor_active": true, "ts_utc": "2026-06-21T04:38:18.136416Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.43541825098745, "sensor_active": true, "ts_utc": "2026-06-21T04:38:18.475015Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.440000057220459}, "remaining_secs": 3.0854182509874497, "sensor_active": true, "ts_utc": "2026-06-21T04:38:18.872470Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "remaining_secs": 2.7354182509874496, "sensor_active": true, "ts_utc": "2026-06-21T04:38:19.268829Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0260000228881836}, "remaining_secs": 2.3854182509874495, "sensor_active": true, "ts_utc": "2026-06-21T04:38:19.674843Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1610000133514404}, "remaining_secs": 2.0354182509874494, "sensor_active": true, "ts_utc": "2026-06-21T04:38:20.077185Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4950000047683716}, "remaining_secs": 1.6854182509874494, "sensor_active": true, "ts_utc": "2026-06-21T04:38:20.484365Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.4579999446868896}, "remaining_secs": 1.3354182509874493, "sensor_active": true, "ts_utc": "2026-06-21T04:38:20.891599Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3769999742507935}, "remaining_secs": 0.9854182509874493, "sensor_active": true, "ts_utc": "2026-06-21T04:38:21.293604Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.828000009059906}, "remaining_secs": 0.6354182509874493, "sensor_active": true, "ts_utc": "2026-06-21T04:38:21.687857Z"}
+{"burst_secs": 0.35, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3860000371932983}, "remaining_secs": 0.28541825098744933, "sensor_active": true, "ts_utc": "2026-06-21T04:38:22.089290Z"}
+{"burst_secs": 0.28541825098744933, "direction_deg": 291, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.503000020980835}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:22.425656Z"}
+{"direction_deg": 303, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016702.877449, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.789926266780619, "sensor_active": true, "ts_utc": "2026-06-21T04:38:22.930436Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.4399262667806187, "sensor_active": true, "ts_utc": "2026-06-21T04:38:23.294408Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8999999761581421}, "remaining_secs": 2.0899262667806187, "sensor_active": true, "ts_utc": "2026-06-21T04:38:23.705006Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9089999794960022}, "remaining_secs": 1.7399262667806186, "sensor_active": true, "ts_utc": "2026-06-21T04:38:24.104051Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.3899262667806185, "sensor_active": true, "ts_utc": "2026-06-21T04:38:24.506136Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3140000104904175}, "remaining_secs": 1.0399262667806184, "sensor_active": true, "ts_utc": "2026-06-21T04:38:24.908592Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "remaining_secs": 0.6899262667806184, "sensor_active": true, "ts_utc": "2026-06-21T04:38:25.309163Z"}
+{"burst_secs": 0.35, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8190000057220459}, "remaining_secs": 0.33992626678061844, "sensor_active": true, "ts_utc": "2026-06-21T04:38:25.708740Z"}
+{"burst_secs": 0.33992626678061844, "direction_deg": 303, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.187999963760376}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:26.107935Z"}
+{"direction_deg": 35, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016706.577644, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.107960435357854, "sensor_active": true, "ts_utc": "2026-06-21T04:38:26.615699Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.757960435357854, "sensor_active": true, "ts_utc": "2026-06-21T04:38:27.024237Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9449999928474426}, "remaining_secs": 1.4079604353578539, "sensor_active": true, "ts_utc": "2026-06-21T04:38:27.430784Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.215000033378601}, "remaining_secs": 1.0579604353578538, "sensor_active": true, "ts_utc": "2026-06-21T04:38:27.824687Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3769999742507935}, "remaining_secs": 0.7079604353578538, "sensor_active": true, "ts_utc": "2026-06-21T04:38:28.232325Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3229999542236328}, "remaining_secs": 0.3579604353578538, "sensor_active": true, "ts_utc": "2026-06-21T04:38:28.640149Z"}
+{"burst_secs": 0.35, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9539999961853027}, "remaining_secs": 0.007960435357853846, "sensor_active": true, "ts_utc": "2026-06-21T04:38:29.041557Z"}
+{"burst_secs": 0.007960435357853846, "direction_deg": 35, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8370000123977661}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:29.342355Z"}
+{"direction_deg": 256, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016709.776948, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.574395782129144, "sensor_active": true, "ts_utc": "2026-06-21T04:38:29.849322Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.224395782129144, "sensor_active": true, "ts_utc": "2026-06-21T04:38:30.243469Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2869999408721924}, "remaining_secs": 1.874395782129144, "sensor_active": true, "ts_utc": "2026-06-21T04:38:30.642153Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.340999960899353}, "remaining_secs": 1.5243957821291438, "sensor_active": true, "ts_utc": "2026-06-21T04:38:31.045313Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.215000033378601}, "remaining_secs": 1.1743957821291438, "sensor_active": true, "ts_utc": "2026-06-21T04:38:31.449066Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.034999966621399}, "remaining_secs": 0.8243957821291438, "sensor_active": true, "ts_utc": "2026-06-21T04:38:31.861763Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2330000400543213}, "remaining_secs": 0.4743957821291438, "sensor_active": true, "ts_utc": "2026-06-21T04:38:32.262355Z"}
+{"burst_secs": 0.35, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7739999890327454}, "remaining_secs": 0.12439578212914382, "sensor_active": true, "ts_utc": "2026-06-21T04:38:32.669007Z"}
+{"burst_secs": 0.12439578212914382, "direction_deg": 256, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:32.969885Z"}
+{"direction_deg": 250, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016713.377186, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.900211292721527, "sensor_active": true, "ts_utc": "2026-06-21T04:38:33.473989Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0529999732971191}, "remaining_secs": 2.550211292721527, "sensor_active": true, "ts_utc": "2026-06-21T04:38:33.872671Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.200211292721527, "sensor_active": true, "ts_utc": "2026-06-21T04:38:34.277895Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1610000133514404}, "remaining_secs": 1.8502112927215268, "sensor_active": true, "ts_utc": "2026-06-21T04:38:34.692282Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6480000019073486}, "remaining_secs": 1.5002112927215268, "sensor_active": true, "ts_utc": "2026-06-21T04:38:35.076293Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.125}, "remaining_secs": 1.1502112927215267, "sensor_active": true, "ts_utc": "2026-06-21T04:38:35.480254Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.430999994277954}, "remaining_secs": 0.8002112927215267, "sensor_active": true, "ts_utc": "2026-06-21T04:38:35.878410Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6930000185966492}, "remaining_secs": 0.4502112927215267, "sensor_active": true, "ts_utc": "2026-06-21T04:38:36.281185Z"}
+{"burst_secs": 0.35, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.215000033378601}, "remaining_secs": 0.10021129272152673, "sensor_active": true, "ts_utc": "2026-06-21T04:38:36.689996Z"}
+{"burst_secs": 0.10021129272152673, "direction_deg": 250, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1069999933242798}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:36.993490Z"}
+{"direction_deg": 116, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016717.477211, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.8194443711807393, "sensor_active": true, "ts_utc": "2026-06-21T04:38:37.498925Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.4694443711807392, "sensor_active": true, "ts_utc": "2026-06-21T04:38:37.895933Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.119444371180739, "sensor_active": true, "ts_utc": "2026-06-21T04:38:38.297798Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7289999723434448}, "remaining_secs": 2.769444371180739, "sensor_active": true, "ts_utc": "2026-06-21T04:38:38.707272Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.419444371180739, "sensor_active": true, "ts_utc": "2026-06-21T04:38:39.109899Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "remaining_secs": 2.069444371180739, "sensor_active": true, "ts_utc": "2026-06-21T04:38:39.512699Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8999999761581421}, "remaining_secs": 1.7194443711807388, "sensor_active": true, "ts_utc": "2026-06-21T04:38:39.914718Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.3694443711807387, "sensor_active": true, "ts_utc": "2026-06-21T04:38:40.329691Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0260000228881836}, "remaining_secs": 1.0194443711807386, "sensor_active": true, "ts_utc": "2026-06-21T04:38:40.725847Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.6694443711807386, "sensor_active": true, "ts_utc": "2026-06-21T04:38:41.129634Z"}
+{"burst_secs": 0.35, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7739999890327454}, "remaining_secs": 0.31944437118073865, "sensor_active": true, "ts_utc": "2026-06-21T04:38:41.537242Z"}
+{"burst_secs": 0.31944437118073865, "direction_deg": 116, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1610000133514404}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:41.904035Z"}
+{"direction_deg": 169, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016722.377198, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.7213843752308096, "sensor_active": true, "ts_utc": "2026-06-21T04:38:42.408034Z"}
+{"burst_secs": 0.35, "direction_deg": 169, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9449999928474426}, "remaining_secs": 3.3713843752308095, "sensor_active": true, "ts_utc": "2026-06-21T04:38:42.740610Z"}
+{"burst_secs": 0.35, "direction_deg": 169, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2070000022649765}, "remaining_secs": 3.0213843752308094, "sensor_active": true, "ts_utc": "2026-06-21T04:38:43.149318Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:38:43.239201Z"}
+{"degree": 115, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:38:43.245819Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:38:46.468161Z"}
+{"direction_deg": 293, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016726.876957, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.335034449218152, "sensor_active": true, "ts_utc": "2026-06-21T04:38:46.972343Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.09000000357627869}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:38:46.976047Z"}
+{"degree": 119, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:38:46.980283Z"}
+{"direction_deg": 273, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:38:50.083360Z"}
+{"burst_secs": 0.35, "direction_deg": 273, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "remaining_secs": 1.9850344492181518, "sensor_active": true, "ts_utc": "2026-06-21T04:38:50.477966Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.16200000047683716}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:38:50.579247Z"}
+{"degree": 92, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:38:50.583484Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:38:53.451988Z"}
+{"direction_deg": 46, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016733.877206, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.9511238877208275, "sensor_active": true, "ts_utc": "2026-06-21T04:38:53.956628Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.675000011920929}, "remaining_secs": 3.6011238877208274, "sensor_active": true, "ts_utc": "2026-06-21T04:38:54.313710Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.2511238877208273, "sensor_active": true, "ts_utc": "2026-06-21T04:38:54.712251Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.4040000438690186}, "remaining_secs": 2.901123887720827, "sensor_active": true, "ts_utc": "2026-06-21T04:38:55.108837Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.062000036239624}, "remaining_secs": 2.551123887720827, "sensor_active": true, "ts_utc": "2026-06-21T04:38:55.510220Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.890999972820282}, "remaining_secs": 2.201123887720827, "sensor_active": true, "ts_utc": "2026-06-21T04:38:55.913754Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0889999866485596}, "remaining_secs": 1.851123887720827, "sensor_active": true, "ts_utc": "2026-06-21T04:38:56.318549Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.414000004529953}, "remaining_secs": 1.5011238877208268, "sensor_active": true, "ts_utc": "2026-06-21T04:38:56.725247Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0080000162124634}, "remaining_secs": 1.1511238877208267, "sensor_active": true, "ts_utc": "2026-06-21T04:38:57.126496Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9629999995231628}, "remaining_secs": 0.8011238877208268, "sensor_active": true, "ts_utc": "2026-06-21T04:38:57.531033Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6660000085830688}, "remaining_secs": 0.4511238877208268, "sensor_active": true, "ts_utc": "2026-06-21T04:38:57.929232Z"}
+{"burst_secs": 0.35, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0260000228881836}, "remaining_secs": 0.10112388772082681, "sensor_active": true, "ts_utc": "2026-06-21T04:38:58.325967Z"}
+{"burst_secs": 0.10112388772082681, "direction_deg": 46, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7200000286102295}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:38:58.632776Z"}
+{"direction_deg": 110, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016739.077068, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.9106773039278018, "sensor_active": true, "ts_utc": "2026-06-21T04:38:59.137440Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.5606773039278017, "sensor_active": true, "ts_utc": "2026-06-21T04:38:59.536917Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3049999475479126}, "remaining_secs": 2.2106773039278016, "sensor_active": true, "ts_utc": "2026-06-21T04:38:59.937454Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.215000033378601}, "remaining_secs": 1.8606773039278015, "sensor_active": true, "ts_utc": "2026-06-21T04:39:00.339878Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.5106773039278014, "sensor_active": true, "ts_utc": "2026-06-21T04:39:00.747654Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6930000185966492}, "remaining_secs": 1.1606773039278013, "sensor_active": true, "ts_utc": "2026-06-21T04:39:01.138803Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.593999981880188}, "remaining_secs": 0.8106773039278014, "sensor_active": true, "ts_utc": "2026-06-21T04:39:01.544358Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8100000023841858}, "remaining_secs": 0.4606773039278014, "sensor_active": true, "ts_utc": "2026-06-21T04:39:01.949241Z"}
+{"burst_secs": 0.35, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.1106773039278014, "sensor_active": true, "ts_utc": "2026-06-21T04:39:02.358629Z"}
+{"burst_secs": 0.1106773039278014, "direction_deg": 110, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.746000051498413}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:39:02.656987Z"}
+{"direction_deg": 140, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016743.077055, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.391750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:03.165047Z"}
+{"burst_secs": 0.35, "direction_deg": 140, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 4.041750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:03.560029Z"}
+{"burst_secs": 0.35, "direction_deg": 140, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2419999837875366}, "remaining_secs": 3.691750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:03.962731Z"}
+{"burst_secs": 0.35, "direction_deg": 140, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1430000066757202}, "remaining_secs": 3.341750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:04.368723Z"}
+{"burst_secs": 0.35, "direction_deg": 140, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1430000066757202}, "remaining_secs": 2.991750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:04.773984Z"}
+{"burst_secs": 0.35, "direction_deg": 140, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "remaining_secs": 2.641750308484916, "sensor_active": true, "ts_utc": "2026-06-21T04:39:05.168675Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:05.266435Z"}
+{"degree": 112, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:05.281783Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:08.530261Z"}
+{"direction_deg": 0, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016748.976891, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.562326631683062, "sensor_active": true, "ts_utc": "2026-06-21T04:39:09.036019Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:09.039665Z"}
+{"degree": 132, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:09.044321Z"}
+{"direction_deg": 0, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:12.143036Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.16200000047683716}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:12.197876Z"}
+{"degree": 137, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:12.201665Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:15.639751Z"}
+{"direction_deg": 49, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016756.076886, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.873735600741879, "sensor_active": true, "ts_utc": "2026-06-21T04:39:16.143967Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.05400000140070915}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:16.147717Z"}
+{"degree": 121, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:16.151326Z"}
+{"direction_deg": 356, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:19.206802Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.05400000140070915}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:19.234829Z"}
+{"degree": 156, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:19.243959Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:22.710308Z"}
+{"direction_deg": 60, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016763.177246, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.529002321063283, "sensor_active": true, "ts_utc": "2026-06-21T04:39:23.213926Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:23.218459Z"}
+{"degree": 99, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:23.223612Z"}
+{"direction_deg": 0, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:26.169742Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8190000057220459}, "remaining_secs": 2.1790023210632827, "sensor_active": true, "ts_utc": "2026-06-21T04:39:26.493312Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.034999966621399}, "remaining_secs": 1.8290023210632826, "sensor_active": true, "ts_utc": "2026-06-21T04:39:26.887402Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.4790023210632826, "sensor_active": true, "ts_utc": "2026-06-21T04:39:27.292948Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9269999861717224}, "remaining_secs": 1.1290023210632825, "sensor_active": true, "ts_utc": "2026-06-21T04:39:27.705817Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.7790023210632825, "sensor_active": true, "ts_utc": "2026-06-21T04:39:28.099824Z"}
+{"burst_secs": 0.35, "direction_deg": 0, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3779999911785126}, "remaining_secs": 0.4290023210632825, "sensor_active": true, "ts_utc": "2026-06-21T04:39:28.507251Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3320000171661377}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:28.603810Z"}
+{"degree": 134, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:28.608985Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:31.909543Z"}
+{"direction_deg": 267, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016772.37738, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.82937352728076, "sensor_active": true, "ts_utc": "2026-06-21T04:39:32.413302Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:32.418442Z"}
+{"degree": 148, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:32.423690Z"}
+{"direction_deg": 285, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:35.749287Z"}
+{"burst_secs": 0.35, "direction_deg": 285, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.15299999713897705}, "remaining_secs": 4.47937352728076, "sensor_active": true, "ts_utc": "2026-06-21T04:39:36.145439Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.15299999713897705}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:36.234855Z"}
+{"degree": 142, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:36.241425Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:39.538720Z"}
+{"direction_deg": 106, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016779.977241, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.585627021287807, "sensor_active": true, "ts_utc": "2026-06-21T04:39:40.042687Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:40.047434Z"}
+{"degree": 138, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:40.051361Z"}
+{"direction_deg": 92, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:43.366067Z"}
+{"burst_secs": 0.35, "direction_deg": 92, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "remaining_secs": 4.235627021287807, "sensor_active": true, "ts_utc": "2026-06-21T04:39:43.772877Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:43.870879Z"}
+{"degree": 154, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:43.874574Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:47.252814Z"}
+{"direction_deg": 174, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016787.677712, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.485157937433231, "sensor_active": true, "ts_utc": "2026-06-21T04:39:47.763387Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:47.766998Z"}
+{"degree": 99, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:47.770387Z"}
+{"direction_deg": 121, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:50.691466Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.24300000071525574}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:50.706000Z"}
+{"degree": 120, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:50.711468Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:39:53.833783Z"}
+{"direction_deg": 129, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016794.277536, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.475651653464945, "sensor_active": true, "ts_utc": "2026-06-21T04:39:54.337673Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:54.343805Z"}
+{"degree": 113, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:54.347360Z"}
+{"direction_deg": 234, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:39:57.427988Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:39:57.442755Z"}
+{"degree": 102, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:39:57.447000Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:00.394411Z"}
+{"direction_deg": 182, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016800.877335, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.178028970682149, "sensor_active": true, "ts_utc": "2026-06-21T04:40:00.900799Z"}
+{"burst_secs": 0.35, "direction_deg": 182, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.828028970682149, "sensor_active": true, "ts_utc": "2026-06-21T04:40:01.268378Z"}
+{"burst_secs": 0.35, "direction_deg": 182, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "remaining_secs": 3.478028970682149, "sensor_active": true, "ts_utc": "2026-06-21T04:40:01.666542Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3330000042915344}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:01.767809Z"}
+{"degree": 136, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:01.771906Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:04.970214Z"}
+{"direction_deg": 323, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016805.379883, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.842706980217847, "sensor_active": true, "ts_utc": "2026-06-21T04:40:05.473390Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.09000000357627869}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:05.478001Z"}
+{"degree": 103, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:05.481496Z"}
+{"direction_deg": 191, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:08.487896Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:08.594409Z"}
+{"degree": 129, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:08.600806Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:11.767729Z"}
+{"direction_deg": 358, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016812.177064, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.176833731901988, "sensor_active": true, "ts_utc": "2026-06-21T04:40:12.271455Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:12.275426Z"}
+{"degree": 151, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:12.281955Z"}
+{"direction_deg": 194, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:15.516615Z"}
+{"burst_secs": 0.35, "direction_deg": 194, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "remaining_secs": 3.826833731901988, "sensor_active": true, "ts_utc": "2026-06-21T04:40:15.934211Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:16.031354Z"}
+{"degree": 112, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:16.034866Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:19.053925Z"}
+{"direction_deg": 92, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016819.477661, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.868682103555552, "sensor_active": true, "ts_utc": "2026-06-21T04:40:19.557709Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.12600000202655792}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:19.562829Z"}
+{"degree": 109, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:19.567761Z"}
+{"direction_deg": 177, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:22.552287Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:22.666728Z"}
+{"degree": 122, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:22.670689Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:25.749881Z"}
+{"direction_deg": 224, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016826.177004, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.467528912280082, "sensor_active": true, "ts_utc": "2026-06-21T04:40:26.253437Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.11699999868869781}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:26.258022Z"}
+{"degree": 161, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:26.261823Z"}
+{"direction_deg": 207, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:29.656329Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:29.692617Z"}
+{"degree": 150, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:29.699606Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:33.017819Z"}
+{"direction_deg": 109, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016833.476795, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.262561512212078, "sensor_active": true, "ts_utc": "2026-06-21T04:40:33.521659Z"}
+{"burst_secs": 0.35, "direction_deg": 109, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.9125615122120778, "sensor_active": true, "ts_utc": "2026-06-21T04:40:33.916701Z"}
+{"burst_secs": 0.35, "direction_deg": 109, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1080000028014183}, "remaining_secs": 1.5625615122120777, "sensor_active": true, "ts_utc": "2026-06-21T04:40:34.317697Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2070000022649765}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:34.419778Z"}
+{"degree": 177, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:34.425917Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:38.139366Z"}
+{"direction_deg": 18, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016838.577312, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.840669016387046, "sensor_active": true, "ts_utc": "2026-06-21T04:40:38.644460Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:38.648461Z"}
+{"degree": 156, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:38.652437Z"}
+{"direction_deg": 53, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:42.002510Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:42.048505Z"}
+{"degree": 144, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:42.053535Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:45.374646Z"}
+{"direction_deg": 213, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016845.876984, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.0018564415612468, "sensor_active": true, "ts_utc": "2026-06-21T04:40:45.878503Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:45.882211Z"}
+{"degree": 92, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:45.886622Z"}
+{"direction_deg": 257, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:48.732277Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.16200000047683716}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:48.778989Z"}
+{"degree": 136, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:48.788323Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:52.003250Z"}
+{"direction_deg": 231, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016852.476967, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.8562027513932904, "sensor_active": true, "ts_utc": "2026-06-21T04:40:52.508654Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.27000001072883606}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:52.512183Z"}
+{"degree": 107, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:52.515848Z"}
+{"direction_deg": 261, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:40:55.481506Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:55.517814Z"}
+{"degree": 119, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:55.522145Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:40:58.575229Z"}
+{"direction_deg": 141, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016859.077272, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.575165762386712, "sensor_active": true, "ts_utc": "2026-06-21T04:40:59.079235Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:40:59.083402Z"}
+{"degree": 160, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:40:59.087304Z"}
+{"direction_deg": 171, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:02.447587Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:02.543533Z"}
+{"degree": 124, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:02.547461Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:05.715664Z"}
+{"direction_deg": 323, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016866.177297, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.1993781477345067, "sensor_active": true, "ts_utc": "2026-06-21T04:41:06.221422Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.11699999868869781}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:06.225056Z"}
+{"degree": 99, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:06.232681Z"}
+{"direction_deg": 182, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:09.086833Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:09.182592Z"}
+{"degree": 127, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:09.186846Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:12.378835Z"}
+{"direction_deg": 223, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016872.876939, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.7293487970312786, "sensor_active": true, "ts_utc": "2026-06-21T04:41:12.883400Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.06300000101327896}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:12.887765Z"}
+{"degree": 177, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:12.892162Z"}
+{"direction_deg": 230, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:16.326916Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:16.418423Z"}
+{"degree": 118, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:16.424794Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:19.612153Z"}
+{"direction_deg": 58, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016880.077304, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.601430097601751, "sensor_active": true, "ts_utc": "2026-06-21T04:41:20.117696Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:20.122692Z"}
+{"degree": 172, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:20.126766Z"}
+{"direction_deg": 306, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:23.642811Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.25200000405311584}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:23.749219Z"}
+{"degree": 177, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:23.753529Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:27.443931Z"}
+{"direction_deg": 58, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016887.877178, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.226168240416462, "sensor_active": true, "ts_utc": "2026-06-21T04:41:27.948565Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3059999942779541}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:27.953359Z"}
+{"degree": 91, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:27.957965Z"}
+{"direction_deg": 138, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:30.776344Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.26100000739097595}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:30.883605Z"}
+{"degree": 148, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:30.896461Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:34.277617Z"}
+{"direction_deg": 182, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016894.776857, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.393669159778752, "sensor_active": true, "ts_utc": "2026-06-21T04:41:34.785642Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:34.789457Z"}
+{"degree": 128, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:34.794347Z"}
+{"direction_deg": 313, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:37.923335Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.22499999403953552}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:38.021230Z"}
+{"degree": 177, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:38.025386Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:41.656588Z"}
+{"direction_deg": 76, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016902.077643, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.062783797391788, "sensor_active": true, "ts_utc": "2026-06-21T04:41:42.160740Z"}
+{"burst_secs": 0.35, "direction_deg": 76, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.0989999994635582}, "remaining_secs": 3.7127837973917877, "sensor_active": true, "ts_utc": "2026-06-21T04:41:42.557246Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:42.646250Z"}
+{"degree": 94, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:42.651791Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:45.545670Z"}
+{"direction_deg": 1, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016905.977485, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.22154777951909, "sensor_active": true, "ts_utc": "2026-06-21T04:41:46.049988Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.22499999403953552}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:46.054535Z"}
+{"degree": 138, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:46.058761Z"}
+{"direction_deg": 8, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:49.346045Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1889999955892563}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:49.380895Z"}
+{"degree": 155, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:49.386860Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:41:52.777810Z"}
+{"direction_deg": 106, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016913.277517, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.3854011632421503, "sensor_active": true, "ts_utc": "2026-06-21T04:41:53.281457Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.24300000071525574}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:41:53.285872Z"}
+{"degree": 126, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:41:53.292362Z"}
+{"direction_deg": 19, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:41:56.511371Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.0354011632421503, "sensor_active": true, "ts_utc": "2026-06-21T04:41:56.929050Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.4850000143051147}, "remaining_secs": 1.6854011632421502, "sensor_active": true, "ts_utc": "2026-06-21T04:41:57.332603Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.33540116324215, "sensor_active": true, "ts_utc": "2026-06-21T04:41:57.729988Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.277999997138977}, "remaining_secs": 0.9854011632421501, "sensor_active": true, "ts_utc": "2026-06-21T04:41:58.133637Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.6354011632421501, "sensor_active": true, "ts_utc": "2026-06-21T04:41:58.540052Z"}
+{"burst_secs": 0.35, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9089999794960022}, "remaining_secs": 0.28540116324215015, "sensor_active": true, "ts_utc": "2026-06-21T04:41:58.941844Z"}
+{"burst_secs": 0.28540116324215015, "direction_deg": 19, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8190000057220459}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:41:59.282263Z"}
+{"direction_deg": 90, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016919.776791, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.967629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:41:59.787331Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7829999923706055}, "remaining_secs": 4.617629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:42:00.147607Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6660000085830688}, "remaining_secs": 4.2676298095555545, "sensor_active": true, "ts_utc": "2026-06-21T04:42:00.556014Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1970000267028809}, "remaining_secs": 3.9176298095555544, "sensor_active": true, "ts_utc": "2026-06-21T04:42:00.953492Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.5676298095555543, "sensor_active": true, "ts_utc": "2026-06-21T04:42:01.355844Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.5849999785423279}, "remaining_secs": 3.217629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:42:01.764043Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8100000023841858}, "remaining_secs": 2.867629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:42:02.161821Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.062000036239624}, "remaining_secs": 2.517629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:42:02.557688Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2059999704360962}, "remaining_secs": 2.167629809555554, "sensor_active": true, "ts_utc": "2026-06-21T04:42:02.960925Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.1519999504089355}, "remaining_secs": 1.8176298095555539, "sensor_active": true, "ts_utc": "2026-06-21T04:42:03.376395Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.4676298095555538, "sensor_active": true, "ts_utc": "2026-06-21T04:42:03.775172Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.1176298095555537, "sensor_active": true, "ts_utc": "2026-06-21T04:42:04.179696Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.4320000112056732}, "remaining_secs": 0.7676298095555537, "sensor_active": true, "ts_utc": "2026-06-21T04:42:04.576347Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.46799999475479126}, "remaining_secs": 0.41762980955555373, "sensor_active": true, "ts_utc": "2026-06-21T04:42:04.992678Z"}
+{"burst_secs": 0.35, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8730000257492065}, "remaining_secs": 0.06762980955555375, "sensor_active": true, "ts_utc": "2026-06-21T04:42:05.383762Z"}
+{"burst_secs": 0.06762980955555375, "direction_deg": 90, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.972000002861023}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:42:05.686275Z"}
+{"direction_deg": 183, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016926.177061, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.9440064122053413, "sensor_active": true, "ts_utc": "2026-06-21T04:42:06.190741Z"}
+{"burst_secs": 0.35, "direction_deg": 183, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3869999945163727}, "remaining_secs": 2.5940064122053412, "sensor_active": true, "ts_utc": "2026-06-21T04:42:06.599255Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:06.685801Z"}
+{"degree": 151, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:06.691059Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:10.046744Z"}
+{"direction_deg": 256, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016930.479989, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.6362898867349522, "sensor_active": true, "ts_utc": "2026-06-21T04:42:10.551801Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:10.556271Z"}
+{"degree": 153, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:10.559662Z"}
+{"direction_deg": 184, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:13.878328Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.286289886734952, "sensor_active": true, "ts_utc": "2026-06-21T04:42:14.229528Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7829999923706055}, "remaining_secs": 1.936289886734952, "sensor_active": true, "ts_utc": "2026-06-21T04:42:14.633308Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0169999599456787}, "remaining_secs": 1.586289886734952, "sensor_active": true, "ts_utc": "2026-06-21T04:42:15.037375Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.2362898867349519, "sensor_active": true, "ts_utc": "2026-06-21T04:42:15.449549Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7649999856948853}, "remaining_secs": 0.8862898867349519, "sensor_active": true, "ts_utc": "2026-06-21T04:42:15.849264Z"}
+{"burst_secs": 0.35, "direction_deg": 184, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "remaining_secs": 0.5362898867349519, "sensor_active": true, "ts_utc": "2026-06-21T04:42:16.244717Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:16.345292Z"}
+{"degree": 162, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:16.349722Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:19.747128Z"}
+{"direction_deg": 239, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016940.177141, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.168018263048532, "sensor_active": true, "ts_utc": "2026-06-21T04:42:20.251169Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:20.254611Z"}
+{"degree": 156, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:20.258386Z"}
+{"direction_deg": 80, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:23.652685Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.3149999976158142}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:23.677536Z"}
+{"degree": 129, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:23.683028Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:26.851754Z"}
+{"direction_deg": 245, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016947.277643, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.2755352776985935, "sensor_active": true, "ts_utc": "2026-06-21T04:42:27.359423Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:27.363871Z"}
+{"degree": 115, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:27.368527Z"}
+{"direction_deg": 82, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:30.394375Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:30.420504Z"}
+{"degree": 144, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:30.425527Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:33.720122Z"}
+{"direction_deg": 349, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016954.178018, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.6632447599715245, "sensor_active": true, "ts_utc": "2026-06-21T04:42:34.224262Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:34.228790Z"}
+{"degree": 159, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:34.232639Z"}
+{"direction_deg": 250, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:37.699206Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.17100000381469727}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:37.753872Z"}
+{"degree": 152, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:37.757521Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:41.100682Z"}
+{"direction_deg": 139, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016961.579217, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.2639704014692703, "sensor_active": true, "ts_utc": "2026-06-21T04:42:41.605878Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2879999876022339}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:41.611015Z"}
+{"degree": 93, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:41.615275Z"}
+{"direction_deg": 316, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:44.449651Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.08100000023841858}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:44.495064Z"}
+{"degree": 167, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:44.498486Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:47.948213Z"}
+{"direction_deg": 191, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016968.379569, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.892007286003947, "sensor_active": true, "ts_utc": "2026-06-21T04:42:48.451472Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 4.5420072860039475, "sensor_active": true, "ts_utc": "2026-06-21T04:42:48.816911Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.23399999737739563}, "remaining_secs": 4.192007286003948, "sensor_active": true, "ts_utc": "2026-06-21T04:42:49.223250Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 3.842007286003948, "sensor_active": true, "ts_utc": "2026-06-21T04:42:49.619211Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.944000005722046}, "remaining_secs": 3.4920072860039477, "sensor_active": true, "ts_utc": "2026-06-21T04:42:50.034730Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.6389999985694885}, "remaining_secs": 3.1420072860039476, "sensor_active": true, "ts_utc": "2026-06-21T04:42:50.440425Z"}
+{"burst_secs": 0.35, "direction_deg": 191, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "remaining_secs": 2.7920072860039475, "sensor_active": true, "ts_utc": "2026-06-21T04:42:50.826379Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.34200000762939453}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:50.922454Z"}
+{"degree": 129, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:50.926693Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:42:54.214132Z"}
+{"direction_deg": 329, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016974.68078, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.153675355666574, "sensor_active": true, "ts_utc": "2026-06-21T04:42:54.717533Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.07199999690055847}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:54.722433Z"}
+{"degree": 119, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:54.726903Z"}
+{"direction_deg": 359, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:42:57.726369Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:42:57.753956Z"}
+{"degree": 173, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:42:57.760358Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:43:01.262471Z"}
+{"direction_deg": 32, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016981.677852, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 4.154955492240573, "sensor_active": true, "ts_utc": "2026-06-21T04:43:01.766778Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.12600000202655792}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:01.770585Z"}
+{"degree": 106, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:01.776316Z"}
+{"direction_deg": 310, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:43:04.757018Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:04.802044Z"}
+{"degree": 145, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:04.807336Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:43:08.071048Z"}
+{"direction_deg": 111, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016988.478021, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.6347048985323367, "sensor_active": true, "ts_utc": "2026-06-21T04:43:08.575952Z"}
+{"burst_secs": 0.35, "direction_deg": 111, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.2070000022649765}, "remaining_secs": 2.2847048985323366, "sensor_active": true, "ts_utc": "2026-06-21T04:43:08.934992Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:09.024866Z"}
+{"degree": 102, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:09.029878Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:43:12.153987Z"}
+{"direction_deg": 2, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016992.578369, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.9676293648099956, "sensor_active": true, "ts_utc": "2026-06-21T04:43:12.658999Z"}
+{"event": "obstacle_detected_pre_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.13500000536441803}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:12.662793Z"}
+{"degree": 169, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:12.666615Z"}
+{"direction_deg": 147, "event": "step_direction_reselected", "ts_utc": "2026-06-21T04:43:16.139832Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:16.158926Z"}
+{"degree": 102, "direction": 1, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:16.162356Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:43:19.138289Z"}
+{"direction_deg": 55, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782016999.577447, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 2.4724441384370524, "sensor_active": true, "ts_utc": "2026-06-21T04:43:19.642957Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.4129999876022339}, "remaining_secs": 2.1224441384370523, "sensor_active": true, "ts_utc": "2026-06-21T04:43:19.986611Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9990000128746033}, "remaining_secs": 1.7724441384370522, "sensor_active": true, "ts_utc": "2026-06-21T04:43:20.380719Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2419999837875366}, "remaining_secs": 1.422444138437052, "sensor_active": true, "ts_utc": "2026-06-21T04:43:20.802145Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 1.072444138437052, "sensor_active": true, "ts_utc": "2026-06-21T04:43:21.200920Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.7649999856948853}, "remaining_secs": 0.722444138437052, "sensor_active": true, "ts_utc": "2026-06-21T04:43:21.592441Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.37244413843705204, "sensor_active": true, "ts_utc": "2026-06-21T04:43:21.999324Z"}
+{"burst_secs": 0.35, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 0.022444138437052064, "sensor_active": true, "ts_utc": "2026-06-21T04:43:22.403543Z"}
+{"burst_secs": 0.022444138437052064, "direction_deg": 55, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.3049999475479126}, "remaining_secs": 0.0, "sensor_active": true, "ts_utc": "2026-06-21T04:43:22.705399Z"}
+{"direction_deg": 249, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782017003.177788, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.345863234706976, "sensor_active": true, "ts_utc": "2026-06-21T04:43:23.216250Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": Infinity}, "remaining_secs": 2.995863234706976, "sensor_active": true, "ts_utc": "2026-06-21T04:43:23.617797Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.8550000190734863}, "remaining_secs": 2.645863234706976, "sensor_active": true, "ts_utc": "2026-06-21T04:43:24.019844Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9449999928474426}, "remaining_secs": 2.295863234706976, "sensor_active": true, "ts_utc": "2026-06-21T04:43:24.423155Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.9179999828338623}, "remaining_secs": 1.9458632347069758, "sensor_active": true, "ts_utc": "2026-06-21T04:43:24.833356Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.277999997138977}, "remaining_secs": 1.5958632347069757, "sensor_active": true, "ts_utc": "2026-06-21T04:43:25.223544Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.2239999771118164}, "remaining_secs": 1.2458632347069756, "sensor_active": true, "ts_utc": "2026-06-21T04:43:25.628902Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.0080000162124634}, "remaining_secs": 0.8958632347069756, "sensor_active": true, "ts_utc": "2026-06-21T04:43:26.036160Z"}
+{"burst_secs": 0.35, "direction_deg": 249, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.296999990940094}, "remaining_secs": 0.5458632347069756, "sensor_active": true, "ts_utc": "2026-06-21T04:43:26.437570Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 1.125}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:26.535868Z"}
+{"degree": 102, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:26.539610Z"}
+{"event": "step_interrupted_for_obstacle", "ts_utc": "2026-06-21T04:43:29.625899Z"}
+{"direction_deg": 305, "event": "step_selected", "pose": {"has_data": true, "heading_deg": 0.0, "ts": 1782017010.078411, "x_m": 0.0, "y_m": 0.0}, "requested_duration_s": 3.532586458337669, "sensor_active": true, "ts_utc": "2026-06-21T04:43:30.129604Z"}
+{"burst_secs": 0.35, "direction_deg": 305, "event": "move_burst", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.18000000715255737}, "remaining_secs": 3.182586458337669, "sensor_active": true, "ts_utc": "2026-06-21T04:43:30.452435Z"}
+{"event": "obstacle_detected_mid_step", "readings": {"/SensorNode/ibeacon": -1.0, "/SensorNode/tof": 0.1979999989271164}, "threshold_m": 0.4, "ts_utc": "2026-06-21T04:43:30.548298Z"}
+{"degree": 117, "direction": 2, "event": "rotate_away", "ts_utc": "2026-06-21T04:43:30.552778Z"}
+{"event": "signal_received", "signum": 2, "ts_utc": "2026-06-21T04:43:33.739367Z"}
