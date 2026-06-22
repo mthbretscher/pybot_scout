@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 """
-Camera-brightness directional explorer.
+Camera-brightness continuous analog explorer.
 
-The robot uses lower camera brightness regions (left/center/right) from
-/CoreNode/grey_img to steer. The left-vs-right brightness difference chooses
-turn direction, while lower-center brightness controls forward confidence and
-speed. Proximity topics are still subscribed and logged for diagnostics only.
+Implements an analog-circuit-style control loop: the robot's speed and
+heading are internal state variables that are nudged each tick toward
+target values derived from camera brightness — like a capacitor being
+charged or discharged through a resistor.
+
+  v[n]       = v[n-1]  + alpha * (v_target  - v[n-1])
+  heading[n] = h[n-1]  + beta  * (h_target  - h[n-1])
+
+where alpha/beta are per-tick gains (ACCEL_ALPHA, BRAKE_ALPHA,
+STEER_ALPHA).  There are no discrete move-bursts; velocity is streamed
+continuously via set_translate_4, which re-publishes at ~10 Hz via the
+async sender thread.
+
+Sensor inputs:
+  - Primary: lower-center camera brightness (dark = caution, bright = clear)
+  - Secondary: left/right brightness delta for lateral steering
+  - Tertiary: brightness-over-time delta (approaching obstacle)
+
+Proximity topics are subscribed and logged for diagnostics only.
 
 At startup the script detects whether the robot is sitting on its charging
 station (via /SensorNode/simple_battery_status).  If so it drives straight
@@ -40,18 +55,33 @@ from pybot_scout.ros_inventory import log_ros_inventory
 from pybot_scout.scout import pybot_scout
 
 # ── tunable constants ──────────────────────────────────────────────────────────
-SPEED                = 0.20    # m/s forward speed (low but continuous)
-CRAWL_SPEED          = 0.10    # m/s in the warning zone (smooth deceleration)
-ROTATION_SPEED       = 90      # deg/s rotation speed
-MAX_STEER_DEG        = 45.0    # clamp camera steering angle to this range
-STEER_GAIN           = 28.0    # heading command gain from lower-left/right bias
-DARK_SLOW_BRIGHTNESS = 60.0    # dim lower-center -> slow movement
-DARK_PIVOT_BRIGHTNESS = 40.0   # very dim lower-center -> brief in-place pivot
-CHECK_INTERVAL_SECS  = 0.30    # drive-burst length; sensor checked between bursts
-PAUSE_SECS           = 0.30    # brief stop between a scan-turn and the next move
+TICK_SECS            = 0.30    # control-loop interval (s)
+PAUSE_SECS           = 0.25    # pause after in-place pivot before resuming
 CAMERA_TIMEOUT_SECS  = 5.0     # wait this long for the first camera brightness sample
 CHARGER_EXIT_SECS    = 3.0     # drive straight for this long to clear the dock
 REDISCOVERY_SECS     = 15.0    # re-scan for proximity topics this often
+
+MAX_SPEED            = 0.20    # m/s absolute speed ceiling
+MIN_SPEED            = 0.04    # m/s – below this snap to zero (prevent creeping)
+CRAWL_SPEED          = 0.10    # m/s used for charger-exit ramp; not used in main loop
+ROTATION_SPEED       = 90      # deg/s for pivot / stuck recovery
+MAX_STEER_DEG        = 45.0    # clamp heading command to ±this range
+STEER_GAIN           = 28.0    # heading gain from lateral brightness normalised ratio
+
+# Camera brightness thresholds (centre lower-panel brightness 0–255)
+DARK_STOP_BRIGHTNESS  = 35.0   # at or below this → v_target = 0  (hard brake)
+DARK_SLOW_BRIGHTNESS  = 60.0   # transition zone boundary (crawl→full speed)
+DARK_PIVOT_BRIGHTNESS = 40.0   # centre brightness that enables in-place pivot
+PIVOT_HEADING_DEG     = 15.0   # |heading_target| that triggers pivot when stopped
+
+# ── analog controller gains (first-order difference equations per tick) ────────
+# Think of these as RC time constants:  alpha = dt / (dt + tau)
+# At TICK_SECS=0.30:  ACCEL_ALPHA=0.20 → tau≈1.2 s (slow charge)
+#                     BRAKE_ALPHA=0.65 → tau≈0.16 s (fast discharge)
+#                     STEER_ALPHA=0.40 → tau≈0.45 s (moderate steering slew)
+ACCEL_ALPHA  = 0.20    # speed climb rate toward higher target  (gradual ramp-up)
+BRAKE_ALPHA  = 0.65    # speed drop rate toward lower target    (fast braking)
+STEER_ALPHA  = 0.40    # heading slew rate per tick
 
 # Delta-based obstacle approach steering
 DELTA_APPROACH_THRESHOLD = 0.025  # delta_fwd/base ratio that triggers approach boost
@@ -59,12 +89,12 @@ DELTA_STEER_BOOST        = 3.0    # multiplier applied to lateral_norm when appr
 DELTA_WINDOW_SPAN        = 5      # number of readings over which to compute deltas
 
 # Stuck detection and recovery
-STUCK_WINDOW_SIZE      = 20    # brightness readings in the stuck-detection window (~6 s)
-STUCK_BRIGHTNESS_SPREAD = 5.0  # max(fwd) - min(fwd) below this → scene not changing
-STUCK_DIST_THRESHOLD_M  = 0.20 # odometry distance that confirms NOT stuck (moving freely)
-STUCK_COOLDOWN_SECS     = 15.0 # minimum seconds between successive stuck-recoveries
-STUCK_ROTATE_DEG        = 90   # degrees to rotate during recovery
-STUCK_DRIVE_SECS        = 2.0  # seconds to drive straight after recovery rotation
+STUCK_WINDOW_SIZE       = 20    # brightness readings in the stuck-detection window (~6 s)
+STUCK_BRIGHTNESS_SPREAD = 5.0   # max(fwd) - min(fwd) below this → scene not changing
+STUCK_DIST_THRESHOLD_M  = 0.20  # odometry distance that confirms NOT stuck (moving freely)
+STUCK_COOLDOWN_SECS     = 15.0  # minimum seconds between successive stuck-recoveries
+STUCK_ROTATE_DEG        = 90    # degrees to rotate during recovery
+STUCK_DRIVE_SECS        = 2.0   # seconds to drive straight after recovery rotation
 
 ALLOW_SENSORLESS = os.environ.get("PYBOT_SCOUT_ALLOW_SENSORLESS_FALLBACK", "0") == "1"
 
@@ -128,7 +158,12 @@ def _clamp(value, lo, hi):
 
 
 def _camera_drive_command(camera_stats, delta_fwd=0.0, delta_left=0.0, delta_right=0.0):
-    """Return camera-based drive command dict or None when insufficient data.
+    """Return camera-based drive targets dict or None when insufficient data.
+
+    Returns v_target (desired forward speed, m/s) and heading_target (desired
+    heading in degrees, 0=straight, positive=right) computed from camera
+    brightness.  These are *targets* for the analog state variables, not
+    instantaneous commands — the caller applies difference-equation smoothing.
 
     delta_* are brightness changes over recent readings (positive = brighter =
     approaching an obstacle on that face).  When the forward view is brightening,
@@ -157,18 +192,29 @@ def _camera_drive_command(camera_stats, delta_fwd=0.0, delta_left=0.0, delta_rig
     lateral_norm -= max(0.0, delta_right) / base * DELTA_STEER_BOOST * 0.5
 
     steer = STEER_GAIN * lateral_norm
-    heading_deg = _clamp(steer, -MAX_STEER_DEG, MAX_STEER_DEG)
-    speed = CRAWL_SPEED if center < DARK_SLOW_BRIGHTNESS else SPEED
-    pivot = bool(center < DARK_PIVOT_BRIGHTNESS and abs(lateral_norm) > 0.08)
+    heading_target = _clamp(steer, -MAX_STEER_DEG, MAX_STEER_DEG)
+
+    # Continuous speed target from centre brightness:
+    #   centre ≤ DARK_STOP_BRIGHTNESS  → v_target = 0  (hard brake zone)
+    #   DARK_STOP < centre ≤ DARK_SLOW → linear ramp from 0 to CRAWL_SPEED
+    #   centre > DARK_SLOW             → linear ramp from CRAWL_SPEED to MAX_SPEED
+    if center <= DARK_STOP_BRIGHTNESS:
+        v_target = 0.0
+    elif center <= DARK_SLOW_BRIGHTNESS:
+        frac = (center - DARK_STOP_BRIGHTNESS) / (DARK_SLOW_BRIGHTNESS - DARK_STOP_BRIGHTNESS)
+        v_target = frac * CRAWL_SPEED
+    else:
+        frac = _clamp((center - DARK_SLOW_BRIGHTNESS) / (base - DARK_SLOW_BRIGHTNESS + 1.0), 0.0, 1.0)
+        v_target = CRAWL_SPEED + frac * (MAX_SPEED - CRAWL_SPEED)
+
     return {
         "left": left,
         "center": center,
         "right": right,
         "lateral_norm": lateral_norm,
         "center_conf": _clamp(center / base, 0.0, 1.0),
-        "heading_deg": heading_deg,
-        "speed": speed,
-        "pivot": pivot,
+        "heading_target": heading_target,
+        "v_target": v_target,
         "delta_fwd": round(delta_fwd, 3),
         "delta_left": round(delta_left, 3),
         "delta_right": round(delta_right, 3),
@@ -215,7 +261,7 @@ def start():
     CAMERA.start(logger=LOGGER)
 
     pybot_scout.set_rotationSpeed(ROTATION_SPEED)
-    pybot_scout.set_translationSpeed(SPEED)
+    pybot_scout.set_translationSpeed(CRAWL_SPEED)
     DASHBOARD.start()
     inventory = log_ros_inventory(LOGGER)
     DASHBOARD.update_ros_topics(inventory.get("topics", []))
@@ -223,14 +269,19 @@ def start():
     subscribed = _subscribe_topics(set())
     LOGGER.log(
         "run_started",
-        speed=SPEED,
+        max_speed=MAX_SPEED,
+        min_speed=MIN_SPEED,
         crawl_speed=CRAWL_SPEED,
         rotation_speed=ROTATION_SPEED,
         max_steer_deg=MAX_STEER_DEG,
         steer_gain=STEER_GAIN,
+        dark_stop_brightness=DARK_STOP_BRIGHTNESS,
         dark_slow_brightness=DARK_SLOW_BRIGHTNESS,
         dark_pivot_brightness=DARK_PIVOT_BRIGHTNESS,
-        check_interval_secs=CHECK_INTERVAL_SECS,
+        accel_alpha=ACCEL_ALPHA,
+        brake_alpha=BRAKE_ALPHA,
+        steer_alpha=STEER_ALPHA,
+        tick_secs=TICK_SECS,
         camera_timeout_secs=CAMERA_TIMEOUT_SECS,
         charger_exit_secs=CHARGER_EXIT_SECS,
         allow_sensorless=ALLOW_SENSORLESS,
@@ -265,10 +316,12 @@ def start():
     # ── leave the dock first ───────────────────────────────────────────────────
     _exit_charger_if_needed()
 
-    # ── set initial heading (forward / 0°) ───────────────────────────────────────
-    # The first scan will immediately orient to the clearest direction if needed.
-    heading = 0.0
-    print("Pong explorer started.  Initial heading: %d°.  Press Ctrl-C to stop." % int(heading))
+    # ── analog controller state ───────────────────────────────────────────────
+    # v_cmd and heading_cmd are the capacitor-like state variables.  Each tick
+    # they charge/discharge toward their targets via difference equations.
+    v_cmd       = 0.0   # current commanded speed, m/s
+    heading_cmd = 0.0   # current commanded heading, degrees (0=straight forward)
+    print("Analog explorer started.  Press Ctrl-C to stop.")
 
     next_rediscovery = time.time() + REDISCOVERY_SECS
     bw = BrightnessWindow(STUCK_WINDOW_SIZE)
@@ -288,7 +341,7 @@ def start():
             LOGGER.log("waiting_for_camera_data")
             DASHBOARD.update_state(
                 mode="waiting_for_camera_data",
-                heading_deg=heading,
+                heading_deg=heading_cmd,
                 camera_active=camera_active,
                 subscribed_topics=len(subscribed),
             )
@@ -304,7 +357,7 @@ def start():
         DASHBOARD.update_sensors(readings)
         DASHBOARD.update_state(
             mode="drive_loop",
-            heading_deg=heading,
+            heading_deg=heading_cmd,
             camera_active=camera_active,
             subscribed_topics=len(subscribed),
             camera_left=(drive or {}).get("left"),
@@ -319,20 +372,20 @@ def start():
                 time.sleep(0.3)
                 continue
             drive = {
-                "heading_deg": 0.0,
-                "speed": CRAWL_SPEED,
+                "heading_target": 0.0,
+                "v_target": MIN_SPEED,
                 "left": None,
                 "center": None,
                 "right": None,
                 "lateral_norm": 0.0,
                 "center_conf": 0.0,
-                "pivot": False,
                 "delta_fwd": 0.0,
                 "delta_left": 0.0,
                 "delta_right": 0.0,
             }
 
-        heading = drive.get("heading_deg", 0.0)
+        v_target = drive.get("v_target", 0.0)
+        h_target = drive.get("heading_target", 0.0)
 
         # ── stuck detection ────────────────────────────────────────────────────
         if bw.is_stuck() and time.time() - last_stuck_ts > STUCK_COOLDOWN_SECS:
@@ -343,7 +396,6 @@ def start():
             if odom_pose["has_data"] and odom_dist_at_window_fill is not None:
                 dist_since_fill = odom_stats["total_distance_m"] - odom_dist_at_window_fill
                 if dist_since_fill > STUCK_DIST_THRESHOLD_M:
-                    # Robot is actually moving through a uniform environment.
                     do_unstick = False
             LOGGER.log(
                 "stuck_check",
@@ -360,41 +412,77 @@ def start():
                 pybot_scout.stop_move()
                 pybot_scout.set_rotate_3(rot_dir, STUCK_ROTATE_DEG)
                 time.sleep(float(STUCK_ROTATE_DEG) / ROTATION_SPEED + 0.3)
-                pybot_scout.set_translationSpeed(SPEED)
+                pybot_scout.set_translationSpeed(CRAWL_SPEED)
                 pybot_scout.set_translate_2(0, STUCK_DRIVE_SECS)
                 time.sleep(STUCK_DRIVE_SECS)
                 LOGGER.log("stuck_recovery_done")
                 bw.reset()
                 odom_dist_at_window_fill = None
                 last_stuck_ts = time.time()
+                # Reset analog state so we accelerate smoothly after recovery
+                v_cmd = 0.0
+                heading_cmd = 0.0
                 continue
 
-        if drive.get("pivot"):
-            pybot_scout.stop_move()
-            pybot_scout.set_rotate_3(2 if heading > 0 else 1, 12)
-            LOGGER.log("camera_pivot",
-                       heading_deg=heading,
-                       camera_stats=camera_stats,
-                       readings=readings)
-            DASHBOARD.update_state(mode="camera_pivot", heading_deg=heading)
-            DASHBOARD.tick()
-            time.sleep(PAUSE_SECS)
-            continue
+        # ── analog difference-equation state update ───────────────────────────
+        # Speed: use faster discharge (BRAKE_ALPHA) when target is below current
+        # so the robot reacts quickly to obstacles, and slower charge (ACCEL_ALPHA)
+        # for a gradual ramp-up on clear paths.
+        alpha = BRAKE_ALPHA if v_target < v_cmd else ACCEL_ALPHA
+        v_cmd = v_cmd + alpha * (v_target - v_cmd)
+        if v_cmd < MIN_SPEED:
+            v_cmd = 0.0
 
-        pybot_scout.set_translationSpeed(drive.get("speed", SPEED))
-        pybot_scout.set_translate_2(heading % 360, CHECK_INTERVAL_SECS)
+        # Heading: first-order low-pass, clamped to physical steering range.
+        heading_cmd = heading_cmd + STEER_ALPHA * (h_target - heading_cmd)
+        heading_cmd = _clamp(heading_cmd, -MAX_STEER_DEG, MAX_STEER_DEG)
+
+        # ── issue continuous velocity command ─────────────────────────────────
+        # set_translate_4 feeds the async-sender thread which re-publishes the
+        # Twist at ~10 Hz, providing continuous smooth motion between ticks.
+        if v_cmd > 0.0:
+            pybot_scout.set_translate_4(heading_cmd % 360, v_cmd)
+        else:
+            pybot_scout.stop_move()
+            # In-place pivot toward the clearer side when fully stopped and
+            # the lateral error is large enough to be meaningful.
+            if (drive.get("center") is not None
+                    and drive["center"] < DARK_PIVOT_BRIGHTNESS
+                    and abs(h_target) > PIVOT_HEADING_DEG):
+                rot_dir = 2 if h_target > 0 else 1
+                pybot_scout.set_rotate_3(rot_dir, 12)
+                LOGGER.log("camera_pivot",
+                           heading_cmd=round(heading_cmd, 2),
+                           h_target=round(h_target, 2),
+                           camera_stats=camera_stats,
+                           readings=readings)
+                DASHBOARD.update_state(mode="camera_pivot", heading_deg=heading_cmd)
+                DASHBOARD.tick()
+                time.sleep(PAUSE_SECS)
+
         LOGGER.log(
-            "move_burst_camera",
-            direction_deg=heading,
-            burst_secs=CHECK_INTERVAL_SECS,
+            "drive_tick",
+            v_cmd=round(v_cmd, 4),
+            v_target=round(v_target, 4),
+            heading_cmd=round(heading_cmd, 2),
+            heading_target=round(h_target, 2),
             camera_active=camera_active,
             camera_stats=camera_stats,
             readings=readings,
         )
-        DASHBOARD.update_state(mode="move_burst_camera", heading_deg=heading, camera_center=drive.get("center"))
+        DASHBOARD.update_state(
+            mode="continuous_drive",
+            heading_deg=heading_cmd,
+            camera_center=drive.get("center"),
+            v_cmd=v_cmd,
+            v_target=v_target,
+        )
         DASHBOARD.tick()
 
-        # ── update brightness window after each drive burst ────────────────────
+        # ── pace the control loop ─────────────────────────────────────────────
+        time.sleep(TICK_SECS)
+
+        # ── update brightness window after each tick ───────────────────────────
         if camera_stats:
             lc = camera_stats.get("lower_center_mean_brightness") or 0.0
             ll = camera_stats.get("lower_left_mean_brightness") or 0.0
