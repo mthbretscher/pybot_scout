@@ -72,19 +72,26 @@ def _parse_battery_msg(msg):
     # ── fall back: roller_eye/status carries status=[state, pct, extra] ──────
     # Observed layout: status[0] = state (0=CHARGING, 1=UNCHARGE, 2=FULL, 3=UNKNOWN)
     #                  status[1] = battery percentage 0-100
+    # Use duck-typing (try/except) instead of isinstance so that numpy arrays,
+    # array.array, tuples, lists and any other indexable sequence all work.
     status_list = getattr(msg, "status", None)
-    if isinstance(status_list, (list, tuple)) and len(status_list) >= 2:
-        if percent is None:
-            pct_val = status_list[1]
-            if isinstance(pct_val, (int, float)) and 0.0 <= float(pct_val) <= 100.0:
-                percent = float(pct_val)
-        if charging is None:
-            state_code = status_list[0]
-            if state_code in (0, 2):   # 0=CHARGING, 2=FULL (still docked)
-                charging = True
-            elif state_code == 1:       # 1=UNCHARGE (discharging)
-                charging = False
-    elif charging is None:
+    if status_list is not None:
+        try:
+            if len(status_list) >= 2:
+                if percent is None:
+                    pct_val = status_list[1]
+                    pct_float = float(pct_val)
+                    if 0.0 <= pct_float <= 100.0:
+                        percent = pct_float
+                if charging is None:
+                    state_code = int(status_list[0])
+                    if state_code in (0, 2):   # 0=CHARGING, 2=FULL (still docked)
+                        charging = True
+                    elif state_code == 1:       # 1=UNCHARGE (discharging)
+                        charging = False
+        except (TypeError, IndexError, ValueError):
+            pass
+    if charging is None:
         # Scalar status/data fallback (other message types)
         for attr in ("data",):
             val = getattr(msg, attr, None)
