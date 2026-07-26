@@ -35,6 +35,30 @@ def _get_git_version():
     return info
 
 
+def _json_safe(value):
+    """Recursively replace non-standard-JSON float values (+inf/-inf/NaN)
+    with explicit strings, so json.dumps(..., allow_nan=False) below always
+    produces strict, portable JSON. Needed since 2026-07-26: a ToF reading
+    of +inf is a legitimate "confirmed clear, no obstacle in range" value
+    (see scripts/obstacle_avoidance.py's _tof_distance), so it can show up
+    as a real field value (e.g. tof_distance=inf) rather than only ever
+    appearing as an error case.
+    """
+    if isinstance(value, float):
+        if value != value:
+            return "NaN"
+        if value == float("inf"):
+            return "Infinity"
+        if value == float("-inf"):
+            return "-Infinity"
+        return value
+    if isinstance(value, dict):
+        return dict((k, _json_safe(v)) for k, v in value.items())
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(v) for v in value]
+    return value
+
+
 class FeedbackLogger(object):
     def __init__(self, script_name, output_dir="run_feedback"):
         self.script_name = script_name
@@ -58,8 +82,9 @@ class FeedbackLogger(object):
             "event": event,
         }
         payload.update(fields)
+        payload = _json_safe(payload)
 
-        line = json.dumps(payload, sort_keys=True)
+        line = json.dumps(payload, sort_keys=True, allow_nan=False)
         with self._lock:
             self._fp.write(line + "\n")
             self._fp.flush()
@@ -71,7 +96,7 @@ class FeedbackLogger(object):
                     "ts_utc": datetime.datetime.utcnow().isoformat() + "Z",
                     "event": "logger_stopped",
                 }
-                self._fp.write(json.dumps(payload, sort_keys=True) + "\n")
+                self._fp.write(json.dumps(payload, sort_keys=True, allow_nan=False) + "\n")
                 self._fp.flush()
                 self._fp.close()
                 self._fp = None
