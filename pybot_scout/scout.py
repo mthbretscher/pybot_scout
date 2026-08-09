@@ -1,15 +1,16 @@
 import time,os
+import subprocess
 import threading
 import signal
 import sys
 import math
 from geometry_msgs.msg import Twist
-from rollereye_ros_bridge import *
+from .ros_bridge import *
 import datetime
 from timeit import default_timer as timer
 import json
 
-SC_SOUND_DIR = "/var/roller_eye/"
+SCOUT_SOUND_DIR = os.environ.get("PYBOT_SCOUT_SOUND_DIR", "/var/roller_eye/")
 
 def disable_print():
   print "print is disalbed"
@@ -235,7 +236,7 @@ class MotionCmdAsyncSender(threading.Thread):
     print "async vel cmd sender stop done"
 
 
-class Rollereye:
+class PyBotScout:
   _is_started = False
 
   _translation_speed = 0      #m/s
@@ -261,6 +262,10 @@ class Rollereye:
 
   _ai_detect_switch = dict([("person", False), ("dog", False), ("cat", False), ("motion", False)])
   _ai_detect_result = {"person":{"last_detected_time": -1.0}, "dog":{"last_detected_time": -1.0}, "cat":{"last_detected_time": -1.0}, "motion":{"last_detected_time": -1.0}}
+
+  _proximity_subs = {}
+  _proximity_lock = threading.Lock()
+  _proximity_readings = {}  # topic -> range in metres (-1.0 = no data yet)
 
   @property
   def translation_speed(self):
@@ -404,15 +409,15 @@ class Rollereye:
     disable_print()
     self._lock.acquire()
     if self._is_started:
-      print 'rollereye already started'
+      print 'pybot_scout already started'
     else:
       self._is_started = True
-      self._ros_bridge = RollerEyeRosBride()
+      self._ros_bridge = PyBotScoutRosBridge()
       self._motion_cmd_async_sender = MotionCmdAsyncSender(self._ros_bridge)
       self._motion_cmd_async_sender.start()
       self._reset_sound_volume_to_default()
       self.record_stop()
-      print('rollereye do start')
+      print('pybot_scout do start')
     self._lock.release()
 
   '''
@@ -429,9 +434,9 @@ class Rollereye:
       self._ros_bridge.close()
       self._ros_bridge.join()
       self._is_started = False
-      print('rollereye do stop')
+      print('pybot_scout do stop')
     else:
-     print('rollereye already stop or not started')
+     print('pybot_scout already stop or not started')
     self._lock.release()
     self._reset_sound_volume_to_default()
 
@@ -561,23 +566,24 @@ class Rollereye:
   param isFinis_finishedished boolean
   '''
   def play_sound(self, effect_id, is_finished):
-    if effect_id == 1:
-      sound_path = SC_SOUND_DIR + "sc_sound_001.wav"
-    elif effect_id == 2:
-      sound_path = SC_SOUND_DIR + "sc_sound_002.wav"
-    elif effect_id == 3:
-      sound_path = SC_SOUND_DIR + "sc_sound_003.wav"
-    else:
-      print('unknown sound id:%d', effect_id)
-    
-    if is_finished:
-      cmd = "aplay " + sound_path
-    else:
-      cmd = "aplay " + sound_path + " &"
+    try:
+      refined_effect_id = int(effect_id)
+    except Exception:
+      print("unknown sound id: %s" % str(effect_id))
+      return False
 
-    print("run: %s" % cmd)
-    
-    os.system(cmd)
+    if refined_effect_id <= 0:
+      print("invalid sound id: %d" % refined_effect_id)
+      return False
+
+    try:
+      ok = self._ros_bridge.publish_speaker_cmd(refined_effect_id)
+      if is_finished:
+        time.sleep(0.8)
+      return bool(ok)
+    except Exception as exc:
+      print("play_sound failed: %s" % str(exc))
+      return False
  
   '''
   description: take photo
@@ -676,9 +682,72 @@ class Rollereye:
     x_distance = x_part * speed * seconds
     y_distance = y_part * speed * seconds
 
-    print('set_translate_2, degree:%.2f, seconds:%d, x_distance:%.2f, y_distance:%.2f, speed:%.2f' % (degree, seconds, x_distance, y_distance, speed))
+    print('set_translate_2, degree:%.2f, seconds:%.2f, x_distance:%.2f, y_distance:%.2f, speed:%.2f' % (degree, seconds, x_distance, y_distance, speed))
 
     self._move(x_distance, y_distance, speed)
+
+  '''
+  description: set Scout to translate at (0:360) for (0:20) s with a velocity
+               ramp-up at the start and ramp-down at the end, for smoother motion.
+               Falls back to a normal move when the requested duration is too short
+               to accommodate both ramp phases.
+  param self
+  param degree  translate direction (0:360)
+  param seconds duration (0:20)
+  '''
+  def set_translate_smooth(self, degree, seconds):
+    print('set_translate_smooth')
+    if degree < 0 or degree > 360:
+      print('invalid degree:%d, ignore set_translate_smooth' % degree)
+      return
+    if seconds < 0 or seconds > 20:
+      print('invalid seconds:%.2f, ignore set_translate_smooth' % seconds)
+      return
+
+    RAMP_FRACS   = [0.3, 0.7]   # velocity fractions for each ramp step
+    RAMP_STEP_S  = 0.1          # wall-clock duration per ramp step (seconds)
+    PUBLISH_INTERVAL_S = 0.05   # re-publish interval within each ramp step
+    TOTAL_RAMP_S = len(RAMP_FRACS) * RAMP_STEP_S * 2  # both ends
+
+    self._stop_async_translate_rotate()
+    self.translation_direction = degree
+    speed = self.translation_speed
+    x_part, y_part = direction_2_x_y(degree)
+    vx_full = speed * x_part
+    vy_full = speed * y_part
+
+    if seconds < TOTAL_RAMP_S:
+      # Too short to ramp; delegate to the standard timed move
+      x_distance = x_part * speed * seconds
+      y_distance = y_part * speed * seconds
+      self._move(x_distance, y_distance, speed)
+      return
+
+    sustain_s = seconds - TOTAL_RAMP_S
+
+    def _publish_for(vx, vy, duration_s):
+      end = time.time() + duration_s
+      vel = Twist()
+      vel.linear.x  = vx
+      vel.linear.y  = vy
+      vel.angular.z = 0.0
+      while time.time() < end:
+        self._ros_bridge.publish_raw_cmd_vel(vel)
+        remaining = end - time.time()
+        if remaining > 0:
+          time.sleep(min(PUBLISH_INTERVAL_S, remaining))
+
+    for frac in RAMP_FRACS:
+      _publish_for(vx_full * frac, vy_full * frac, RAMP_STEP_S)
+
+    _publish_for(vx_full, vy_full, sustain_s)
+
+    for frac in RAMP_FRACS[::-1]:
+      _publish_for(vx_full * frac, vy_full * frac, RAMP_STEP_S)
+
+    stop_vel = Twist()
+    self._ros_bridge.publish_raw_cmd_vel(stop_vel)
+    time.sleep(0.05)
 
   '''
   description: set Scount to translate at (0:360) for (0:5) meters
@@ -847,6 +916,52 @@ class Rollereye:
     self.rotation_direction = direction
 
     self._motion_cmd_async_sender.start_translate_rotate(self.translation_speed, self.translation_direction, self.rotation_speed, self.rotation_direction)
+
+  '''
+  description: Subscribe to a proximity/range sensor ROS topic.
+               The latest reading for each subscribed topic is cached internally.
+  param self
+  param topic  ROS topic name publishing sensor_msgs/Range messages
+  return the rospy.Subscriber object
+  '''
+  def subscribe_proximity(self, topic):
+    with self._proximity_lock:
+      if topic in self._proximity_subs:
+        return self._proximity_subs[topic]
+      self._proximity_readings[topic] = -1.0
+
+    def _cb(msg):
+      with self._proximity_lock:
+        self._proximity_readings[topic] = msg.range
+
+    sub = self._ros_bridge.sub_topic_proximity(topic, _cb)
+    with self._proximity_lock:
+      self._proximity_subs[topic] = sub
+    return sub
+
+  '''
+  description: Return a snapshot of all subscribed proximity readings.
+               Keys are topic names; values are range in metres (-1.0 = no data yet).
+  param self
+  return dict {topic: range_m}
+  '''
+  def get_proximity_readings(self):
+    with self._proximity_lock:
+      return dict(self._proximity_readings)
+
+  '''
+  description: Return True when any proximity reading on subscribed topics is
+               below threshold_m, indicating an obstacle is close.
+  param self
+  param threshold_m  distance threshold in metres
+  return bool
+  '''
+  def is_obstacle_ahead(self, threshold_m=0.4):
+    readings = self.get_proximity_readings()
+    for topic, dist in readings.items():
+      if dist >= 0.0 and dist < threshold_m:
+        return True
+    return False
 
   '''
   description: stop move
@@ -1072,74 +1187,74 @@ class Rollereye:
 
 def signalHandler(signalNum, frame):
   print("signalHandler bye")
-  rollereye.stop()
+  pybot_scout.stop()
 
-rollereye = Rollereye()
+pybot_scout = PyBotScout()
 
 def highlightBlock(meta_msg):
   time.sleep(0.05)
-  rollereye.handle_meta(meta_msg)
+  pybot_scout.handle_meta(meta_msg)
 
-def rollereye_print(msg):
+def pybot_scout_print(msg):
   time.sleep(0.05)
-  rollereye.handle_msg(0, msg)
+  pybot_scout.handle_msg(0, msg)
 
 # def start():
-#   rollereye.set_rotationSpeed(60)
-#   rollereye.set_translationSpeed(0.3)
-#   rollereye.set_translate_rotate(1,90)
-#   rollereye.timerStart()
-#   while rollereye.getTimerTime() <= 10000:
+#   pybot_scout.set_rotationSpeed(60)
+#   pybot_scout.set_translationSpeed(0.3)
+#   pybot_scout.set_translate_rotate(1,90)
+#   pybot_scout.timerStart()
+#   while pybot_scout.getTimerTime() <= 10000:
 #     pass
 
 # if __name__ == '__main__':
-#    rollereye.start()
+#    pybot_scout.start()
 #    start()
-#    rollereye.stop()
+#    pybot_scout.stop()
 
 if __name__ == '__main__':
   signal.signal(signal.SIGINT, signalHandler) 
   signal.signal(signal.SIGHUP, signalHandler)
   signal.signal(signal.SIGTERM, signalHandler)
 
-  rollereye.start()
+  pybot_scout.start()
 
-  #rollereye._enable_ai_detect()
+  #pybot_scout._enable_ai_detect()
 
-  rollereye.timerStart()
+  pybot_scout.timerStart()
 
 
 
-  while rollereye.getTimerTime() < 100000:
-    if(rollereye.getTimerTime() > 5000):
-      rollereye.stop()
+  while pybot_scout.getTimerTime() < 100000:
+    if(pybot_scout.getTimerTime() > 5000):
+      pybot_scout.stop()
   
 
 
-  rollereye.enable_detection()
+  pybot_scout.enable_detection()
 
-  rollereye.enable_reg(target = reg.person)
-  rollereye.enable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.enable_reg(target = reg.person)
+  pybot_scout.enable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.disable_reg(target = reg.person)
-  rollereye.disable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.disable_reg(target = reg.person)
+  pybot_scout.disable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.enable_reg(target = reg.cat)
-  rollereye.enable_reg(target = reg.person)
-  #rollereye.recWait(target = reg.person)
+  pybot_scout.enable_reg(target = reg.cat)
+  pybot_scout.enable_reg(target = reg.person)
+  #pybot_scout.recWait(target = reg.person)
 
-  rollereye.disable_reg(target = reg.person)
-  rollereye.disable_reg(target = reg.dog)
-  rollereye.disable_reg(target = reg.cat)
+  pybot_scout.disable_reg(target = reg.person)
+  pybot_scout.disable_reg(target = reg.dog)
+  pybot_scout.disable_reg(target = reg.cat)
 
-  rollereye.disable_detection()
+  pybot_scout.disable_detection()
 
-  rollereye.enable_reg(target = reg.person)
-  #rollereye.recWait(target = reg.person)
+  pybot_scout.enable_reg(target = reg.person)
+  #pybot_scout.recWait(target = reg.person)
   
-  rollereye.enable_reg(target = reg.person)
+  pybot_scout.enable_reg(target = reg.person)
 
   test = timer()
   time.sleep(1)
@@ -1147,78 +1262,78 @@ if __name__ == '__main__':
 
   vol = 100
 
-  rollereye.play_sound(1 + vol % 3, False)
+  pybot_scout.play_sound(1 + vol % 3, False)
 
   while vol > 90:
-    rollereye.set_soundVolume(vol)
-    rollereye.play_sound(1 + vol % 3, True)
+    pybot_scout.set_soundVolume(vol)
+    pybot_scout.play_sound(1 + vol % 3, True)
     vol = vol - 10
 
-    rollereye._reset_sound_volume_to_default()
+    pybot_scout._reset_sound_volume_to_default()
 
 
   cnt = 0
   while 1:
     time.sleep(0.1)
-    rollereye.recogResult() 
+    pybot_scout.recogResult() 
     continue
 
     cnt += 1
     #print('sleep:%d' % cnt)
     time.sleep(1)
-    rollereye.getRunTime()
-    rollereye.getCurrentTime()
-    rollereye.set_soundVolume(0)
-    rollereye.play_sound(0, True)
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.record_start()
+    pybot_scout.getRunTime()
+    pybot_scout.getCurrentTime()
+    pybot_scout.set_soundVolume(0)
+    pybot_scout.play_sound(0, True)
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.record_start()
     time.sleep(5)
-    rollereye.record_stop()
-    rollereye.capture() 
-    rollereye.capture() 
-    rollereye.record_start()
+    pybot_scout.record_stop()
+    pybot_scout.capture() 
+    pybot_scout.capture() 
+    pybot_scout.record_start()
     time.sleep(10)
-    rollereye.record_stop()
-    rollereye.capture() 
+    pybot_scout.record_stop()
+    pybot_scout.capture() 
 
-    rollereye.timerStart()
+    pybot_scout.timerStart()
     time.sleep(2.89712)
-    rollereye.getTimerTime()
-    rollereye.timerPause()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerPause()
     time.sleep(6.54323)
-    rollereye.getTimerTime()
-    rollereye.timerStart()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerStart()
     time.sleep(5.1)
-    rollereye.getTimerTime()
-    rollereye.timerStop()
-    rollereye.getTimerTime()
+    pybot_scout.getTimerTime()
+    pybot_scout.timerStop()
+    pybot_scout.getTimerTime()
 
-    rollereye.set_translationSpeed(0.2)
-    rollereye.set_rotationSpeed(5)
-    rollereye.set_wheel(frontLeft = 0, frontRight = 0, rearLeft = 0, rearRight = 0)
-    rollereye.set_translate(degree = 1)
+    pybot_scout.set_translationSpeed(0.2)
+    pybot_scout.set_rotationSpeed(5)
+    pybot_scout.set_wheel(frontLeft = 0, frontRight = 0, rearLeft = 0, rearRight = 0)
+    pybot_scout.set_translate(degree = 1)
 
     time.sleep(1)
 
-    rollereye.set_translate_2(degree = 270, seconds = 1) 
-    rollereye.set_translate_3(degree = 45, meters = 1)
-    rollereye.set_translate_4(degree = 0, speed = 0.1)
-    rollereye.set_rotate(direction = 1)
-    rollereye.set_rotate_2(direction = 1, seconds = 10)
-    rollereye.set_rotate_3(direction = 1, degree = 30)
-    rollereye.set_translate_rotate(degree = 30, direction = 1)
-    rollereye.stop_move()
+    pybot_scout.set_translate_2(degree = 270, seconds = 1) 
+    pybot_scout.set_translate_3(degree = 45, meters = 1)
+    pybot_scout.set_translate_4(degree = 0, speed = 0.1)
+    pybot_scout.set_rotate(direction = 1)
+    pybot_scout.set_rotate_2(direction = 1, seconds = 10)
+    pybot_scout.set_rotate_3(direction = 1, degree = 30)
+    pybot_scout.set_translate_rotate(degree = 30, direction = 1)
+    pybot_scout.stop_move()
 
-    rollereye.recogResult() 
-    rollereye.recResult(target = reg.person)
-    rollereye.recWait(target = reg.person)
-    rollereye.enable_detection()
-    rollereye.disable_detection() 
-    rollereye.motionDetected()
+    pybot_scout.recogResult() 
+    pybot_scout.recResult(target = reg.person)
+    pybot_scout.recWait(target = reg.person)
+    pybot_scout.enable_detection()
+    pybot_scout.disable_detection() 
+    pybot_scout.motionDetected()
 
     if(cnt > 60):
       break
-  rollereye.stop()
+  pybot_scout.stop()
   print "main thread exit"
